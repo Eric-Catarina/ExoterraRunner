@@ -1,0 +1,73 @@
+{
+    "name": "InputActions",
+    "maps": [
+        {
+            "name": "Tap",
+            "id": "7bf076e3-44f4-4669-acef-72a2c91c7895",
+            "actions": [
+                {
+                    "name": "Fly",
+                    "type": "Button",
+                    "id": "093dcf5c-a4fa-43c9-9da6-8ec46c7699fb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c28ec3b3-66a7-4cac-b744-ba1730054720",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fly",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Horizontal",
+            "id": "b69e411e-db0e-4c24-914e-fdddc7efb26b",
+            "actions": [
+                {
+                    "name": "MoveHorizontal",
+                    "type": "Value",
+                    "id": "a0849477-3df3-4aa2-88cb-34778a7ce58b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "594973c1-4552-4f8b-9e86-5538569d1cbd",
+                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveHorizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cab9ba1f-851e-42d7-9a85-51cbd1129e38",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveHorizontal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
