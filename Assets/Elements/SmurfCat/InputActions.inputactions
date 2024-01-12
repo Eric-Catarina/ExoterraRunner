@@ -6,7 +6,7 @@
             "id": "7bf076e3-44f4-4669-acef-72a2c91c7895",
             "actions": [
                 {
-                    "name": "Fly",
+                    "name": "Jump",
                     "type": "Button",
                     "id": "093dcf5c-a4fa-43c9-9da6-8ec46c7699fb",
                     "expectedControlType": "Button",
@@ -23,7 +23,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Fly",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -37,8 +37,8 @@ public class SmurfCatMovement : MonoBehaviour
 
 
     private void Update(){
-        if(Input.touchCount > 4){
-            SwitchGodMode();
+        if(Input.touchCount > 0){
+            Jump();
         }
     }
     private void FixedUpdate()
@@ -98,6 +98,17 @@ public class SmurfCatMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(30);
         TurnOffGodMode();
+    }
+    public void Jump()
+    {
+        if (IsCollidingWithGround() == true)
+        {
+            rb.AddForce(Vector3.up * 2, ForceMode.Impulse);
+        }
+    }
+    public bool IsCollidingWithGround()
+    {
+        return true;
     }
 
 }
