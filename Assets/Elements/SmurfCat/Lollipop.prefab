@@ -400,7 +400,6 @@ GameObject:
   - component: {fileID: 1793246209280157398}
   - component: {fileID: 1793246209280157396}
   - component: {fileID: 1793246209280157385}
-  - component: {fileID: 1793246209280157386}
   - component: {fileID: 1335977238284424984}
   m_Layer: 6
   m_Name: Lollipop
@@ -526,19 +525,6 @@ MonoBehaviour:
   m_DefaultActionMap: Horizontal
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1793246209280157386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1451155497926676829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d556c775f41f45cc875e02e5b88168b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
 --- !u!114 &1335977238284424984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,9 +537,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c08fa3438634dcb2a366db4966a8d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
   horizontalSpeed: 2
-  godModeVFX: {fileID: 498165362000351511}
+  jumpStrenght: 0
+  loseScreen: {fileID: 0}
+  isGrounded: 0
 --- !u!1 &1517874476865716798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1799,10 +1786,5 @@ PrefabInstance:
 --- !u!4 &498165362000351506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8025472410596676795, guid: 83eb43893f0607ab8822dae83d035127, type: 3}
-  m_PrefabInstance: {fileID: 7604858361112118697}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &498165362000351511 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8025472410596676798, guid: 83eb43893f0607ab8822dae83d035127, type: 3}
   m_PrefabInstance: {fileID: 7604858361112118697}
   m_PrefabAsset: {fileID: 0}

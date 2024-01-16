@@ -5,10 +5,9 @@ using UnityEngine.InputSystem;
 
 public class SmurfCatMovement : MonoBehaviour
 {
-    public float moveSpeed = 5;
-    public float horizontalSpeed = 2.0f; // Adjust this value to control the smoothness of horizontal movement.
-    public GameObject godModeVFX, loseScreen;
-
+    public float horizontalSpeed = 2.0f, jumpStrenght; // Adjust this value to control the smoothness of horizontal movement.
+    public GameObject loseScreen, fallingVFX;
+    public bool isGrounded;
     private Rigidbody rb;
     private Vector3 targetVelocity;
 
@@ -22,93 +21,73 @@ public class SmurfCatMovement : MonoBehaviour
     private void OnDisable()
     {
         playerInput.actions.Disable();
-        Sugar.OnSugarCollected -= TurnOnGodMode;
-        Spike.OnSpikeHit -= ShowLoseScreen;
+
     }
 
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
-        Sugar.OnSugarCollected += TurnOnGodMode;
-        Spike.OnSpikeHit += ShowLoseScreen;
-
     }
 
-
-    private void Update(){
-        if(Input.touchCount > 0){
-            Jump();
-        }
+private void FixedUpdate()
+{
+    // Apply the target velocity, smoothing the horizontal movement.
+    rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, horizontalSpeed * Time.fixedDeltaTime);
+    if (rb.velocity.y < -15){
+        fallingVFX.SetActive(true);
     }
-    private void FixedUpdate()
+    else{
+        fallingVFX.SetActive(false);
+    }
+}
+
+
+public void MoveHorizontally(InputAction.CallbackContext value)
+{
+    if (value.phase == InputActionPhase.Performed)
     {
-        rb.MovePosition(transform.position + targetVelocity * Time.fixedDeltaTime);
-        targetVelocity = Vector3.zero;
+        Vector2 moveInput = value.ReadValue<Vector2>();
+        float moveInputX = moveInput.x;
 
+        // Calculate the target horizontal velocity and preserve the existing y velocity to maintain gravity's effect.
+        targetVelocity = new Vector3(moveInputX * horizontalSpeed * 3, rb.velocity.y, rb.velocity.z);
     }
-
-    public void MoveHorizontally(InputAction.CallbackContext value)
+    else if (value.phase == InputActionPhase.Canceled)
     {
-        if (value.phase == InputActionPhase.Performed)
-        {
-            Vector2 moveInput = value.ReadValue<Vector2>();
-            float moveInputX = moveInput.x;
+        // Only reset the horizontal movement while preserving the vertical velocity (gravity).
+        targetVelocity = new Vector3(0, rb.velocity.y, rb.velocity.z);
+    }
+}
 
-            // Calculate the target velocity based on the input.
-            Vector3 targetVelocity = new Vector3(moveInputX * moveSpeed, rb.velocity.y, 10);
-
-            // Apply the target velocity directly to the rigidbody.
-            rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, horizontalSpeed * Time.fixedDeltaTime);
-        }
-        else if (value.phase == InputActionPhase.Canceled)
-        {
-            // If input is released, set velocity to zero to stop movement.
-            rb.velocity = Vector3.zero;
-        }
-    }
-
-    public void TurnOnGodMode( )
-    {
-        StartCoroutine(DeactivateGodModeAfter());
-        godModeVFX.SetActive(true);
-    }
-    public void TurnOffGodMode( )
-    {
-        godModeVFX.SetActive(false);
-    }
-    public void SwitchGodMode( )
-    {
-        if (godModeVFX.activeSelf == false){
-        godModeVFX.SetActive(true);
-        }
-        else{
-        godModeVFX.SetActive(false);
-        }
-    }
 
     public void ShowLoseScreen()
     {
-        if (godModeVFX.activeSelf == false){
-            loseScreen.SetActive(true);
-        }
+        loseScreen.SetActive(true);
+
     }
-    // Deactivate godmode after 10 seconds
-    public IEnumerator DeactivateGodModeAfter()
-    {
-        yield return new WaitForSeconds(30);
-        TurnOffGodMode();
-    }
+
     public void Jump()
     {
-        if (IsCollidingWithGround() == true)
+        if (isGrounded == true)
         {
-            rb.AddForce(Vector3.up * 2, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * jumpStrenght, ForceMode.Impulse);
         }
     }
-    public bool IsCollidingWithGround()
+
+    private void OnCollisionEnter(Collision collision)
     {
-        return true;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
 
 }
