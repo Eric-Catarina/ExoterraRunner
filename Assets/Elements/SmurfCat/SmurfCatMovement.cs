@@ -28,6 +28,10 @@ public class SmurfCatMovement : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
+        // If is playing on unity editor, double the speed  
+        #if UNITY_EDITOR
+        horizontalSpeed *= 2;
+        #endif
     }
 
 private void FixedUpdate()
