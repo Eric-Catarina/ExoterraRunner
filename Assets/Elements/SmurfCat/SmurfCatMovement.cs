@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class SmurfCatMovement : MonoBehaviour
 {
     public float horizontalSpeed = 2.0f, jumpStrenght; // Adjust this value to control the smoothness of horizontal movement.
-    public GameObject loseScreen, fallingVFX;
+    public GameObject loseScreen, fallingVFX, fallExplosionVFX;
     public bool isGrounded;
-    private Rigidbody rb;
+    public Rigidbody rb;
     private Vector3 targetVelocity;
-
+    private bool hadHighFallSpeed = false;
     private PlayerInput playerInput;
 
     private void OnEnable()
@@ -38,8 +39,10 @@ private void FixedUpdate()
 {
     // Apply the target velocity, smoothing the horizontal movement.
     rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, horizontalSpeed * Time.fixedDeltaTime);
+    
     if (rb.velocity.y < -15){
         fallingVFX.SetActive(true);
+        hadHighFallSpeed = true;
     }
     else{
         fallingVFX.SetActive(false);
@@ -84,6 +87,13 @@ public void MoveHorizontally(InputAction.CallbackContext value)
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            
+            if (hadHighFallSpeed)
+            {
+                ActivateGroundExplosion(rb.velocity.y);
+            }
+            
+            hadHighFallSpeed = false;
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -92,6 +102,13 @@ public void MoveHorizontally(InputAction.CallbackContext value)
         {
             isGrounded = false;
         }
+    }
+    
+    private void ActivateGroundExplosion(float strength){
+        // Instantiate the explosion VFX on the object that the player collided
+        GameObject explosion = Instantiate(fallExplosionVFX, transform.position, Quaternion.identity);
+        //explosion.transform.parent = collision.gameObject.transform;
+        Destroy(explosion, 3.3f);
     }
 
 }
