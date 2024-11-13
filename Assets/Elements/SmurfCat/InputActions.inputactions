@@ -46,19 +46,8 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "594973c1-4552-4f8b-9e86-5538569d1cbd",
-                    "path": "<Touchscreen>/primaryTouch/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MoveHorizontal",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "cab9ba1f-851e-42d7-9a85-51cbd1129e38",
-                    "path": "<Mouse>/delta",
+                    "path": "<Touchscreen>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

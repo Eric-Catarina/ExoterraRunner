@@ -210,7 +210,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 19a0933536d78d619a2d30a43cd29e5e, type: 3}
+  - {fileID: 2100000, guid: 6b19ccfe75499a21ebc3ac2b3a8dc347, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -538,9 +538,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horizontalSpeed: 2
-  jumpStrenght: 0
+  jumpStrength: 10
   loseScreen: {fileID: 0}
+  fallingVFX: {fileID: 0}
+  fallExplosionVFX: {fileID: 0}
   isGrounded: 0
+  rb: {fileID: 0}
+  maxHorizontalSpeed: 15
 --- !u!1 &1517874476865716798
 GameObject:
   m_ObjectHideFlags: 0
