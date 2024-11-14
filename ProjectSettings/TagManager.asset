@@ -13,6 +13,7 @@ TagManager:
   - Audio
   - End
   - GroundEnd
+  - GroundStartMid
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - JumpSpot
   - Coin
   - GroundEnd
-  - 
+  - GroundStartMid
   - 
   - 
   - 

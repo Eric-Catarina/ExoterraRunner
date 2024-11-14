@@ -125,9 +125,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animateScale: 1
-  scaleMultiplier: 1
+  scaleMultiplier: 2
   scaleDuration: 1
-  scaleEase: 27
+  scaleEase: 18
   waitForOneFrame: 1
   animateRotation: 1
   rotationAxis: {x: 0, y: 360, z: 0}
@@ -135,6 +135,14 @@ MonoBehaviour:
   animateVerticalBounce: 1
   bounceHeight: 1
   bounceDuration: 0.5
-  bounceEase: 4
+  bounceEase: 34
   rainbowMode: 0
   rainbowSpeed: 1
+  animateText: 0
+  textToAnimate: {fileID: 0}
+  textPulseEffect: 1
+  textVerticalBounce: 0
+  textScaleMultiplier: 1.05
+  textBounceHeight: 10
+  textAnimationDuration: 0.8
+  textAnimationEase: 7

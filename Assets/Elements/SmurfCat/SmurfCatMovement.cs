@@ -112,6 +112,7 @@ public class SmurfCatMovement : MonoBehaviour
 
             if (hadHighFallSpeed)
             {
+                collision.gameObject.GetComponent<SpawnCoins>().StartCoroutine("DelayedSpawn");
                 ActivateGroundExplosion();
                 audioManager.StopFallingAudio();
                 audioManager.PlayRandomImpactSound();
@@ -133,8 +134,10 @@ public class SmurfCatMovement : MonoBehaviour
     {
         if (other.CompareTag("GroundEnd"))
         {
+
             generator.Generate();
         }
+
     }
 
     private void ActivateGroundExplosion()
