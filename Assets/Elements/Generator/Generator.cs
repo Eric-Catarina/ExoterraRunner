@@ -66,8 +66,8 @@ public class Generator : MonoBehaviour
     private void SetInitialScaleAndPosition(GameObject element, Vector3 finalPosition)
     {
         Vector3 initialScale = element.transform.localScale;
-        element.transform.localScale = initialScale * 8f; // Começa maior
-        element.transform.position = finalPosition + new Vector3(Random.Range(-50, 50), 250, 0); // Posição inicial diagonal
+        element.transform.localScale = initialScale * 4f; // Começa maior
+        element.transform.position = finalPosition + new Vector3(Random.Range(-100, 100), 250, 100); // Posição inicial diagonal
 
         // Desativa o Collider no próprio objeto e em todos os filhos no início
         Collider[] colliders = element.GetComponentsInChildren<Collider>();
@@ -80,8 +80,8 @@ public class Generator : MonoBehaviour
     // Aplica as animações de escala, movimento e rotação
     private void ApplyAnimations(GameObject element, Vector3 finalPosition)
     {
-        element.transform.DOScale(element.transform.localScale / 8f, 3f).SetEase(Ease.OutBack);
-        element.transform.DOMove(finalPosition, 1.5f).SetEase(Ease.InQuad);
+        element.transform.DOScale(element.transform.localScale / 4f, 1f).SetEase(Ease.OutBack);
+        element.transform.DOMove(finalPosition, 1f).SetEase(Ease.InQuad);
 
         float randomRotationZ = Random.Range(-5f, 5f);
         element.transform.DORotate(new Vector3(0, 0, randomRotationZ), 1f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuad);

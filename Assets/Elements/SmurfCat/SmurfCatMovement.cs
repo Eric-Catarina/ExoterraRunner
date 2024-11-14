@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class SmurfCatMovement : MonoBehaviour
 {
@@ -14,11 +11,16 @@ public class SmurfCatMovement : MonoBehaviour
     public float maxHorizontalSpeed = 15.0f;
     public float maxYSpeed = -20.0f;
     public LevelEnd levelEnd;
-    public Generator generator; // Referência ao Generator
-    
+    public Generator generator;
+    public GameObject grounds;
+    public CameraController cameraController;
+
     private Vector3 targetVelocity;
     private bool hadHighFallSpeed = false, isDead = false;
     private PlayerInput playerInput;
+    
+    // Reference to AudioManager and wind sound
+    private AudioManager audioManager;
 
     private void OnEnable()
     {
@@ -34,6 +36,7 @@ public class SmurfCatMovement : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
+        audioManager = FindObjectOfType<AudioManager>(); // Find the AudioManager in the scene
 
         #if UNITY_EDITOR
         horizontalSpeed *= 2;
@@ -56,10 +59,18 @@ public class SmurfCatMovement : MonoBehaviour
         {
             Die();
         }
+        
+       
+        
+        
         if (rb.velocity.y < -15)
         {
             fallingVFX.SetActive(true);
             hadHighFallSpeed = true;
+
+        
+            audioManager.PlayFallingAudio();
+            
         }
         else
         {
@@ -72,8 +83,7 @@ public class SmurfCatMovement : MonoBehaviour
         if (value.phase == InputActionPhase.Performed || value.phase == InputActionPhase.Canceled)
         {
             Vector2 moveInput = value.ReadValue<Vector2>();
-            float moveInputX = moveInput.x;
-            moveInputX = Math.Clamp(moveInputX, -maxHorizontalSpeed, maxHorizontalSpeed);
+            float moveInputX = Math.Clamp(moveInput.x, -maxHorizontalSpeed, maxHorizontalSpeed);
             targetVelocity = new Vector3(moveInputX * horizontalSpeed, rb.velocity.y, rb.velocity.z);
         }
     }
@@ -87,6 +97,7 @@ public class SmurfCatMovement : MonoBehaviour
     {
         if (isGrounded)
         {
+            cameraController.SetAirborne(true);
             rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
             isGrounded = false; 
         }
@@ -97,10 +108,13 @@ public class SmurfCatMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            cameraController.SetAirborne(false);
 
             if (hadHighFallSpeed)
             {
                 ActivateGroundExplosion();
+                audioManager.StopFallingAudio();
+                audioManager.PlayRandomImpactSound();
             }
             
             hadHighFallSpeed = false;
@@ -119,13 +133,16 @@ public class SmurfCatMovement : MonoBehaviour
     {
         if (other.CompareTag("GroundEnd"))
         {
-            generator.Generate(); // Chama o método Generate do Generator
+            generator.Generate();
         }
     }
 
     private void ActivateGroundExplosion()
     {
         GameObject explosion = Instantiate(fallExplosionVFX, transform.position, Quaternion.identity);
+        
+        explosion.transform.SetParent(grounds.transform, worldPositionStays: true);
+        
         Destroy(explosion, 3.3f);
     }
     

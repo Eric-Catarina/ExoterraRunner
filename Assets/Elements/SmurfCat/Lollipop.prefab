@@ -401,6 +401,7 @@ GameObject:
   - component: {fileID: 1793246209280157396}
   - component: {fileID: 1793246209280157385}
   - component: {fileID: 1335977238284424984}
+  - component: {fileID: 4287244898372680630}
   m_Layer: 6
   m_Name: Lollipop
   m_TagString: Character
@@ -545,6 +546,35 @@ MonoBehaviour:
   isGrounded: 0
   rb: {fileID: 0}
   maxHorizontalSpeed: 15
+  maxYSpeed: -20
+  levelEnd: {fileID: 0}
+  generator: {fileID: 0}
+--- !u!114 &4287244898372680630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451155497926676829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ab877b14e4e66eb90b873422b9a781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animateScale: 1
+  scaleMultiplier: 1.5
+  scaleDuration: 0.5
+  scaleEase: 27
+  waitForOneFrame: 1
+  animateRotation: 0
+  rotationAxis: {x: 0, y: 360, z: 0}
+  rotationDuration: 2
+  animateVerticalBounce: 0
+  bounceHeight: 0.5
+  bounceDuration: 1
+  bounceEase: 4
+  rainbowMode: 0
+  rainbowSpeed: 5
 --- !u!1 &1517874476865716798
 GameObject:
   m_ObjectHideFlags: 0

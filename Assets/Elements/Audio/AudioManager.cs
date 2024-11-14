@@ -9,14 +9,14 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixer audioMixer;
     [Header("--- Audio Manager ---")]
     [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioSource SFXSource;
+    [SerializeField] public AudioSource SFXSource;
+    [SerializeField] private AudioSource fallingSource;
 
     [Header("--- Clips ---")]
-
     [SerializeField] public AudioClip[] audioClips;
+    [SerializeField] private List<AudioClip> impactSounds; // List of impact sounds
 
-    [SerializeField]
-    private PauseMenu pauseMenu;
+    [SerializeField] private PauseMenu pauseMenu;
 
     void Start()
     {
@@ -25,14 +25,18 @@ public class AudioManager : MonoBehaviour
         Coin.OnCoinCollected += PlayCoinAudio;
     }
 
-    public void PlaySFX(AudioClip clip){
+    public void PlaySFX(AudioClip clip)
+    {
         SFXSource.PlayOneShot(clip);
     }
 
-    public void MuteMaster(){
+    public void MuteMaster()
+    {
         audioMixer.SetFloat("MasterVolume", -80);
     }
-    public void UnmuteMaster(){
+
+    public void UnmuteMaster()
+    {
         audioMixer.SetFloat("MasterVolume", 0);
     }
 
@@ -41,7 +45,39 @@ public class AudioManager : MonoBehaviour
         PlaySFX(audioClips[1]);
     }
 
-    public void OnDestroy()
+    public void PlayFallingAudio()
+    {
+        // Only play if the fallingSource isn't already playing
+        if (fallingSource != null && !fallingSource.isPlaying)
+        {
+            fallingSource.Play(); // Play the falling sound on the dedicated source
+        }
+    }
+
+    public void StopFallingAudio()
+    {
+        if (fallingSource != null && fallingSource.isPlaying)
+        {
+            fallingSource.Stop();
+        }
+    }
+
+    // Play a random impact sound from the list
+    public void PlayRandomImpactSound()
+    {
+        if (impactSounds.Count > 0)
+        {
+            // Select a random clip from the list
+            AudioClip randomImpactClip = impactSounds[UnityEngine.Random.Range(0, impactSounds.Count)];
+            SFXSource.PlayOneShot(randomImpactClip);
+        }
+        else
+        {
+            Debug.LogWarning("No impact sounds are set in the impactSounds list.");
+        }
+    }
+
+    private void OnDestroy()
     {
         Coin.OnCoinCollected -= PlayCoinAudio;
     }
