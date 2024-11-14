@@ -14,11 +14,11 @@ public class SmurfCatMovement : MonoBehaviour
     public float maxHorizontalSpeed = 15.0f;
     public float maxYSpeed = -20.0f;
     public LevelEnd levelEnd;
+    public Generator generator; // Referência ao Generator
     
     private Vector3 targetVelocity;
     private bool hadHighFallSpeed = false, isDead = false;
     private PlayerInput playerInput;
-    
 
     private void OnEnable()
     {
@@ -42,7 +42,6 @@ public class SmurfCatMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Aplicando a velocidade desejada suavemente para movimentos horizontais
         Vector3 newVelocity = new Vector3(targetVelocity.x, rb.velocity.y, rb.velocity.z);
         if (!isDead)
         {
@@ -75,7 +74,6 @@ public class SmurfCatMovement : MonoBehaviour
             Vector2 moveInput = value.ReadValue<Vector2>();
             float moveInputX = moveInput.x;
             moveInputX = Math.Clamp(moveInputX, -maxHorizontalSpeed, maxHorizontalSpeed);
-            // Configura a velocidade horizontal alvo, sem alterar o movimento vertical
             targetVelocity = new Vector3(moveInputX * horizontalSpeed, rb.velocity.y, rb.velocity.z);
         }
     }
@@ -90,7 +88,7 @@ public class SmurfCatMovement : MonoBehaviour
         if (isGrounded)
         {
             rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
-            isGrounded = false; // Marcar como não no chão imediatamente após o salto
+            isGrounded = false; 
         }
     }
 
@@ -116,10 +114,17 @@ public class SmurfCatMovement : MonoBehaviour
             isGrounded = false;
         }
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("GroundEnd"))
+        {
+            generator.Generate(); // Chama o método Generate do Generator
+        }
+    }
+
     private void ActivateGroundExplosion()
     {
-        // Instancia a explosão de partículas no local do objeto
         GameObject explosion = Instantiate(fallExplosionVFX, transform.position, Quaternion.identity);
         Destroy(explosion, 3.3f);
     }

@@ -19,10 +19,10 @@ public class Coin : MonoBehaviour
     }
     
     // Keeps rotating in Y
-    private void FixedUpdate()
-    {
-        transform.Rotate(0, 1, 0);
-    }
+    // private void FixedUpdate()
+    // {
+    //     transform.Rotate(0, 1, 0);
+    // }
     
     
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3931597769424348997}
   - component: {fileID: 2399929278087707058}
   - component: {fileID: 2399929278087707059}
+  - component: {fileID: 7180262522881635928}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -111,3 +112,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinVFX: {fileID: 8440767653920252216, guid: 3bf0ba8ec85074790a4a3c0b6b9c9c42, type: 3}
+--- !u!114 &7180262522881635928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3282890100029916816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ab877b14e4e66eb90b873422b9a781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animateScale: 1
+  scaleMultiplier: 1
+  scaleDuration: 1
+  scaleEase: 27
+  waitForOneFrame: 1
+  animateRotation: 1
+  rotationAxis: {x: 0, y: 360, z: 0}
+  rotationDuration: 1
+  animateVerticalBounce: 1
+  bounceHeight: 1
+  bounceDuration: 0.5
+  bounceEase: 4
+  rainbowMode: 0
+  rainbowSpeed: 1
