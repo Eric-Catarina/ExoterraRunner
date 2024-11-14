@@ -75,7 +75,6 @@ public class SmurfCatMovement : MonoBehaviour
             Vector2 moveInput = value.ReadValue<Vector2>();
             float moveInputX = moveInput.x;
             moveInputX = Math.Clamp(moveInputX, -maxHorizontalSpeed, maxHorizontalSpeed);
-            Debug.Log(moveInputX);
             // Configura a velocidade horizontal alvo, sem alterar o movimento vertical
             targetVelocity = new Vector3(moveInputX * horizontalSpeed, rb.velocity.y, rb.velocity.z);
         }
