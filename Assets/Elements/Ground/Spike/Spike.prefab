@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8156855588499661746}
   - component: {fileID: 3026263195248650420}
   - component: {fileID: 4472470477375958247}
+  - component: {fileID: 4095503618659531396}
   m_Layer: 0
   m_Name: Spike
   m_TagString: Untagged
@@ -111,3 +112,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spikeVFX: {fileID: 2492023078240448479, guid: 5e973f6ba7aef02caaa6399dcb978107, type: 3}
+--- !u!114 &4095503618659531396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7652183668584153703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ab877b14e4e66eb90b873422b9a781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animateScale: 1
+  scaleMultiplier: 1.5
+  scaleDuration: 0.5
+  scaleEase: 27
+  waitForOneFrame: 1
+  animateRotation: 0
+  rotationAxis: {x: 0, y: 360, z: 0}
+  rotationDuration: 2
+  animateVerticalBounce: 0
+  bounceHeight: 0.5
+  bounceDuration: 1
+  bounceEase: 4
+  rainbowMode: 0
+  rainbowSpeed: 5
+  animateText: 0
+  textToAnimate: {fileID: 0}
+  textPulseEffect: 1
+  textVerticalBounce: 0
+  textScaleMultiplier: 1.05
+  textBounceHeight: 10
+  textAnimationDuration: 0.8
+  textAnimationEase: 7

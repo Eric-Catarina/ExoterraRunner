@@ -12,6 +12,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     void Awake()
     {
         InitializeAds();
+    
     }
 
     public void InitializeAds()
@@ -23,9 +24,22 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 #elif UNITY_EDITOR
             _gameId = _androidGameId; //Only for testing the functionality in the Editor
 #endif
+        
+        
+        
         if (!Advertisement.isInitialized && Advertisement.isSupported)
         {
             Advertisement.Initialize(_gameId, _testMode, this);
+
+            // Configure COPPA compliance for child-directed treatment
+            MetaData metaData = new MetaData("gdpr");
+            metaData.Set("gdpr.consent", "false"); // No personalized ads for children
+            Advertisement.SetMetaData(metaData);
+
+            MetaData childDirectedMetaData = new MetaData("user");
+            childDirectedMetaData.Set("user.nonbehavioral", "true"); // Treat users as non-behavioral
+            Advertisement.SetMetaData(childDirectedMetaData);
+            
         }
     }
 

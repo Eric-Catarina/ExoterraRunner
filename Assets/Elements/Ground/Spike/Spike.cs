@@ -15,7 +15,7 @@ public class Spike : MonoBehaviour
             OnSpikeHit?.Invoke();
             GameObject spikeVFXInstance = Instantiate(spikeVFX, transform.position, Quaternion.identity);
             Destroy(spikeVFXInstance, 1f);
-            Destroy(gameObject);
+            other.GetComponent<SmurfCatMovement>().Die();
         }
     }
     

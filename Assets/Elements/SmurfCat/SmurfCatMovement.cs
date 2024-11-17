@@ -149,7 +149,7 @@ public class SmurfCatMovement : MonoBehaviour
         Destroy(explosion, 3.3f);
     }
     
-    private void Die()
+    public void Die()
     {
         isDead = true;
         levelEnd.EndLevel();
