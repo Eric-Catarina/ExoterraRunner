@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Button SFXButton;
     [SerializeField] private TextMeshProUGUI SFXText;
     [SerializeField] private AudioManager audioManager;
+    public static bool isPaused = false;
     private bool sfxOn = true;
 
     void Awake()
@@ -18,10 +19,12 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
+        isPaused = true;
     }
     public void UnpauseGame()
     {
         Time.timeScale = 1;
+        isPaused = false;
     }
     public void Home()
     {
@@ -68,6 +71,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void Initialize()
     {
+        
         sfxOn = PlayerPrefs.GetInt("SFX", 1) == 1;
         if (sfxOn)
         {

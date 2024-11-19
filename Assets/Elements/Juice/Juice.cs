@@ -10,9 +10,14 @@ public class Juice : MonoBehaviour
     public float scaleMultiplier = 1.5f;       // Scale multiplier for the initial effect
     public float scaleDuration = 0.5f;
     public Ease scaleEase = Ease.OutBack;
-    public bool waitForOneFrame = false;       // Waits one frame before starting scale animation
+    public bool shouldAnimateWhilePaused = true;     // Continue animation even when Time.timeScale = 0
     private Vector3 baseScale;                 // Stores the original scale of the object
-    private bool scaleAnimationStarted = false;
+
+    [Header("Deactivation/Destruction Animation Settings")]
+    public bool animateOnDeactivateOrDestroy = true;
+    public float deactivationScaleDuration = 0.5f; // Duration of the deactivation scale animation
+    public Ease deactivationEase = Ease.InBack;
+    public float fadeOutDuration = 0.5f;          // Duration for fade-out effect
 
     [Header("Rotation Animation Settings")]
     public bool animateRotation = false;
@@ -29,89 +34,85 @@ public class Juice : MonoBehaviour
     public bool rainbowMode = false;           // Activates rainbow color cycling mode
     public float rainbowSpeed = 5f;            // Speed of color transition
 
-    [Header("Text Animation Settings")]
-    public bool animateText = false;           // Activates text animation settings
-    public TextMeshProUGUI textToAnimate;      // Reference to the TextMeshPro component
-    public bool textPulseEffect = true;        // Enables "pulse" scaling effect for text
-    public bool textVerticalBounce = false;    // Enables vertical bounce for text
-    public float textScaleMultiplier = 1.05f;  // Pulse effect scale multiplier
-    public float textBounceHeight = 10f;       // Height for vertical bounce effect
-    public float textAnimationDuration = 0.8f; // Duration for each text animation loop
-    public Ease textAnimationEase = Ease.InOutQuad;
-
     private Material material;
     private MaterialPropertyBlock propBlock;
     private Renderer objectRenderer;
 
-    private void Start()
+    private void Awake()
     {
-        baseScale = transform.localScale; // Stores the original scale of the object
-
-        // Setup for color manipulation in Rainbow Mode
+        baseScale = transform.localScale; // Store the original scale
         objectRenderer = GetComponent<Renderer>();
+
         if (objectRenderer != null)
         {
             material = objectRenderer.material;
             propBlock = new MaterialPropertyBlock();
         }
+    }
 
-        // Starts configured animations
-        if (animateScale)
-        {
-            StartCoroutine(CheckAndPlayScaleAnimation());
-        }
-
-        if (animateRotation)
-        {
-            PlayRotationAnimation();
-        }
-
-        if (animateVerticalBounce)
-        {
-            PlayVerticalBounceAnimation();
-        }
-
-        if (animateText && textToAnimate != null)
-        {
-            AnimateTextLoop();
-        }
+    private void OnEnable()
+    {
+        PlayActivationAnimation();
+        if (animateRotation) PlayRotationAnimation();
+        if (animateVerticalBounce) PlayVerticalBounceAnimation();
     }
 
     private void Update()
     {
-        // Starts rainbow effect if enabled
         if (rainbowMode && objectRenderer != null)
         {
             ApplyRainbowEffect();
         }
     }
 
-    private IEnumerator CheckAndPlayScaleAnimation()
+    private void PlayActivationAnimation()
     {
-        if (waitForOneFrame)
+        if (!animateScale) return;
+
+        transform.localScale = Vector3.zero; // Start from zero for the "pop-in" effect
+        transform.DOScale(baseScale * scaleMultiplier, scaleDuration)
+            .SetEase(scaleEase)
+            .SetUpdate(shouldAnimateWhilePaused); // Ensures animation runs even when timeScale = 0
+    }
+
+    public void PlayDeactivationOrDestroyAnimation(System.Action onComplete)
+    {
+        if (!animateOnDeactivateOrDestroy)
         {
-            yield return null; // Waits one frame
+            onComplete?.Invoke();
+            return;
         }
 
-        // Waits until the game is unpaused
-        while (Time.timeScale == 0)
-        {
-            yield return null;
-        }
+        // Scale down animation
+        transform.DOScale(Vector3.zero, deactivationScaleDuration)
+            .SetEase(deactivationEase)
+            .SetUpdate(shouldAnimateWhilePaused) // Ensures animation runs even when timeScale = 0
+            .OnComplete(() =>
+            {
+                onComplete?.Invoke();
+            });
 
-        // Ensures the scale animation only starts once
-        if (!scaleAnimationStarted)
+        // Optional: Fade out if material allows
+        if (objectRenderer != null)
         {
-            scaleAnimationStarted = true;
-            PlayScaleAnimation();
+            FadeOutEffect();
         }
     }
 
-    private void PlayScaleAnimation()
+    private void FadeOutEffect()
     {
-        Vector3 targetScale = baseScale * scaleMultiplier; // Final scale based on original scale
-        transform.localScale = Vector3.zero; // Starts invisible for a "pop-in" effect
-        transform.DOScale(targetScale, scaleDuration).SetEase(scaleEase).SetUpdate(true);
+        if (material == null || !material.HasProperty("_Color")) return;
+
+        Color startColor = material.color;
+        Color endColor = startColor;
+        endColor.a = 0; // Fade to transparent
+
+        material.DOColor(endColor, fadeOutDuration)
+            .SetUpdate(shouldAnimateWhilePaused) // Ensures fade-out runs even when timeScale = 0
+            .OnComplete(() =>
+            {
+                material.color = startColor; // Reset color for next activation
+            });
     }
 
     private void PlayRotationAnimation()
@@ -119,7 +120,7 @@ public class Juice : MonoBehaviour
         transform.DORotate(rotationAxis, rotationDuration, RotateMode.LocalAxisAdd)
             .SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Incremental)
-            .SetUpdate(true); // Continuous rotation, even if timeScale is 0
+            .SetUpdate(shouldAnimateWhilePaused); // Ensures animation runs even when timeScale = 0
     }
 
     private void PlayVerticalBounceAnimation()
@@ -128,40 +129,26 @@ public class Juice : MonoBehaviour
         transform.DOMoveY(startY + bounceHeight, bounceDuration)
             .SetEase(bounceEase)
             .SetLoops(-1, LoopType.Yoyo)
-            .SetUpdate(true); // Continuous vertical bounce, even if timeScale is 0
-    }
-
-    private void AnimateTextLoop()
-    {
-        if (textPulseEffect)
-        {
-            // Pulse effect for text (scale animation)
-            textToAnimate.transform.localScale = Vector3.one * (1 / textScaleMultiplier); // Start slightly smaller
-            textToAnimate.transform.DOScale(textScaleMultiplier, textAnimationDuration)
-                .SetEase(textAnimationEase)
-                .SetLoops(-1, LoopType.Yoyo)
-                .SetUpdate(true); // Continuous pulse
-        }
-
-        if (textVerticalBounce)
-        {
-            // Vertical bounce for text
-            float startY = textToAnimate.transform.localPosition.y;
-            textToAnimate.transform.DOLocalMoveY(startY + textBounceHeight, textAnimationDuration)
-                .SetEase(textAnimationEase)
-                .SetLoops(-1, LoopType.Yoyo)
-                .SetUpdate(true); // Continuous vertical bounce
-        }
+            .SetUpdate(shouldAnimateWhilePaused); // Ensures animation runs even when timeScale = 0
     }
 
     private void ApplyRainbowEffect()
     {
-        // Generates a quickly-changing hue for rainbow effect
         float hue = Mathf.Repeat(Time.time * rainbowSpeed, 1);
-        Color rainbowColor = Color.HSVToRGB(hue, 1, 1); // Vibrant colors
+        Color rainbowColor = Color.HSVToRGB(hue, 1, 1);
 
         objectRenderer.GetPropertyBlock(propBlock);
         propBlock.SetColor("_Color", rainbowColor);
         objectRenderer.SetPropertyBlock(propBlock);
+    }
+
+    public void Deactivate()
+    {
+        PlayDeactivationOrDestroyAnimation(() => gameObject.SetActive(false));
+    }
+
+    public void DestroyWithAnimation()
+    {
+        PlayDeactivationOrDestroyAnimation(() => Destroy(gameObject));
     }
 }

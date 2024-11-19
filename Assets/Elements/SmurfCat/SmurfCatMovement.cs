@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class SmurfCatMovement : MonoBehaviour
@@ -96,6 +97,10 @@ public class SmurfCatMovement : MonoBehaviour
 
     public void Jump()
     {
+        // Checks if game is paused
+        if (IsPointerOverUI()) return;
+        
+        
         if (isGrounded)
         {
             cameraController.SetAirborne(true);
@@ -173,5 +178,11 @@ public class SmurfCatMovement : MonoBehaviour
 
         Time.timeScale = originalTimeScale;
         isHitstopActive = false;
+    }
+    
+    private bool IsPointerOverUI()
+    {
+        // Detecta se o cursor ou toque está sobre um elemento da interface
+        return EventSystem.current.IsPointerOverGameObject();
     }
 }
