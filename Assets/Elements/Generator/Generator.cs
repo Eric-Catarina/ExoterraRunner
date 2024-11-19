@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
-    [SerializeField] private GameObject element, elementContainer;
+    [Header("Pista Settings")]
+    [SerializeField] private List<GameObject> trackPrefabs; // Lista de prefabs de pista
+    [SerializeField] private GameObject elementContainer;
     [SerializeField] private float timeToGenerate;
     [SerializeField] private float timeToDestroy;
     [SerializeField] private float minimumXPosition, maximumXPosition;
@@ -13,35 +15,49 @@ public class Generator : MonoBehaviour
     [SerializeField] private bool hasDifferentZRotation = false;
     private float timer = 0;
 
-    // Range de variação de posição adicional
+    [Header("Position Variation Settings")]
     [SerializeField] private float xVariationRange = 50f;
     [SerializeField] private float minYVariation = 30f;
     [SerializeField] private float maxYVariation = 150f;
 
-    // Acumula o deslocamento em Y
-    private float cumulativeYOffset = 0f;
+    private float cumulativeYOffset = 0f; // Acumula o deslocamento em Y
 
-    void Update()
-    {
-        timer += Time.deltaTime;
-        if (timer >= timeToGenerate)
-        {
-            timer = 0;
-            // Generate();
-        }
-    }
+    // void Update()
+    // {
+    //     timer += Time.deltaTime;
+    //     if (timer >= timeToGenerate)
+    //     {
+    //         timer = 0;
+    //     }
+    // }
 
     public void Generate()
     {
+        // Seleciona aleatoriamente um prefab de pista
+        GameObject selectedTrack = SelectRandomTrack();
+        if (selectedTrack == null)
+        {
+            Debug.LogWarning("Nenhum prefab de pista disponível na lista.");
+            return;
+        }
+
+        // Calcula a posição final e instancia o elemento
         Vector3 finalPosition = CalculateFinalPosition();
-        GameObject newElement = InstantiateElement(finalPosition);
-        
+        GameObject newElement = InstantiateElement(selectedTrack, finalPosition);
+
         SetInitialScaleAndPosition(newElement, finalPosition);
         ApplyAnimations(newElement, finalPosition);
         ScheduleDestruction(newElement);
     }
 
-    // Calcula a posição final com base nas variações em X e Y
+    // Seleciona aleatoriamente um prefab de pista
+    private GameObject SelectRandomTrack()
+    {
+        if (trackPrefabs.Count == 0) return null; // Evita erros se a lista estiver vazia
+        int randomIndex = Random.Range(0, trackPrefabs.Count);
+        return trackPrefabs[randomIndex];
+    }
+
     private Vector3 CalculateFinalPosition()
     {
         float baseXPosition = Random.Range(minimumXPosition, maximumXPosition) + transform.position.x;
@@ -54,15 +70,13 @@ public class Generator : MonoBehaviour
         return new Vector3(baseXPosition + randomXOffset, finalYPosition, transform.position.z);
     }
 
-    // Instancia o elemento e define seu parent
-    private GameObject InstantiateElement(Vector3 position)
+    private GameObject InstantiateElement(GameObject prefab, Vector3 position)
     {
-        GameObject newElement = Instantiate(element, position, Quaternion.identity);
+        GameObject newElement = Instantiate(prefab, position, Quaternion.identity);
         newElement.transform.parent = elementContainer.transform;
         return newElement;
     }
 
-    // Define a escala inicial e a posição de spawn do elemento
     private void SetInitialScaleAndPosition(GameObject element, Vector3 finalPosition)
     {
         Vector3 initialScale = element.transform.localScale;
@@ -77,7 +91,6 @@ public class Generator : MonoBehaviour
         }
     }
 
-    // Aplica as animações de escala, movimento e rotação
     private void ApplyAnimations(GameObject element, Vector3 finalPosition)
     {
         element.transform.DOScale(element.transform.localScale / 4f, 1f).SetEase(Ease.OutBack);
@@ -86,7 +99,6 @@ public class Generator : MonoBehaviour
         float randomRotationZ = Random.Range(-5f, 5f);
         element.transform.DORotate(new Vector3(0, 0, randomRotationZ), 1f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuad);
 
-        // Ativa os Colliders após as animações terminarem
         element.transform.DOMove(finalPosition, 1.5f).OnComplete(() =>
         {
             Collider[] colliders = element.GetComponentsInChildren<Collider>();
@@ -97,7 +109,6 @@ public class Generator : MonoBehaviour
         });
     }
 
-    // Configura o tempo para destruir o objeto após sua animação
     private void ScheduleDestruction(GameObject element)
     {
         Destroy(element, timeToDestroy);

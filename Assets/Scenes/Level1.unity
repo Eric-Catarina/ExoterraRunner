@@ -3411,7 +3411,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3119dc68be4bf976af3feb5304e9643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  element: {fileID: 5133287355049454783, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+  trackPrefabs:
+  - {fileID: 5133287355049454783, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+  - {fileID: 5133287355049454783, guid: 899c10dcf10d00c43b328b1cf1da262a, type: 3}
   elementContainer: {fileID: 117135503}
   timeToGenerate: 4
   timeToDestroy: 120
@@ -5113,7 +5115,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.2148208, y: 0.000000018788194, z: -0.000000004132575, w: 0.9766535}
+  m_LocalRotation: {x: 0.2148208, y: -0.000000018788198, z: 0.000000004132576, w: 0.9766535}
   m_LocalPosition: {x: 0, y: 8.82, z: -9.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7283,6 +7285,8 @@ MonoBehaviour:
   musicSource: {fileID: 18640741}
   SFXSource: {fileID: 1426815108}
   fallingSource: {fileID: 167890440}
+  minPitch: 0.8
+  maxPitch: 1.2
   audioClips:
   - {fileID: 8300000, guid: 7f994d6d2bd9f6486957e38c70bd028d, type: 3}
   - {fileID: 8300000, guid: 0d763a8546a30655ea403198776be9c9, type: 3}
@@ -8506,7 +8510,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 56.12
+      value: 48.06
       objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8685,7 +8689,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730516138}
-  m_LocalRotation: {x: 0.2148208, y: 0.000000018788194, z: -0.000000004132575, w: 0.9766535}
+  m_LocalRotation: {x: 0.2148208, y: -0.000000018788198, z: 0.000000004132576, w: 0.9766535}
   m_LocalPosition: {x: 0, y: 8.82, z: -9.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8707,8 +8711,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1730516139}
-  airborneOffset: {x: 0, y: 8, z: 3}
-  transitionSpeed: 2
+  airborneOffset: {x: 0, y: 7, z: 2}
+  transitionSpeed: 20
 --- !u!1001 &1757205169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9939,6 +9943,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 10f1dd4fc8b72d2018d038bc4c85f679, type: 3}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: hitstopDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: horizontalSpeed
       value: 2
       objectReference: {fileID: 0}
@@ -9951,8 +9959,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8819396057100367888, guid: 10c15f3bafe0dd864ad65627ade87d15, type: 3}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: hitstopIntensity
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: maxHitstopDuration
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: maxHorizontalSpeed
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: minHitstopDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: maxHitstopIntensity
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: minHitstopIntensity
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1451155497926676829, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_Name
@@ -9998,6 +10026,10 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1793246209280157398, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 768d755731710e359b0b2546cdaddb57, type: 2}
     - target: {fileID: 1793246209280157399, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_UseGravity
       value: 1

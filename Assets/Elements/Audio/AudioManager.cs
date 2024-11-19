@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] public AudioSource SFXSource;
     [SerializeField] private AudioSource fallingSource;
+    [SerializeField] private float minPitch = 0.8f; // Min pitch range
+    [SerializeField] private float maxPitch = 1.2f; // Max pitch range
 
     [Header("--- Clips ---")]
     [SerializeField] public AudioClip[] audioClips;
@@ -27,6 +30,10 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(AudioClip clip)
     {
+        if (clip == null) return;
+
+        // Apply random pitch
+        SFXSource.pitch = Random.Range(minPitch, maxPitch);
         SFXSource.PlayOneShot(clip);
     }
 
@@ -45,13 +52,12 @@ public class AudioManager : MonoBehaviour
         PlaySFX(audioClips[1]);
     }
 
-    public void PlayFallingAudio()
+    public void PlayFallingAudio ()
     {
-        // Only play if the fallingSource isn't already playing
-        if (fallingSource != null && !fallingSource.isPlaying)
-        {
-            fallingSource.Play(); // Play the falling sound on the dedicated source
-        }
+
+        // Apply random pitch
+        SFXSource.pitch = Random.Range(minPitch, maxPitch);
+        SFXSource.PlayOneShot(fallingSource.clip);
     }
 
     public void StopFallingAudio()

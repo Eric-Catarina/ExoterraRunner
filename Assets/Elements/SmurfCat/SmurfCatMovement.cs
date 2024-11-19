@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,9 +19,15 @@ public class SmurfCatMovement : MonoBehaviour
     private Vector3 targetVelocity;
     private bool hadHighFallSpeed = false, isDead = false;
     private PlayerInput playerInput;
-    
-    // Reference to AudioManager and wind sound
     private AudioManager audioManager;
+
+    [Header("Hitstop Settings")]
+    public float minHitstopDuration = 0.05f; // Minimum duration of hitstop
+    public float maxHitstopDuration = 0.3f; // Maximum duration of hitstop
+    public float minHitstopIntensity = 0.2f; // Minimum slowdown intensity
+    public float maxHitstopIntensity = 0.0f; // Maximum slowdown intensity (complete stop)
+    public float maxVelocityForScaling = 120f; // Velocity threshold for maximum hitstop
+    private bool isHitstopActive = false; // Prevents overlapping hitstops
 
     private void OnEnable()
     {
@@ -36,11 +43,11 @@ public class SmurfCatMovement : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
-        audioManager = FindObjectOfType<AudioManager>(); // Find the AudioManager in the scene
+        audioManager = FindObjectOfType<AudioManager>();
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         horizontalSpeed *= 2;
-        #endif
+#endif
     }
 
     private void FixedUpdate()
@@ -54,23 +61,17 @@ public class SmurfCatMovement : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
-        
+
         if (rb.velocity.y < -maxYSpeed)
         {
             Die();
         }
-        
-       
-        
-        
+
         if (rb.velocity.y < -15)
         {
             fallingVFX.SetActive(true);
             hadHighFallSpeed = true;
-
-        
             audioManager.PlayFallingAudio();
-            
         }
         else
         {
@@ -99,7 +100,7 @@ public class SmurfCatMovement : MonoBehaviour
         {
             cameraController.SetAirborne(true);
             rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
-            isGrounded = false; 
+            isGrounded = false;
         }
     }
 
@@ -116,8 +117,17 @@ public class SmurfCatMovement : MonoBehaviour
                 ActivateGroundExplosion();
                 audioManager.StopFallingAudio();
                 audioManager.PlayRandomImpactSound();
+
+                Handheld.Vibrate();
+                // Calculate scaled hitstop time and intensity
+                float impactVelocity = Mathf.Abs(rb.velocity.y);
+                float scaledDuration = Mathf.Lerp(minHitstopDuration, maxHitstopDuration, impactVelocity / maxVelocityForScaling);
+                float scaledIntensity = Mathf.Lerp(minHitstopIntensity, maxHitstopIntensity, impactVelocity / maxVelocityForScaling);
+
+                // Trigger hitstop
+                StartCoroutine(HitstopCoroutine(scaledDuration, scaledIntensity));
             }
-            
+
             hadHighFallSpeed = false;
         }
     }
@@ -134,24 +144,34 @@ public class SmurfCatMovement : MonoBehaviour
     {
         if (other.CompareTag("GroundEnd"))
         {
-
             generator.Generate();
         }
-
     }
 
     private void ActivateGroundExplosion()
     {
         GameObject explosion = Instantiate(fallExplosionVFX, transform.position, Quaternion.identity);
-        
         explosion.transform.SetParent(grounds.transform, worldPositionStays: true);
-        
         Destroy(explosion, 3.3f);
     }
-    
+
     public void Die()
     {
         isDead = true;
         levelEnd.EndLevel();
+    }
+
+    private IEnumerator HitstopCoroutine(float duration, float intensity)
+    {
+        if (isHitstopActive) yield break;
+
+        isHitstopActive = true;
+        float originalTimeScale = Time.timeScale;
+        Time.timeScale = intensity;
+
+        yield return new WaitForSecondsRealtime(duration);
+
+        Time.timeScale = originalTimeScale;
+        isHitstopActive = false;
     }
 }
