@@ -7,10 +7,10 @@ using UnityEngine.InputSystem;
 public class SmurfCatMovement : MonoBehaviour
 {
     public float horizontalSpeed = 2.0f, jumpStrength = 10.0f;
+    public float maxHorizontalSpeed = 15.0f;
     public GameObject loseScreen, fallingVFX, fallExplosionVFX;
     public bool isGrounded;
     public Rigidbody rb;
-    public float maxHorizontalSpeed = 15.0f;
     public float maxYSpeed = -20.0f;
     public LevelEnd levelEnd;
     public Generator generator;

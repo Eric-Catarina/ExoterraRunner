@@ -667,7 +667,11 @@ MonoBehaviour:
   scaleMultiplier: 1.5
   scaleDuration: 0.5
   scaleEase: 27
-  waitForOneFrame: 0
+  shouldAnimateWhilePaused: 1
+  animateOnDeactivateOrDestroy: 1
+  deactivationScaleDuration: 0.5
+  deactivationEase: 26
+  fadeOutDuration: 0.5
   animateRotation: 0
   rotationAxis: {x: 0, y: 360, z: 0}
   rotationDuration: 2
@@ -677,14 +681,6 @@ MonoBehaviour:
   bounceEase: 4
   rainbowMode: 0
   rainbowSpeed: 5
-  animateText: 1
-  textToAnimate: {fileID: 102553488}
-  textPulseEffect: 1
-  textVerticalBounce: 0
-  textScaleMultiplier: 1.15
-  textBounceHeight: 10
-  textAnimationDuration: 0.8
-  textAnimationEase: 7
 --- !u!1 &117135503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1770,7 +1766,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _androidAdUnitId: Rewarded_Android
-  _iOSAdUnitId: Rewarded_iOS
 --- !u!114 &364017217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1815,7 +1810,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bannerPosition: 4
   _androidAdUnitId: Banner_Android
-  _iOSAdUnitId: Banner_iOS
 --- !u!114 &364017220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3421,7 +3415,6 @@ MonoBehaviour:
   maximumXPosition: 0
   minimumZRotation: 0
   maximumZRotation: 0
-  hasDifferentZRotation: 0
   xVariationRange: 15
   minYVariation: 100
   maxYVariation: 200
@@ -4518,7 +4511,11 @@ MonoBehaviour:
   scaleMultiplier: 1
   scaleDuration: 0.5
   scaleEase: 27
-  waitForOneFrame: 0
+  shouldAnimateWhilePaused: 1
+  animateOnDeactivateOrDestroy: 1
+  deactivationScaleDuration: 0.5
+  deactivationEase: 26
+  fadeOutDuration: 0.5
   animateRotation: 0
   rotationAxis: {x: 0, y: 360, z: 0}
   rotationDuration: 2
@@ -4528,14 +4525,6 @@ MonoBehaviour:
   bounceEase: 4
   rainbowMode: 0
   rainbowSpeed: 5
-  animateText: 0
-  textToAnimate: {fileID: 0}
-  textPulseEffect: 1
-  textVerticalBounce: 0
-  textScaleMultiplier: 1.05
-  textBounceHeight: 10
-  textAnimationDuration: 0.8
-  textAnimationEase: 7
 --- !u!4 &725027674 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400022, guid: 9e1cb89bae143d046bb9dba32b57bed0, type: 3}
@@ -7285,8 +7274,8 @@ MonoBehaviour:
   musicSource: {fileID: 18640741}
   SFXSource: {fileID: 1426815108}
   fallingSource: {fileID: 167890440}
-  minPitch: 0.8
-  maxPitch: 1.2
+  minPitch: 0.9
+  maxPitch: 1.1
   audioClips:
   - {fileID: 8300000, guid: 7f994d6d2bd9f6486957e38c70bd028d, type: 3}
   - {fileID: 8300000, guid: 0d763a8546a30655ea403198776be9c9, type: 3}
@@ -8543,7 +8532,7 @@ PrefabInstance:
     - target: {fileID: 5133287355049454781, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f0c2a907e6d32d48eb4d701617dcf612, type: 2}
+      objectReference: {fileID: 2100000, guid: 57166e13326e439e98be17fd4ffa4a98, type: 2}
     - target: {fileID: 5133287355049454783, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_Name
       value: Ground
@@ -8711,8 +8700,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1730516139}
-  airborneOffset: {x: 0, y: 7, z: 2}
-  transitionSpeed: 20
+  airborneOffset: {x: 0, y: 4, z: 1}
+  transitionSpeed: 15
 --- !u!1001 &1757205169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10044,11 +10033,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2263158387367087079, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2263158387367087079, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2263158387367087079, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2263158387367087079, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10088,6 +10081,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2263158387367087079, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2263158387367087079, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287244898372680630, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: scaleDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287244898372680630, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: scaleMultiplier
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287244898372680630, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: shouldAnimateWhilePaused
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -5,15 +5,13 @@ public class UnityRewardedAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
 {
     
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
-    [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
     string _adUnitId = null; // This will remain null for unsupported platforms
     public static UnityRewardedAd Instace;
     void Awake()
     {
         // Get the Ad Unit ID for the current platform:
-#if UNITY_IOS
-        _adUnitId = _iOSAdUnitId;
-#elif UNITY_ANDROID
+
+#if UNITY_ANDROID
         _adUnitId = _androidAdUnitId;
 #endif
         //Load Ad

@@ -12,8 +12,6 @@ public class Generator : MonoBehaviour
     [SerializeField] private float timeToDestroy;
     [SerializeField] private float minimumXPosition, maximumXPosition;
     [SerializeField] private float minimumZRotation, maximumZRotation;
-    [SerializeField] private bool hasDifferentZRotation = false;
-    private float timer = 0;
 
     [Header("Position Variation Settings")]
     [SerializeField] private float xVariationRange = 50f;
