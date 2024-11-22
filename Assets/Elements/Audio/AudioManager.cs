@@ -54,10 +54,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlayFallingAudio ()
     {
+        // Check if its not playing, then change the pit and Play()
+        if (!fallingSource.isPlaying)
+        {
+            fallingSource.pitch = Random.Range(minPitch, maxPitch);
+            fallingSource.Play();
+        }
 
-        // Apply random pitch
-        SFXSource.pitch = Random.Range(minPitch, maxPitch);
-        SFXSource.PlayOneShot(fallingSource.clip);
     }
 
     public void StopFallingAudio()
