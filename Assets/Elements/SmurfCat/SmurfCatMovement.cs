@@ -18,7 +18,7 @@ public class SmurfCatMovement : MonoBehaviour
     public CameraController cameraController;
 
     private Vector3 targetVelocity;
-    private bool hadHighFallSpeed = false, isDead = false;
+    private bool hadHighFallSpeed = false, isDead = false, isOnJumpSpot = false;
     private PlayerInput playerInput;
     private AudioManager audioManager;
 
@@ -103,9 +103,14 @@ public class SmurfCatMovement : MonoBehaviour
         
         if (isGrounded)
         {
-            cameraController.SetAirborne(true);
             rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
             isGrounded = false;
+            
+            if (isOnJumpSpot)
+            {
+                Debug.Log("Jumped on JumpSpot");
+            }
+            
         }
     }
 
@@ -143,6 +148,11 @@ public class SmurfCatMovement : MonoBehaviour
         {
             isGrounded = false;
         }
+        
+        if (collision.gameObject.CompareTag("JumpSpot"))
+        {
+            isOnJumpSpot = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -150,6 +160,14 @@ public class SmurfCatMovement : MonoBehaviour
         if (other.CompareTag("GroundEnd"))
         {
             generator.Generate();
+
+            cameraController.SetAirborne(true);
+            
+        }
+        
+        if (other.CompareTag("JumpSpot"))
+        {
+            isOnJumpSpot = true;
         }
     }
 

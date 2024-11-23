@@ -3189,6 +3189,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 117135504}
     m_Modifications:
+    - target: {fileID: 607700566292079933, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -5249,8 +5253,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.07092204, y: 4.473075e-18, z: 1.4960547e-17, w: 0.9974819}
-  m_LocalPosition: {x: 0, y: 8.04, z: -17.49}
+  m_LocalRotation: {x: 0.17203583, y: -0.000000016949846, z: 0.0000000029601142, w: 0.98509073}
+  m_LocalPosition: {x: 0, y: 12.04, z: -16.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7720,7 +7724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 8.04, z: -17.49}
+  m_FollowOffset: {x: 0, y: 12.04, z: -16.92}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -8848,8 +8852,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730516138}
-  m_LocalRotation: {x: 0.07092204, y: 4.473075e-18, z: 1.4960547e-17, w: 0.9974819}
-  m_LocalPosition: {x: 0, y: 8.04, z: -17.49}
+  m_LocalRotation: {x: 0.17203583, y: -0.000000016949846, z: 0.0000000029601142, w: 0.98509073}
+  m_LocalPosition: {x: 0, y: 12.04, z: -16.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10263,7 +10267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4287244898372680630, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: scaleMultiplier
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4287244898372680630, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: shouldAnimateWhilePaused
