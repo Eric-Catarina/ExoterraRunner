@@ -15,6 +15,58 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: -0.20944902
       objectReference: {fileID: 0}
+    - target: {fileID: 607700566292079933, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 607700566292079933, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 607700566292079933, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 607700566292079933, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 89.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 607700566292079933, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 607700566292079933, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 607700566292079933, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 607700566292079933, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 607700566292079933, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2271751897328895781, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2271751897328895781, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 2271751897328895781, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.900811
+      objectReference: {fileID: 0}
+    - target: {fileID: 2271751897328895781, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.14538093
+      objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -99,6 +151,18 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -5623049968651150729, guid: 7fb70ab529b1ff8cb9cf88b0ecbd5153, type: 3}
+    - target: {fileID: 7862289525201565102, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 7862289525201565102, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.900811
+      objectReference: {fileID: 0}
+    - target: {fileID: 7862289525201565102, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.14538093
+      objectReference: {fileID: 0}
     - target: {fileID: 8545107261173070545, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.x
       value: 109
@@ -106,6 +170,30 @@ PrefabInstance:
     - target: {fileID: 8545107261173070545, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.z
       value: 13.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915889387321507259, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915889387321507259, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.900811
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915889387321507259, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.14538093
+      objectReference: {fileID: 0}
+    - target: {fileID: 8920345820830741006, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 8920345820830741006, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.900811
+      objectReference: {fileID: 0}
+    - target: {fileID: 8920345820830741006, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.14538093
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8427417226400659457, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
@@ -147,7 +235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2646545870603843100, guid: 79f1e258740b6b1fa9086a0dff43dc8d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.14
+      value: 17.4
       objectReference: {fileID: 0}
     - target: {fileID: 2646545870603843100, guid: 79f1e258740b6b1fa9086a0dff43dc8d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -155,7 +243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2646545870603843100, guid: 79f1e258740b6b1fa9086a0dff43dc8d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 83.8
+      value: 80.28
       objectReference: {fileID: 0}
     - target: {fileID: 2646545870603843100, guid: 79f1e258740b6b1fa9086a0dff43dc8d, type: 3}
       propertyPath: m_LocalRotation.w

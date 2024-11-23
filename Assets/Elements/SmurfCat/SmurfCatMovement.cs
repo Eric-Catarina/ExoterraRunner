@@ -16,6 +16,7 @@ public class SmurfCatMovement : MonoBehaviour
     public Generator generator;
     public GameObject grounds;
     public CameraController cameraController;
+    public GameObject jumpSpotText;
 
     private Vector3 targetVelocity;
     private bool hadHighFallSpeed = false, isDead = false, isOnJumpSpot = false;
@@ -108,7 +109,8 @@ public class SmurfCatMovement : MonoBehaviour
             
             if (isOnJumpSpot)
             {
-                Debug.Log("Jumped on JumpSpot");
+                ShowJumpSpotText();
+                
             }
             
         }
@@ -149,10 +151,7 @@ public class SmurfCatMovement : MonoBehaviour
             isGrounded = false;
         }
         
-        if (collision.gameObject.CompareTag("JumpSpot"))
-        {
-            isOnJumpSpot = false;
-        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -168,6 +167,14 @@ public class SmurfCatMovement : MonoBehaviour
         if (other.CompareTag("JumpSpot"))
         {
             isOnJumpSpot = true;
+        }
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("JumpSpot"))
+        {
+            isOnJumpSpot = false;
         }
     }
 
@@ -202,5 +209,18 @@ public class SmurfCatMovement : MonoBehaviour
     {
         // Detecta se o cursor ou toque está sobre um elemento da interface
         return EventSystem.current.IsPointerOverGameObject();
+    }
+    
+    // Set JumpSpot text active, then deactivate it after a delay
+    public void ShowJumpSpotText()
+    {
+        jumpSpotText.SetActive(true);
+        StartCoroutine(HideJumpSpotText());
+    }
+    
+    private IEnumerator HideJumpSpotText()
+    {
+        yield return new WaitForSeconds(2f);
+        jumpSpotText.GetComponent<Juice>().Deactivate();
     }
 }
