@@ -13,8 +13,7 @@ public class Spike : MonoBehaviour
         if (other.gameObject.tag == "Character")
         {
             OnSpikeHit?.Invoke();
-            GameObject spikeVFXInstance = Instantiate(spikeVFX, transform.position, Quaternion.identity);
-            Destroy(spikeVFXInstance, 1f);
+
             other.GetComponent<SmurfCatMovement>().Die();
         }
     }

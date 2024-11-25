@@ -17,17 +17,15 @@ public class Generator : MonoBehaviour
     [SerializeField] private float xVariationRange = 50f;
     [SerializeField] private float minYVariation = 30f;
     [SerializeField] private float maxYVariation = 150f;
+    private float initialZPosition = 0f;
 
     private float cumulativeYOffset = 0f; // Acumula o deslocamento em Y
+    
+    private void Start()
+    {
+        initialZPosition = transform.position.z;
+    }
 
-    // void Update()
-    // {
-    //     timer += Time.deltaTime;
-    //     if (timer >= timeToGenerate)
-    //     {
-    //         timer = 0;
-    //     }
-    // }
 
     public void Generate()
     {
@@ -46,6 +44,7 @@ public class Generator : MonoBehaviour
         SetInitialScaleAndPosition(newElement, finalPosition);
         ApplyAnimations(newElement, finalPosition);
         ScheduleDestruction(newElement);
+        transform.position = new Vector3(transform.position.x, transform.position.y, initialZPosition*SpeedManager.relativeSpeed);
     }
 
     // Seleciona aleatoriamente um prefab de pista
@@ -61,6 +60,8 @@ public class Generator : MonoBehaviour
         float baseXPosition = Random.Range(minimumXPosition, maximumXPosition) + transform.position.x;
         float randomXOffset = Random.Range(-xVariationRange, xVariationRange);
         float randomYOffset = Random.Range(minYVariation, maxYVariation);
+
+        float relativeYOffset = randomYOffset / minYVariation;
 
         float finalYPosition = transform.position.y - randomYOffset - cumulativeYOffset;
         cumulativeYOffset += randomYOffset;

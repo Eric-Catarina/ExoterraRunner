@@ -69,7 +69,7 @@ public class SmurfCatMovement : MonoBehaviour
             Die();
         }
 
-        if (rb.velocity.y < -15)
+        if (rb.velocity.y < -35)
         {
             fallingVFX.SetActive(true);
             hadHighFallSpeed = true;
@@ -86,8 +86,8 @@ public class SmurfCatMovement : MonoBehaviour
         if (value.phase == InputActionPhase.Performed || value.phase == InputActionPhase.Canceled)
         {
             Vector2 moveInput = value.ReadValue<Vector2>();
-            float moveInputX = Math.Clamp(moveInput.x, -maxHorizontalSpeed, maxHorizontalSpeed);
-            targetVelocity = new Vector3(moveInputX * horizontalSpeed, rb.velocity.y, rb.velocity.z);
+            targetVelocity = new Vector3(moveInput.x * horizontalSpeed, rb.velocity.y, rb.velocity.z);
+            targetVelocity.x = Mathf.Clamp(targetVelocity.x, -maxHorizontalSpeed, maxHorizontalSpeed);
         }
     }
 
@@ -182,6 +182,8 @@ public class SmurfCatMovement : MonoBehaviour
     {
         GameObject explosion = Instantiate(fallExplosionVFX, transform.position, Quaternion.identity);
         explosion.transform.SetParent(grounds.transform, worldPositionStays: true);
+        // Make the y higher in 4 in Y
+        explosion.transform.position = new Vector3(explosion.transform.position.x, explosion.transform.position.y + 2.5f, explosion.transform.position.z);
         Destroy(explosion, 3.3f);
     }
 
