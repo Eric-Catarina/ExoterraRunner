@@ -56,11 +56,10 @@ public class Generator : MonoBehaviour
         
         generatedElements++;
         
-        
-        // if (generatedElements == 1)
-        // {
-        //     Generate();
-        // }
+        if (generatedElements == 1)
+        {
+            WaitAndGenerate();
+        }
     }
 
     // Seleciona aleatoriamente um prefab de pista
@@ -95,7 +94,6 @@ public class Generator : MonoBehaviour
         Debug.Log("Z Position Offset: " + zPositionOffset);
         float finalZPosition = endAttachPointZPosition + zPositionOffset;
         
-        // nextElement.transform.position = new Vector3(nextElement.transform.position.x, nextElement.transform.position.y, finalZPosition);
         
         return new Vector3(transform.position.x, transform.position.y, finalZPosition);
     }
@@ -142,5 +140,17 @@ public class Generator : MonoBehaviour
     private void ScheduleDestruction(GameObject element)
     {
         Destroy(element, timeToDestroy);
+    }
+    
+    // Wait 1 second then generate
+    public void WaitAndGenerate()
+    {
+        StartCoroutine(WaitAndGenerateCoroutine());
+    }
+    
+    private IEnumerator WaitAndGenerateCoroutine()
+    {
+        yield return new WaitForSeconds(timeToGenerate);
+        Generate();
     }
 }

@@ -126,7 +126,12 @@ public class SmurfCatMovement : MonoBehaviour
 
             if (hadHighFallSpeed)
             {
-                collision.gameObject.GetComponent<SpawnCoins>().StartCoroutine("DelayedSpawn");
+                // CHeck if gameobject gave component SpawnCoins
+                if (collision.gameObject.GetComponent<SpawnCoins>() != null)
+                {
+                    collision.gameObject.GetComponent<SpawnCoins>().StartCoroutine("DelayedSpawn");
+                }
+
                 ActivateGroundExplosion();
                 audioManager.StopFallingAudio();
                 audioManager.PlayRandomImpactSound();
