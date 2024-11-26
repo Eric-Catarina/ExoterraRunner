@@ -20,6 +20,9 @@ public class Generator : MonoBehaviour
     private float initialZPosition = 0f;
 
     private float cumulativeYOffset = 0f; // Acumula o deslocamento em Y
+    private int generatedElements = 0;
+    [SerializeField]
+    private GameObject lastElement, nextElement;
     
     private void Start()
     {
@@ -36,15 +39,28 @@ public class Generator : MonoBehaviour
             Debug.LogWarning("Nenhum prefab de pista disponível na lista.");
             return;
         }
+        nextElement = selectedTrack;
+
+      
 
         // Calcula a posição final e instancia o elemento
         Vector3 finalPosition = CalculateFinalPosition();
+        
         GameObject newElement = InstantiateElement(selectedTrack, finalPosition);
-
+        
         SetInitialScaleAndPosition(newElement, finalPosition);
         ApplyAnimations(newElement, finalPosition);
         ScheduleDestruction(newElement);
         transform.position = new Vector3(transform.position.x, transform.position.y, initialZPosition*SpeedManager.relativeSpeed);
+        lastElement = newElement;
+        
+        generatedElements++;
+        
+        
+        // if (generatedElements == 1)
+        // {
+        //     Generate();
+        // }
     }
 
     // Seleciona aleatoriamente um prefab de pista
@@ -64,9 +80,24 @@ public class Generator : MonoBehaviour
         float relativeYOffset = randomYOffset / minYVariation;
 
         float finalYPosition = transform.position.y - randomYOffset - cumulativeYOffset;
+
+        float finalZPosition = CalculateZPosition().z;
         cumulativeYOffset += randomYOffset;
 
-        return new Vector3(baseXPosition + randomXOffset, finalYPosition, transform.position.z);
+        return new Vector3(baseXPosition + randomXOffset, finalYPosition,finalZPosition);
+    }
+    
+    private Vector3 CalculateZPosition()
+    {
+        float startAttachPointZPosition = nextElement.GetComponent<Ground>().startAttachPoint.transform.position.z;
+        float endAttachPointZPosition = lastElement.GetComponent<Ground>().endAttachPoint.transform.position.z;
+        float zPositionOffset =  nextElement.transform.position.z - startAttachPointZPosition;
+        Debug.Log("Z Position Offset: " + zPositionOffset);
+        float finalZPosition = endAttachPointZPosition + zPositionOffset;
+        
+        // nextElement.transform.position = new Vector3(nextElement.transform.position.x, nextElement.transform.position.y, finalZPosition);
+        
+        return new Vector3(transform.position.x, transform.position.y, finalZPosition);
     }
 
     private GameObject InstantiateElement(GameObject prefab, Vector3 position)

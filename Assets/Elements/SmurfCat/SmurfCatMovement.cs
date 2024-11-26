@@ -106,6 +106,7 @@ public class SmurfCatMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
             isGrounded = false;
+            audioManager.PlayJumpSound();
             
             if (isOnJumpSpot)
             {

@@ -85,6 +85,13 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning("No impact sounds are set in the impactSounds list.");
         }
     }
+    
+    public void PlayJumpSound()
+    {
+        SFXSource.pitch = Random.Range(minPitch, maxPitch);
+
+        PlaySFX(audioClips[3]);
+    }
 
     private void OnDestroy()
     {

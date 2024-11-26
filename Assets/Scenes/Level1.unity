@@ -15,9 +15,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogColor: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.002
+  m_FogDensity: 0.001
   m_LinearFogStart: 40
   m_LinearFogEnd: 1200
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -3334,6 +3334,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -94.1
       objectReference: {fileID: 0}
+    - target: {fileID: 6411837890646826680, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -204
+      objectReference: {fileID: 0}
+    - target: {fileID: 6821454110505741015, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8654775244983140096, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -3651,11 +3659,13 @@ MonoBehaviour:
   timeToDestroy: 120
   minimumXPosition: 0
   maximumXPosition: 0
-  minimumZRotation: 90
-  maximumZRotation: 90
+  minimumZRotation: 0
+  maximumZRotation: 0
   xVariationRange: 12
   minYVariation: 220
   maxYVariation: 270
+  lastElement: {fileID: 1564774289}
+  currentElement: {fileID: 1564774289}
 --- !u!4 &629453332
 Transform:
   m_ObjectHideFlags: 0
@@ -3664,7 +3674,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629453330}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 110}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5427,7 +5437,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.17203583, y: -0.000000016949846, z: 0.0000000029601142, w: 0.98509073}
+  m_LocalRotation: {x: 0.17203583, y: 0.000000016949848, z: -0.0000000029601144, w: 0.98509073}
   m_LocalPosition: {x: 0, y: 12.04, z: -16.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7748,6 +7758,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7f994d6d2bd9f6486957e38c70bd028d, type: 3}
   - {fileID: 8300000, guid: 0d763a8546a30655ea403198776be9c9, type: 3}
   - {fileID: 8300000, guid: 44f38f01df6e2044f9d3ed1dba2a3274, type: 3}
+  - {fileID: 8300000, guid: 0ec70961b96c784ebb12cc30edea3d80, type: 3}
   impactSounds:
   - {fileID: 8300000, guid: dd43de6efb6c8e66d9c4b0cb12bb3b63, type: 3}
   - {fileID: 8300000, guid: 6fa2779b95eda899196030f7320d2c4d, type: 3}
@@ -8227,6 +8238,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545954626}
   m_CullTransparentMesh: 1
+--- !u!1 &1564774289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5133287355049454783, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+  m_PrefabInstance: {fileID: 578923375}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1583762540
 GameObject:
   m_ObjectHideFlags: 0
@@ -9082,7 +9098,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730516138}
-  m_LocalRotation: {x: 0.17203583, y: -0.000000016949846, z: 0.0000000029601142, w: 0.98509073}
+  m_LocalRotation: {x: 0.17203583, y: 0.000000016949848, z: -0.0000000029601144, w: 0.98509073}
   m_LocalPosition: {x: 0, y: 12.04, z: -16.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10385,7 +10401,7 @@ PrefabInstance:
       objectReference: {fileID: 629453331}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: maxYSpeed
-      value: 180
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: fallingVFX
