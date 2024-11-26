@@ -734,7 +734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animateScale: 1
-  scaleMultiplier: 2
+  scaleMultiplier: 1.3
   scaleDuration: 0.5
   scaleEase: 27
   shouldAnimateWhilePaused: 1
@@ -2249,7 +2249,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364017215}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e004b663f304fbf884d18d46c1df0d7, type: 3}
   m_Name: 
@@ -3422,6 +3422,42 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1432491292}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 721546223}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: UnpauseGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 227881861}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &538558156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3920,8 +3956,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackPrefabs:
-  - {fileID: 1300019424737696151, guid: 0e405e15bce4f0e5b9961591070a2ce7, type: 3}
+  - {fileID: 6345384655228296746, guid: e67433659d8491ad890628a8ae60689c, type: 3}
+  - {fileID: 6345384655228296746, guid: aa4ed89fe092c9830a0a4aef3076aecf, type: 3}
   - {fileID: 5332653040524430255, guid: 5e209b931c6fa2e019a2cbea736544a4, type: 3}
+  - {fileID: 1300019424737696151, guid: 0e405e15bce4f0e5b9961591070a2ce7, type: 3}
   elementContainer: {fileID: 117135503}
   timeToGenerate: 2
   timeToDestroy: 120
@@ -10944,7 +10982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: horizontalSpeed
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: cameraController
@@ -10960,7 +10998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: maxHitstopDuration
-      value: 1.2
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: maxHorizontalSpeed
@@ -10968,15 +11006,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: minHitstopDuration
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: maxHitstopIntensity
-      value: 0.3
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: minHitstopIntensity
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: scoreMultiplierText

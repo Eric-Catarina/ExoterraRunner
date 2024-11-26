@@ -30,16 +30,16 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
         if (!Advertisement.isInitialized && Advertisement.isSupported)
         {
             Advertisement.Initialize(_gameId, _testMode, this);
-
-            // Configure COPPA compliance for child-directed treatment
-            MetaData metaData = new MetaData("gdpr");
-            metaData.Set("gdpr.consent", "false"); // No personalized ads for children
-            Advertisement.SetMetaData(metaData);
-
-            MetaData childDirectedMetaData = new MetaData("user");
-            childDirectedMetaData.Set("user.nonbehavioral", "true"); // Treat users as non-behavioral
-            Advertisement.SetMetaData(childDirectedMetaData);
-            
+        
+        //     // Configure COPPA compliance for child-directed treatment
+        //     MetaData metaData = new MetaData("gdpr");
+        //     metaData.Set("gdpr.consent", "false"); // No personalized ads for children
+        //     Advertisement.SetMetaData(metaData);
+        //
+        //     MetaData childDirectedMetaData = new MetaData("user");
+        //     childDirectedMetaData.Set("user.nonbehavioral", "true"); // Treat users as non-behavioral
+        //     Advertisement.SetMetaData(childDirectedMetaData);
+        //     
         }
     }
 
