@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -17,6 +18,9 @@ public class SmurfCatMovement : MonoBehaviour
     public GameObject grounds;
     public CameraController cameraController;
     public GameObject jumpSpotText;
+    public TextMeshProUGUI scoreText, scoreMultiplierText, highScoreText;
+    private float scoreMultiplier = 1.0f, currentScore = 0.0f, highScore = 0.0f;
+    
 
     private Vector3 targetVelocity;
     private bool hadHighFallSpeed = false, isDead = false, isOnJumpSpot = false;
@@ -46,6 +50,7 @@ public class SmurfCatMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
         audioManager = FindObjectOfType<AudioManager>();
+        highScoreText.text = PlayerPrefs.GetFloat("Highscore", 000).ToString("F0");
 
 #if UNITY_EDITOR
         horizontalSpeed *= 2;
@@ -79,6 +84,15 @@ public class SmurfCatMovement : MonoBehaviour
         {
             fallingVFX.SetActive(false);
         }
+        // Increase score by 1 every second, and the score multiplier by 0.1 every 100 seconds
+        currentScore += scoreMultiplier * Time.fixedDeltaTime * 2;
+        scoreMultiplier += Time.fixedDeltaTime / 150;
+        // Update scoreMultiplier text formating to x1.15f format
+        scoreMultiplierText.text = "x" + scoreMultiplier.ToString("F2");
+
+        scoreText.text = Mathf.FloorToInt(currentScore).ToString();
+
+        
     }
 
     public void MoveHorizontally(InputAction.CallbackContext value)
@@ -109,7 +123,13 @@ public class SmurfCatMovement : MonoBehaviour
             
             if (isOnJumpSpot)
             {
-                ShowJumpSpotText();
+                currentScore += 10 * scoreMultiplier;
+                scoreMultiplier += 0.1f;
+                scoreMultiplier *= 1.01f;
+                
+                ShowJumpSpotText(10 * scoreMultiplier);
+                
+                
                 
             }
             
@@ -118,7 +138,6 @@ public class SmurfCatMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-            Debug.Log("Hit ground");
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
@@ -152,7 +171,6 @@ public class SmurfCatMovement : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-            Debug.Log("Left ground");
             isGrounded = false;
     }
 
@@ -196,6 +214,12 @@ public class SmurfCatMovement : MonoBehaviour
 
     public void Die()
     {
+        // Update Highscore
+        if (currentScore > highScore)
+        {
+            highScore = currentScore;
+        }
+        PlayerPrefs.SetFloat("Highscore", highScore);
         isDead = true;
         levelEnd.EndLevel();
     }
@@ -225,9 +249,10 @@ public class SmurfCatMovement : MonoBehaviour
     }
     
     // Set JumpSpot text active, then deactivate it after a delay
-    public void ShowJumpSpotText()
+    public void ShowJumpSpotText(float score)
     {
         jumpSpotText.SetActive(true);
+        jumpSpotText.GetComponent<TextMeshProUGUI>().text = "Jump Spot! +" + score.ToString("F0"); ;
         StartCoroutine(HideJumpSpotText());
     }
     
