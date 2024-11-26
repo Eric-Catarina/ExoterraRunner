@@ -101,7 +101,6 @@ public class SmurfCatMovement : MonoBehaviour
         // Checks if game is paused
         if (IsPointerOverUI()) return;
         
-        
         if (isGrounded)
         {
             rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
@@ -119,6 +118,7 @@ public class SmurfCatMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+            Debug.Log("Hit ground");
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
@@ -152,12 +152,13 @@ public class SmurfCatMovement : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
+            Debug.Log("Left ground");
             isGrounded = false;
-        }
-        
+    }
 
+    private void OnCollisionStay(Collision other)
+    {
+        isGrounded = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -215,8 +216,12 @@ public class SmurfCatMovement : MonoBehaviour
     
     private bool IsPointerOverUI()
     {
-        // Detecta se o cursor ou toque está sobre um elemento da interface
-        return EventSystem.current.IsPointerOverGameObject();
+        // A verificação da UI é chamada após o processamento do evento, garantindo que o estado da UI esteja atualizado
+        if (EventSystem.current != null)
+        {
+            return EventSystem.current.IsPointerOverGameObject();
+        }
+        return false;    
     }
     
     // Set JumpSpot text active, then deactivate it after a delay

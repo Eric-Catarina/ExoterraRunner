@@ -882,7 +882,6 @@ Transform:
   - {fileID: 1542211846}
   - {fileID: 725027674}
   - {fileID: 2132035600}
-  - {fileID: 815617418}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3292,7 +3291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 93.18185
+      value: 38.9
       objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3651,11 +3650,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackPrefabs:
-  - {fileID: 5133287355049454783, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
-  - {fileID: 5332653040524430255, guid: 0e7d28fd5433bbe4ba934397cf46ad1d, type: 3}
+  - {fileID: 1300019424737696151, guid: 0e405e15bce4f0e5b9961591070a2ce7, type: 3}
   - {fileID: 5332653040524430255, guid: 5e209b931c6fa2e019a2cbea736544a4, type: 3}
   elementContainer: {fileID: 117135503}
-  timeToGenerate: 4
+  timeToGenerate: 2
   timeToDestroy: 120
   minimumXPosition: 0
   maximumXPosition: 0
@@ -3665,7 +3663,7 @@ MonoBehaviour:
   minYVariation: 220
   maxYVariation: 270
   lastElement: {fileID: 1564774289}
-  currentElement: {fileID: 1564774289}
+  nextElement: {fileID: 1564774289}
 --- !u!4 &629453332
 Transform:
   m_ObjectHideFlags: 0
@@ -4855,13 +4853,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815617416}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.02, y: 14.262119, z: 95.18185}
+  m_LocalPosition: {x: -8.868776, y: 14.262119, z: 2}
   m_LocalScale: {x: 8.34, y: 8.34, z: 8.34}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1993443024}
-  m_Father: {fileID: 117135504}
-  m_RootOrder: 5
+  m_Father: {fileID: 1228184504}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &891029558
 GameObject:
@@ -10603,7 +10601,8 @@ PrefabInstance:
       propertyPath: shouldAnimateWhilePaused
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1793246209280157398, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
 --- !u!1001 &2480209142807784379
 PrefabInstance:

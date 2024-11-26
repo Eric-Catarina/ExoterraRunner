@@ -402,6 +402,7 @@ GameObject:
   - component: {fileID: 1793246209280157385}
   - component: {fileID: 1335977238284424984}
   - component: {fileID: 4287244898372680630}
+  - component: {fileID: 1392785620460119915}
   m_Layer: 6
   m_Name: Lollipop
   m_TagString: Character
@@ -540,15 +541,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontalSpeed: 2
   jumpStrength: 10
+  maxHorizontalSpeed: 15
   loseScreen: {fileID: 0}
   fallingVFX: {fileID: 0}
   fallExplosionVFX: {fileID: 0}
   isGrounded: 0
   rb: {fileID: 0}
-  maxHorizontalSpeed: 15
   maxYSpeed: -20
   levelEnd: {fileID: 0}
   generator: {fileID: 0}
+  grounds: {fileID: 0}
+  cameraController: {fileID: 0}
+  jumpSpotText: {fileID: 0}
+  minHitstopDuration: 0.05
+  maxHitstopDuration: 0.3
+  minHitstopIntensity: 0.2
+  maxHitstopIntensity: 0
+  maxVelocityForScaling: 120
 --- !u!114 &4287244898372680630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,7 +574,11 @@ MonoBehaviour:
   scaleMultiplier: 1.5
   scaleDuration: 0.5
   scaleEase: 27
-  waitForOneFrame: 1
+  shouldAnimateWhilePaused: 1
+  animateOnDeactivateOrDestroy: 1
+  deactivationScaleDuration: 0.5
+  deactivationEase: 26
+  fadeOutDuration: 0.5
   animateRotation: 0
   rotationAxis: {x: 0, y: 360, z: 0}
   rotationDuration: 2
@@ -575,6 +588,20 @@ MonoBehaviour:
   bounceEase: 4
   rainbowMode: 0
   rainbowSpeed: 5
+--- !u!136 &1392785620460119915
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451155497926676829}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.7771073
+  m_Height: 3.2868738
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.75, z: 0.2771072}
 --- !u!1 &1517874476865716798
 GameObject:
   m_ObjectHideFlags: 0

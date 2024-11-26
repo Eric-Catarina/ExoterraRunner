@@ -91,7 +91,6 @@ public class Generator : MonoBehaviour
         float startAttachPointZPosition = nextElement.GetComponent<Ground>().startAttachPoint.transform.position.z;
         float endAttachPointZPosition = lastElement.GetComponent<Ground>().endAttachPoint.transform.position.z;
         float zPositionOffset =  nextElement.transform.position.z - startAttachPointZPosition;
-        Debug.Log("Z Position Offset: " + zPositionOffset);
         float finalZPosition = endAttachPointZPosition + zPositionOffset;
         
         
