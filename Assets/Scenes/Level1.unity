@@ -1567,7 +1567,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0.00012207031, y: 0}
   m_SizeDelta: {x: 345.0817, y: 245.94}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &221363116
@@ -2226,7 +2226,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &364017219
 MonoBehaviour:
@@ -2551,7 +2551,7 @@ Transform:
   - {fileID: 1818443651}
   - {fileID: 87552580}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &398314245
 MonoBehaviour:
@@ -2838,7 +2838,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &448616291
 PrefabInstance:
@@ -3955,18 +3955,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3119dc68be4bf976af3feb5304e9643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackPrefabs:
-  - {fileID: 6345384655228296746, guid: e67433659d8491ad890628a8ae60689c, type: 3}
-  - {fileID: 6345384655228296746, guid: aa4ed89fe092c9830a0a4aef3076aecf, type: 3}
-  - {fileID: 5332653040524430255, guid: 5e209b931c6fa2e019a2cbea736544a4, type: 3}
-  - {fileID: 1300019424737696151, guid: 0e405e15bce4f0e5b9961591070a2ce7, type: 3}
+  biomes:
+  - biomeName: IceCave
+    tracks:
+    - {fileID: 2150884777233253590, guid: 748d6f8db9f288dd495aa3b42b828278, type: 3}
+    - {fileID: 6345384655228296746, guid: d28fdb0e52d26adc8b10b6b93867c46a, type: 3}
+    - {fileID: 405758576386881191, guid: 6ab4b4acfb6268469a9daee23a748813, type: 3}
+  - biomeName: Desert
+    tracks:
+    - {fileID: 1300019424737696151, guid: 0e405e15bce4f0e5b9961591070a2ce7, type: 3}
+    - {fileID: 6345384655228296746, guid: e67433659d8491ad890628a8ae60689c, type: 3}
+    - {fileID: 6345384655228296746, guid: aa4ed89fe092c9830a0a4aef3076aecf, type: 3}
   elementContainer: {fileID: 117135503}
   timeToGenerate: 2
   timeToDestroy: 120
+  tracksToChangeBiome: 3
   minimumXPosition: 0
   maximumXPosition: 0
-  minimumZRotation: 0
-  maximumZRotation: 0
   xVariationRange: 12
   minYVariation: 220
   maxYVariation: 270
@@ -5743,7 +5748,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.17203583, y: 0.000000016949848, z: -0.0000000029601144, w: 0.98509073}
+  m_LocalRotation: {x: 0.17203583, y: -0.000000016949846, z: 0.0000000029601142, w: 0.98509073}
   m_LocalPosition: {x: 0, y: 12.04, z: -16.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9628,7 +9633,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730516138}
-  m_LocalRotation: {x: 0.17203583, y: 0.000000016949848, z: -0.0000000029601144, w: 0.98509073}
+  m_LocalRotation: {x: 0.17203583, y: -0.000000016949846, z: 0.0000000029601142, w: 0.98509073}
   m_LocalPosition: {x: 0, y: 12.04, z: -16.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10982,7 +10987,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: horizontalSpeed
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: cameraController

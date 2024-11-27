@@ -11,7 +11,7 @@ public class UnityBannerAd : MonoBehaviour
     [SerializeField] BannerPosition _bannerPosition = BannerPosition.BOTTOM_CENTER;
 
     [SerializeField] string _androidAdUnitId = "Banner_Android";
-    string _adUnitId = null; // This will remain null for unsupported platforms.
+    string _adUnitId = "Banner_Android"; // This will remain null for unsupported platforms.
 
     void Start()
     {
