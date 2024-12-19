@@ -58,7 +58,7 @@ PrefabInstance:
     - target: {fileID: 1901953596711905857, guid: 0e405e15bce4f0e5b9961591070a2ce7, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d0eeaa0afef61c7e793c49b92213058b, type: 2}
+      objectReference: {fileID: 2100000, guid: 3114eb11a8cdd725e96128d985bd4ad9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e405e15bce4f0e5b9961591070a2ce7, type: 3}
 --- !u!4 &2150884777355400160 stripped
@@ -125,6 +125,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 21.755
       objectReference: {fileID: 0}
+    - target: {fileID: 6258439275981709447, guid: babbf7fffe9a09277b91c87b6d34a6c8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d491d9b35d0e63499a617ce0efdf540b, type: 2}
     - target: {fileID: 7003888968611619955, guid: babbf7fffe9a09277b91c87b6d34a6c8, type: 3}
       propertyPath: m_Name
       value: Island.002 Variant (1)
@@ -138,6 +142,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2150884777355400160}
     m_Modifications:
+    - target: {fileID: 661850108892120379, guid: 3c753dc1325306b9980922134f0bd4fe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: fe870c44e48f9a8f6aaf114d820858d4, type: 2}
     - target: {fileID: 7205436870665668593, guid: 3c753dc1325306b9980922134f0bd4fe, type: 3}
       propertyPath: m_Name
       value: TwinIslands Variant 1
@@ -186,6 +194,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8718448639152236068, guid: 3c753dc1325306b9980922134f0bd4fe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d491d9b35d0e63499a617ce0efdf540b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c753dc1325306b9980922134f0bd4fe, type: 3}
 --- !u!1001 &9035470228021444541
@@ -247,6 +259,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 7.019
       objectReference: {fileID: 0}
+    - target: {fileID: 6258439275981709447, guid: babbf7fffe9a09277b91c87b6d34a6c8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d491d9b35d0e63499a617ce0efdf540b, type: 2}
     - target: {fileID: 7003888968611619955, guid: babbf7fffe9a09277b91c87b6d34a6c8, type: 3}
       propertyPath: m_Name
       value: Island.002 Variant
