@@ -1,26 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 [System.Serializable]
 public class BiomeData
 {
     public string biomeName; // Nome do Bioma (apenas para referência)
+    public Color biomeColor;  // Cor característica do texto
     public List<GameObject> tracks; // Lista de pistas para o bioma
 }
 
 public class Generator : MonoBehaviour
 {
-    [Header("Biomes Settings")]
-    [SerializeField] private List<BiomeData> biomes; // Lista reordenável de biomas
+    [Header("Biomes Settings")] [SerializeField]
+    private List<BiomeData> biomes; // Lista reordenável de biomas
+
     [SerializeField] private GameObject elementContainer;
     [SerializeField] private float timeToGenerate;
     [SerializeField] private float timeToDestroy;
     [SerializeField] private int tracksToChangeBiome = 10;
+    [SerializeField] private TextMeshProUGUI biomeText;
 
-    [Header("Position Variation Settings")]
-    [SerializeField] private float minimumXPosition, maximumXPosition;
+    [Header("Position Variation Settings")] [SerializeField]
+    private float minimumXPosition, maximumXPosition;
+
     [SerializeField] private float xVariationRange = 50f;
     [SerializeField] private float minYVariation = 30f;
     [SerializeField] private float maxYVariation = 150f;
@@ -31,8 +36,7 @@ public class Generator : MonoBehaviour
     private float cumulativeYOffset = 0f; // Acumula o deslocamento em Y
     private float initialZPosition = 0f;
 
-    [SerializeField]
-    private GameObject lastElement, nextElement;
+    [SerializeField] private GameObject lastElement, nextElement;
 
     private void Start()
     {
@@ -41,6 +45,7 @@ public class Generator : MonoBehaviour
         if (biomes.Count > 0)
         {
             currentTracks = biomes[currentBiomeIndex].tracks; // Define as pistas iniciais
+            ShowBiomeName();
         }
         else
         {
@@ -60,6 +65,7 @@ public class Generator : MonoBehaviour
             Debug.LogWarning("Nenhum prefab de pista disponível na lista atual.");
             return;
         }
+
         nextElement = selectedTrack;
 
         // Calcula a posição final e instancia o elemento
@@ -85,8 +91,11 @@ public class Generator : MonoBehaviour
     {
         if (tracksGenerated > 0 && tracksGenerated % tracksToChangeBiome == 0)
         {
-            currentBiomeIndex = (currentBiomeIndex + 1) % biomes.Count; // Muda para o próximo bioma na lista
+            currentBiomeIndex = (currentBiomeIndex + 1) % biomes.Count;
             currentTracks = biomes[currentBiomeIndex].tracks;
+
+            // Chamar animação do texto
+            ShowBiomeName();
         }
     }
 
@@ -131,7 +140,8 @@ public class Generator : MonoBehaviour
     {
         Vector3 initialScale = element.transform.localScale;
         element.transform.localScale = initialScale * 4f; // Começa maior
-        element.transform.position = finalPosition + new Vector3(Random.Range(-100, 100), 250, 100); // Posição inicial diagonal
+        element.transform.position =
+            finalPosition + new Vector3(Random.Range(-100, 100), 250, 100); // Posição inicial diagonal
 
         Collider[] colliders = element.GetComponentsInChildren<Collider>();
         foreach (Collider collider in colliders)
@@ -146,7 +156,8 @@ public class Generator : MonoBehaviour
         element.transform.DOMove(finalPosition, 1f).SetEase(Ease.InQuad);
 
         float randomRotationZ = Random.Range(-5f, 5f);
-        element.transform.DORotate(new Vector3(0, 0, randomRotationZ), 1f, RotateMode.LocalAxisAdd).SetEase(Ease.OutQuad);
+        element.transform.DORotate(new Vector3(0, 0, randomRotationZ), 1f, RotateMode.LocalAxisAdd)
+            .SetEase(Ease.OutQuad);
 
         element.transform.DOMove(finalPosition, 1.5f).OnComplete(() =>
         {
@@ -172,5 +183,50 @@ public class Generator : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToGenerate);
         Generate();
+    }
+
+    private void ShowBiomeName()
+    {
+        // Ativar o texto
+        biomeText.gameObject.SetActive(true);
+
+        // Define o texto para o nome do bioma
+        biomeText.text = biomes[currentBiomeIndex].biomeName;
+
+        // Define a cor do texto para a cor do bioma atual
+        biomeText.color = biomes[currentBiomeIndex].biomeColor;
+
+        // Pegar RectTransform do TMP
+        RectTransform textRect = biomeText.GetComponent<RectTransform>();
+
+        // Armazena a posição atual em Y (para manter o texto na altura desejada)
+        float originalY = textRect.anchoredPosition.y;
+
+        // Posicionar inicialmente fora da tela, à esquerda (apenas no eixo X)
+        textRect.anchoredPosition = new Vector2(-Screen.width, originalY);
+
+        // Criar a sequência de animações
+        Sequence seq = DOTween.Sequence();
+
+        // 1. Entrar da esquerda até o centro
+        seq.Append(
+            textRect.DOAnchorPos(new Vector2(0f, originalY), 1f)
+                .SetEase(Ease.OutBack)
+        );
+
+        // 2. Ficar parado 2 segundos
+        seq.AppendInterval(2f);
+
+        // 3. Sair pra direita (fora da tela)
+        seq.Append(
+            textRect.DOAnchorPos(new Vector2(Screen.width, originalY), 1f)
+                .SetEase(Ease.InQuad)
+        );
+
+        // 4. Desativar após o fim
+        seq.OnComplete(() =>
+        {
+            biomeText.gameObject.SetActive(false);
+        });
     }
 }
