@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class SmurfCatMovement : MonoBehaviour
 {
@@ -23,6 +25,8 @@ public class SmurfCatMovement : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI scoreMultiplierText;
     public TextMeshProUGUI highScoreText;
+    [FormerlySerializedAs("fadeInDuration")] [SerializeField] private float fallingVfxFadeInDuration;
+    [FormerlySerializedAs("fadeOutDuration")] [SerializeField] private float fallingVfxFadeOutDuration;
 
     [Header("Hitstop Settings")]
     public float minHitstopDuration = 0.05f;
@@ -53,6 +57,8 @@ public class SmurfCatMovement : MonoBehaviour
 
     private PlayerInput playerInput;
     private AudioManager audioManager;
+    private bool _isFallingFXActive;
+
 
     #region Unity Lifecycle
 
@@ -294,6 +300,49 @@ public class SmurfCatMovement : MonoBehaviour
         {
             fallingVFX.SetActive(false);
         }
+    }
+    private void ActivateFallingVFX()
+    {
+        // Se o GO estiver desativado, ative-o antes de iniciar o fade.
+        fallingVFX.SetActive(true);
+
+        CanvasGroup cg = fallingVFX.GetComponent<CanvasGroup>();
+        if (cg == null)
+        {
+            cg = fallingVFX.AddComponent<CanvasGroup>();
+        }
+
+        cg.alpha = 0f;  // Começa invisível
+        cg.DOKill();    // Cancela qualquer tween anterior, caso esteja rolando
+
+        // Fade in
+        cg.DOFade(1f, fallingVfxFadeInDuration).SetEase(Ease.OutQuad);
+
+        _isFallingFXActive = true;
+    }
+
+    private void DeactivateFallingVFX()
+    {
+        CanvasGroup cg = fallingVFX.GetComponent<CanvasGroup>();
+        if (cg == null)
+        {
+            // Se não existir, apenas desativa sem transição
+            fallingVFX.SetActive(false);
+            _isFallingFXActive = false;
+            return;
+        }
+
+        cg.DOKill();
+
+        // Fade out bem rápido
+        cg.DOFade(0f, fallingVfxFadeOutDuration)
+            .SetEase(Ease.InQuad)
+            .OnComplete(() =>
+            {
+                // Depois do fade out, desativa GameObject
+                fallingVFX.SetActive(false);
+                _isFallingFXActive = false;
+            });
     }
 
     #endregion

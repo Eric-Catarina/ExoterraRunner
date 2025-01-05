@@ -9,6 +9,7 @@ public class BiomeData
 {
     public string biomeName; // Nome do Bioma (apenas para referência)
     public Color biomeColor;  // Cor característica do texto
+    public Material biomeSkybox; // Skybox característico do bioma
     public List<GameObject> tracks; // Lista de pistas para o bioma
 }
 
@@ -22,6 +23,7 @@ public class Generator : MonoBehaviour
     [SerializeField] private float timeToDestroy;
     [SerializeField] private int tracksToChangeBiome = 10;
     [SerializeField] private TextMeshProUGUI biomeText;
+    [SerializeField] private float delayBeforeBiomeChange = 2f;
 
     [Header("Position Variation Settings")] [SerializeField]
     private float minimumXPosition, maximumXPosition;
@@ -57,6 +59,7 @@ public class Generator : MonoBehaviour
     {
         // Atualiza o bioma a cada 20 pistas
         UpdateBiome();
+        ChangeBiomeSkybox();
 
         // Seleciona aleatoriamente um prefab da lista do bioma atual
         GameObject selectedTrack = SelectRandomTrack();
@@ -93,9 +96,7 @@ public class Generator : MonoBehaviour
         {
             currentBiomeIndex = (currentBiomeIndex + 1) % biomes.Count;
             currentTracks = biomes[currentBiomeIndex].tracks;
-
-            // Chamar animação do texto
-            ShowBiomeName();
+            StartCoroutine(WaitAndChangeBiome());
         }
     }
 
@@ -228,5 +229,22 @@ public class Generator : MonoBehaviour
         {
             biomeText.gameObject.SetActive(false);
         });
+    }
+    
+    private void ChangeBiomeSkybox()
+    {
+        RenderSettings.skybox = biomes[currentBiomeIndex].biomeSkybox;
+    }
+    
+    private IEnumerator WaitAndChangeBiome()
+    {
+        // Aguarda X segundos antes de trocar
+        yield return new WaitForSeconds(delayBeforeBiomeChange);
+
+        // Anima o texto
+        ShowBiomeName();
+
+        // Troca a Skybox
+        ChangeBiomeSkybox();
     }
 }
