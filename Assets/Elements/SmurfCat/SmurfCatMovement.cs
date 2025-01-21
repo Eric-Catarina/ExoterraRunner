@@ -57,6 +57,10 @@ public class SmurfCatMovement : MonoBehaviour
     private bool isHitstopActive = false;
 
     private PlayerInput playerInput;
+    private Vector2 startTouchPosition;
+    private Vector2 endTouchPosition;
+    private bool isSwipeDetected = false;
+    
     private AudioManager audioManager;
     private bool _isFallingFXActive;
 
@@ -94,13 +98,14 @@ public class SmurfCatMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision other)
-    {
-        if (other.gameObject.CompareTag(Tags.Ground))
-        {
-            isGrounded = true;
-        }
-    }
+    // private void OnCollisionStay(Collision other)
+    // {
+    //     if (other.gameObject.CompareTag(Tags.Ground))
+    //     {
+    //         return;
+    //         isGrounded = true;
+    //     }
+    // }
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag(Tags.Ground))
@@ -179,8 +184,47 @@ public class SmurfCatMovement : MonoBehaviour
 
     #region Jump
 
+    public void OnSwipe(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            // Registra o início do toque
+            startTouchPosition = context.ReadValue<Vector2>();
+        }
+        else if (context.phase == InputActionPhase.Performed)
+        {
+            Debug.Log("Terminou Swipe");
+            // Registra o fim do toque
+            endTouchPosition = context.ReadValue<Vector2>();
+            DetectSwipe();
+        }
+    }
+    private void DetectSwipe()
+    {
+        if (IsPointerOverUI() || !isGrounded) return;
+
+        Vector2 swipeDelta = endTouchPosition;
+
+        // Verifica se o swipe é significativo
+        if (swipeDelta.magnitude > 10f) // Ajuste o valor conforme necessário
+        {
+            float verticalSwipe = Mathf.Abs(swipeDelta.y);
+            float horizontalSwipe = Mathf.Abs(swipeDelta.x);
+
+            if (verticalSwipe > horizontalSwipe && swipeDelta.y > 0)
+            {
+                // Swipe para cima detectado
+                isSwipeDetected = true;
+                PerformJump();
+                isSwipeDetected = false;
+            }
+        }
+    }
+
+
     public void Jump()
     {
+        return;
         if (IsPointerOverUI() || !isGrounded) return;
 
         PerformJump();
@@ -193,9 +237,14 @@ public class SmurfCatMovement : MonoBehaviour
 
     private void PerformJump()
     {
-        rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
+        if (!isGrounded) return;
         isGrounded = false;
+        rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
         audioManager.PlayJumpSound();
+        if (isOnJumpSpot)
+        {
+            ProcessJumpSpot();
+        }
         if (animator != null)
         {
             animator.SetTrigger("Jump");

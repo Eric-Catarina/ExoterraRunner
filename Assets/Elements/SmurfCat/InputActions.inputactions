@@ -56,6 +56,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "SwipeUp",
+            "id": "a094d694-9062-4638-be9f-0a3684cd6420",
+            "actions": [
+                {
+                    "name": "Jump",
+                    "type": "Value",
+                    "id": "bfc38fea-106d-4ee8-a76d-c4c7bdb232cd",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1e4b5588-ab54-46c4-abb3-787d7e934135",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

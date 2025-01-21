@@ -4403,7 +4403,7 @@ MonoBehaviour:
   elementContainer: {fileID: 117135503}
   timeToGenerate: 2
   timeToDestroy: 20
-  tracksToChangeBiome: 10
+  tracksToChangeBiome: 3
   biomeText: {fileID: 460363128}
   delayBeforeBiomeChange: 5
   minimumXPosition: 0
@@ -11796,12 +11796,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 963194227}
     - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionId
+      value: bfc38fea-106d-4ee8-a76d-c4c7bdb232cd
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionName
+      value: SwipeUp/Jump[/Device Simulator Touchscreen/primaryTouch/delta]
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -11812,7 +11832,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 919132147592852550}
     - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 919132147592852550}
+    - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
@@ -11824,11 +11852,23 @@ PrefabInstance:
       value: MoveHorizontally
       objectReference: {fileID: 0}
     - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSwipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: SmurfCatMovement, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SmurfCatMovement, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1793246209280157396, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
