@@ -13,6 +13,7 @@ public class SmurfCatMovement : MonoBehaviour
     public float horizontalSpeed = 2.0f;
     public float jumpStrength = 10.0f;
     public float maxHorizontalSpeed = 15.0f;
+    private Animator animator;
 
     [Header("Game Objects")]
     public GameObject loseScreen;
@@ -138,6 +139,7 @@ public class SmurfCatMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
         audioManager = FindObjectOfType<AudioManager>();
+        animator = GetComponent<Animator>();
     }
 
     private void LoadHighScore()
@@ -194,6 +196,10 @@ public class SmurfCatMovement : MonoBehaviour
         rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
         isGrounded = false;
         audioManager.PlayJumpSound();
+        if (animator != null)
+        {
+            animator.SetTrigger("Jump");
+        }
     }
 
     private void ProcessJumpSpot()
