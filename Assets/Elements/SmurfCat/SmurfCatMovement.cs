@@ -267,6 +267,7 @@ public class SmurfCatMovement : MonoBehaviour
         TriggerGroundExplosion();
         PlayImpactAudio();
         TriggerHitstopEffect();
+        animator.SetBool("Falling", false);
     }
 
     private void SpawnCoinsOnImpact(Collision collision)
@@ -301,6 +302,7 @@ public class SmurfCatMovement : MonoBehaviour
             fallingVFX.SetActive(true);
             hadHighFallSpeed = true;
             audioManager.PlayFallingAudio();
+            animator.SetBool("Falling", true);
         }
         else
         {
