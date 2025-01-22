@@ -50,7 +50,7 @@ public class SmurfCatMovement : MonoBehaviour
     private float currentScore = 0.0f;
     private float highScore = 0.0f;
     private Vector3 targetVelocity;
-    private bool isGrounded = false;
+    public bool isGrounded = false;
     private bool isOnJumpSpot = false;
     private bool hadHighFallSpeed = false;
     private bool isDead = false;
@@ -106,13 +106,13 @@ public class SmurfCatMovement : MonoBehaviour
     //         isGrounded = true;
     //     }
     // }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag(Tags.Ground))
-        {
-            isGrounded = false;
-        }
-    }
+    // private void OnCollisionExit(Collision collision)
+    // {
+    //     if (collision.gameObject.CompareTag(Tags.Ground))
+    //     {
+    //         isGrounded = false;
+    //     }
+    // }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -186,6 +186,7 @@ public class SmurfCatMovement : MonoBehaviour
 
     public void OnSwipe(InputAction.CallbackContext context)
     {
+        if (IsPointerOverUI() || !isGrounded) return;
         if (context.phase == InputActionPhase.Started)
         {
             // Registra o início do toque
@@ -193,7 +194,6 @@ public class SmurfCatMovement : MonoBehaviour
         }
         else if (context.phase == InputActionPhase.Performed)
         {
-            Debug.Log("Terminou Swipe");
             // Registra o fim do toque
             endTouchPosition = context.ReadValue<Vector2>();
             DetectSwipe();
@@ -201,8 +201,6 @@ public class SmurfCatMovement : MonoBehaviour
     }
     private void DetectSwipe()
     {
-        if (IsPointerOverUI() || !isGrounded) return;
-
         Vector2 swipeDelta = endTouchPosition;
 
         // Verifica se o swipe é significativo
@@ -220,7 +218,8 @@ public class SmurfCatMovement : MonoBehaviour
             }
         }
     }
-
+    
+    
 
     public void Jump()
     {

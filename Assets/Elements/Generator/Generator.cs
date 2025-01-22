@@ -9,6 +9,7 @@ public class BiomeData
 {
     public string biomeName; // Nome do Bioma (apenas para referência)
     public Color biomeColor;  // Cor característica do texto
+    public GameObject biomeParticle;
     public Material biomeSkybox; // Skybox característico do bioma
     public List<GameObject> tracks; // Lista de pistas para o bioma
 }
@@ -188,7 +189,7 @@ public class Generator : MonoBehaviour
 
     private void ShowBiomeName()
     {
-        // Ativar o texto
+        
         biomeText.gameObject.SetActive(true);
 
         // Define o texto para o nome do bioma
@@ -231,6 +232,15 @@ public class Generator : MonoBehaviour
         });
     }
     
+    private void ShowBiomeParticle()
+    {
+        if(biomes[currentBiomeIndex].biomeParticle == null) return;
+        
+        biomes[currentBiomeIndex].biomeParticle.SetActive(true);
+
+    }
+    
+    
     private void ChangeBiomeSkybox()
     {
         RenderSettings.skybox = biomes[currentBiomeIndex].biomeSkybox;
@@ -243,6 +253,7 @@ public class Generator : MonoBehaviour
 
         // Anima o texto
         ShowBiomeName();
+        ShowBiomeParticle();
 
         // Troca a Skybox
         ChangeBiomeSkybox();
