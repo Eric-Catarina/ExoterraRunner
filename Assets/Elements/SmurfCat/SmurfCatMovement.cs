@@ -204,7 +204,7 @@ public class SmurfCatMovement : MonoBehaviour
         Vector2 swipeDelta = endTouchPosition;
 
         // Verifica se o swipe é significativo
-        if (swipeDelta.magnitude > 10f) // Ajuste o valor conforme necessário
+        if (swipeDelta.magnitude > 15f) // Ajuste o valor conforme necessário
         {
             float verticalSwipe = Mathf.Abs(swipeDelta.y);
             float horizontalSwipe = Mathf.Abs(swipeDelta.x);
