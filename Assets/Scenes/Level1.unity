@@ -3955,7 +3955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 38.9
+      value: -115
       objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4359,7 +4359,7 @@ MonoBehaviour:
   timeToDestroy: 20
   tracksToChangeBiome: 2
   biomeText: {fileID: 460363128}
-  delayBeforeBiomeChange: 5
+  delayBeforeBiomeChange: 9
   minimumXPosition: 0
   maximumXPosition: 0
   xVariationRange: 12
@@ -11905,8 +11905,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Swipe to Jump
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 058585b96b7b1aaf18f9faefe13e5a8e, type: 2}
+  m_sharedMaterial: {fileID: -1583097599504994453, guid: 058585b96b7b1aaf18f9faefe13e5a8e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11966,7 +11966,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 17.202866, w: 4.50173}
+  m_margin: {x: 0, y: 0, z: 16.95163, w: 4.50173}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11995,7 +11995,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: -1583097599504994453, guid: 058585b96b7b1aaf18f9faefe13e5a8e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
