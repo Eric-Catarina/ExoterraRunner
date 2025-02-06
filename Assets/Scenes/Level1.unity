@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.24532752, g: 0.2746848, b: 0.3490566, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 7ed994c1997814049b44c36a823bba6c, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 52fcefd712182d743a781fde12426775, type: 2}
   m_HaloStrength: 0
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -4000,7 +4000,7 @@ PrefabInstance:
     - target: {fileID: 5715800036997668713, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ea3b947dd2c6ec7d6bf38792e16b304c, type: 2}
+      objectReference: {fileID: 2100000, guid: c29cfb9a2e25720c28b14c6c1d122442, type: 2}
     - target: {fileID: 5791619203396833346, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4338,14 +4338,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   biomes:
-  - biomeName: Sunscorched dunes
-    biomeColor: {r: 0.8113208, g: 0.3965713, b: 0.22579211, a: 1}
+  - biomeName: Burning Hell
+    biomeColor: {r: 0.8113208, g: 0.13448468, b: 0.07271269, a: 1}
     biomeParticle: {fileID: 0}
     biomeSkybox: {fileID: 2100000, guid: 7ed994c1997814049b44c36a823bba6c, type: 2}
     tracks:
+    - {fileID: 6411948528743387889, guid: 968027837f3157202b399a419b9e6be9, type: 3}
+  - biomeName: Sunscorched Dunes
+    biomeColor: {r: 0.8113208, g: 0.3965713, b: 0.22579211, a: 1}
+    biomeParticle: {fileID: 0}
+    biomeSkybox: {fileID: 2100000, guid: 52fcefd712182d743a781fde12426775, type: 2}
+    tracks:
     - {fileID: 6345384655228296746, guid: e67433659d8491ad890628a8ae60689c, type: 3}
     - {fileID: 6345384655228296746, guid: aa4ed89fe092c9830a0a4aef3076aecf, type: 3}
-  - biomeName: IceCave
+  - biomeName: Ice Cave
     biomeColor: {r: 0.2415895, g: 0.5325245, b: 0.8396226, a: 1}
     biomeParticle: {fileID: 1166342484}
     biomeSkybox: {fileID: 2100000, guid: 9aa8ed67591432941bb76f12eb23ff91, type: 2}
@@ -4356,7 +4362,7 @@ MonoBehaviour:
   elementContainer: {fileID: 117135503}
   timeToGenerate: 2
   timeToDestroy: 30
-  tracksToChangeBiome: 2
+  tracksToChangeBiome: 5
   biomeText: {fileID: 460363128}
   delayBeforeBiomeChange: 9
   minimumXPosition: 0
@@ -12110,7 +12116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: horizontalSpeed
-      value: 8
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: cameraController

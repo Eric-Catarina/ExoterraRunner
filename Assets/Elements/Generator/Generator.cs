@@ -60,7 +60,6 @@ public class Generator : MonoBehaviour
     {
         // Atualiza o bioma a cada 20 pistas
         UpdateBiome();
-        ChangeBiomeSkybox();
 
         // Seleciona aleatoriamente um prefab da lista do bioma atual
         GameObject selectedTrack = SelectRandomTrack();
@@ -234,7 +233,11 @@ public class Generator : MonoBehaviour
     
     private void ShowBiomeParticle()
     {
-        if(biomes[currentBiomeIndex].biomeParticle == null) return;
+        if (biomes[currentBiomeIndex].biomeParticle == null)
+        {
+            biomes[currentBiomeIndex].biomeParticle.SetActive(false);
+            return;
+        }
         
         biomes[currentBiomeIndex].biomeParticle.SetActive(true);
 
