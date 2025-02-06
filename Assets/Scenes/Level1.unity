@@ -3906,6 +3906,155 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 567833876}
   m_CullTransparentMesh: 1
+--- !u!1001 &570727655
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 963194228}
+    m_Modifications:
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.9999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.25999856
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.620003
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9999914
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0025095195
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.0030661733
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0012534116
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: ColorModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 7.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: ShapeModule.alignToDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: ShapeModule.randomDirectionAmount
+      value: 0.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: InitialModule.startColor.minColor.b
+      value: 0.8962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: InitialModule.startColor.minColor.g
+      value: 0.76716906
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: InitialModule.startColor.minColor.r
+      value: 0.5368903
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: InitialModule.startColor.minMaxState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: InitialModule.startSpeed.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820388, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820389, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_NormalDirection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820389, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6a7a90d27d5c5ab55a96bd21742c4af7, type: 2}
+    - target: {fileID: 2480209143739820390, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_Name
+      value: FireParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2480209143739820390, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3542278186436015706, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
 --- !u!1001 &578923375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3955,7 +4104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -115
+      value: 29.3
       objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4338,12 +4487,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   biomes:
-  - biomeName: Burning Hell
-    biomeColor: {r: 0.8113208, g: 0.13448468, b: 0.07271269, a: 1}
-    biomeParticle: {fileID: 0}
-    biomeSkybox: {fileID: 2100000, guid: 7ed994c1997814049b44c36a823bba6c, type: 2}
-    tracks:
-    - {fileID: 6411948528743387889, guid: 968027837f3157202b399a419b9e6be9, type: 3}
   - biomeName: Sunscorched Dunes
     biomeColor: {r: 0.8113208, g: 0.3965713, b: 0.22579211, a: 1}
     biomeParticle: {fileID: 0}
@@ -4357,12 +4500,18 @@ MonoBehaviour:
     biomeSkybox: {fileID: 2100000, guid: 9aa8ed67591432941bb76f12eb23ff91, type: 2}
     tracks:
     - {fileID: 2150884777233253590, guid: 748d6f8db9f288dd495aa3b42b828278, type: 3}
-    - {fileID: 6345384655228296746, guid: d28fdb0e52d26adc8b10b6b93867c46a, type: 3}
+    - {fileID: 6345384655228296746, guid: 57829acd8994f0d08874a19a65cddbf0, type: 3}
     - {fileID: 405758576386881191, guid: 6ab4b4acfb6268469a9daee23a748813, type: 3}
+  - biomeName: Burning Hell
+    biomeColor: {r: 0.8113208, g: 0.13448468, b: 0.07271269, a: 1}
+    biomeParticle: {fileID: 1320047794}
+    biomeSkybox: {fileID: 2100000, guid: 7ed994c1997814049b44c36a823bba6c, type: 2}
+    tracks:
+    - {fileID: 6411948528743387889, guid: 968027837f3157202b399a419b9e6be9, type: 3}
   elementContainer: {fileID: 117135503}
   timeToGenerate: 2
   timeToDestroy: 30
-  tracksToChangeBiome: 5
+  tracksToChangeBiome: 4
   biomeText: {fileID: 460363128}
   delayBeforeBiomeChange: 9
   minimumXPosition: 0
@@ -6150,6 +6299,7 @@ Transform:
   m_Children:
   - {fileID: 1223836384}
   - {fileID: 1356439434}
+  - {fileID: 1320047795}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7840,6 +7990,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1294297499}
   m_CullTransparentMesh: 1
+--- !u!1 &1320047794 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2480209143739820390, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+  m_PrefabInstance: {fileID: 570727655}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1320047795 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2480209143739820379, guid: 45f6dbc86cd06cc15a783e930d210ecd, type: 3}
+  m_PrefabInstance: {fileID: 570727655}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1339775973
 GameObject:
   m_ObjectHideFlags: 0
