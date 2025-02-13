@@ -51,7 +51,7 @@ public class LevelEnd : MonoBehaviour
 
     public void EndLevel()
     {
-        levelEndOverlay.SetActive(true);
+        // levelEndOverlay.SetActive(true);
 
         // Escolhe uma frase aleatória e aplica ao texto
         int randomIndex = Random.Range(0, phrases.Count);

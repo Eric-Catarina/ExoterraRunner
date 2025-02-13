@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+using DG.Tweening;
 
 public class CameraController : MonoBehaviour
 {
@@ -10,7 +11,13 @@ public class CameraController : MonoBehaviour
 
     private CinemachineTransposer transposer;
     private bool isAirborne = false;
-    
+
+    // Deslocamento da câmera para cima e para trás durante a morte
+    [SerializeField] private float deathHeightOffset = 10f; // Deslocamento da câmera para cima
+    [SerializeField] private float deathBackOffset = 5f; // Deslocamento para trás no eixo Z
+
+    private bool isDead = false;  // Flag para saber se o personagem está morto
+
     private void Start()
     {
         transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
@@ -30,14 +37,59 @@ public class CameraController : MonoBehaviour
         isAirborne = airborne;
     }
 
+    // Função chamada quando o personagem morre
+    public void OnPlayerDeath()
+    {
+        isDead = true;
+
+        // Desativa temporariamente o Follow e o LookAt da câmera
+        virtualCamera.Follow = null;
+        virtualCamera.LookAt = null;  // Remove o LookAt do jogador
+
+        // Calcula a nova posição da câmera (deslocando para cima a posição atual e para trás no eixo Z)
+        Vector3 newCameraPosition = virtualCamera.transform.position + new Vector3(0, deathHeightOffset, -deathBackOffset);
+
+        // Transição da câmera para a nova posição calculada
+        virtualCamera.transform.DOMove(newCameraPosition, 0.5f).SetEase(Ease.InOutSine); // Acelerando a transição com um valor de tempo menor
+
+        // Ajustando a rotação para olhar para baixo (verticalmente)
+        virtualCamera.transform.DORotate(new Vector3(90, 0, 0), 0.5f).SetEase(Ease.InSine) // Rotaciona para olhar para baixo
+            .OnComplete(() => { });  // Quando a transição terminar, restaura o Follow.
+    }
+
+    // Função para restaurar a posição e o Follow após a transição
+    private void RestoreCameraFollow()
+    {
+        // Reconecta o Follow ao jogador
+        virtualCamera.Follow = transposer.FollowTarget;
+        virtualCamera.LookAt = transposer.FollowTarget;  // Restaura o LookAt para o jogador
+
+        // Transição suave de volta para o offset normal
+        transposer.m_FollowOffset = groundedOffset;
+
+        // Restaura a rotação normal da câmera
+        virtualCamera.transform.DORotate(Vector3.zero, 0.5f).SetEase(Ease.InOutSine); // Restaura a rotação para normal (olhando para o jogador)
+    }
+
+    // Função para reviver o personagem e restaurar a posição da câmera
+    public void OnRevive()
+    {
+        isDead = false;
+        // Transição da câmera de volta para a posição normal
+        virtualCamera.transform.DOMove(groundedOffset, 0.5f).SetEase(Ease.InOutSine); // Pode ajustar para o valor de offset desejado
+        virtualCamera.transform.DORotate(Vector3.zero, 0.5f).SetEase(Ease.InOutSine); // Restaura a rotação para normal (olhando para o jogador)
+    }
+
     private void Update()
     {
+        if (isDead) return; // Se o personagem está morto, não faz sentido mover a câmera com base na posição do jogador
+
         if (!transposer) return;
 
-        // Choose the target offset based on whether the player is airborne or grounded
+        // Escolhe o target offset baseado se o personagem está no ar ou no chão
         Vector3 targetOffset = isAirborne ? airborneOffset : groundedOffset;
 
-        // Smoothly interpolate the current offset towards the target offset
+        // Interpola suavemente o offset atual para o offset alvo
         transposer.m_FollowOffset = Vector3.Lerp(
             transposer.m_FollowOffset,
             targetOffset,

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class SmurfCatMovement : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class SmurfCatMovement : MonoBehaviour
     public Rigidbody rb;
     public float maxYSpeed = -20.0f;
     public GameObject adsManager;
+    public MoveForward moveForward;
 
     private float scoreMultiplier = 1.0f;
     private float currentScore = 0.0f;
@@ -157,28 +159,36 @@ public class SmurfCatMovement : MonoBehaviour
 
     #region Movement
 
-    public void MoveHorizontally(InputAction.CallbackContext context)
+   public void MoveHorizontally(InputAction.CallbackContext context)
+{
+    if (context.phase == InputActionPhase.Performed || context.phase == InputActionPhase.Canceled)
     {
-        if (context.phase == InputActionPhase.Performed || context.phase == InputActionPhase.Canceled)
-        {
-            Vector2 moveInput = context.ReadValue<Vector2>();
-            targetVelocity = new Vector3(moveInput.x * horizontalSpeed, rb.velocity.y, rb.velocity.z);
-            targetVelocity.x = Mathf.Clamp(targetVelocity.x, -maxHorizontalSpeed, maxHorizontalSpeed);
-        }
+        Vector2 moveInput = context.ReadValue<Vector2>();
+        
+        // Aqui, em vez de multiplicar diretamente por horizontalSpeed, calcule a velocidade com base no movimento
+        float moveDeltaX = moveInput.x * horizontalSpeed;  // Aqui, moveInput.x representa a distância percorrida
+        targetVelocity = new Vector3(moveDeltaX, rb.velocity.y, rb.velocity.z);
+        
+        // Agora aplicamos a limitação na velocidade para garantir que ela não ultrapasse o máximo
+        targetVelocity.x = Mathf.Clamp(targetVelocity.x, -maxHorizontalSpeed, maxHorizontalSpeed);
     }
+}
 
-    private void HandleMovement()
+private void HandleMovement()
+{
+    Vector3 newVelocity = new Vector3(targetVelocity.x, rb.velocity.y, rb.velocity.z);
+    
+    // Movimentação suave entre a velocidade atual e a nova velocidade com base na entrada
+    rb.velocity = !isDead
+        ? Vector3.Lerp(rb.velocity, newVelocity, horizontalSpeed * Time.fixedDeltaTime)
+        : Vector3.zero;
+
+    // Verificação para morte do personagem se a velocidade no eixo Y for muito negativa
+    if (rb.velocity.y < -maxYSpeed)
     {
-        Vector3 newVelocity = new Vector3(targetVelocity.x, rb.velocity.y, rb.velocity.z);
-        rb.velocity = !isDead
-            ? Vector3.Lerp(rb.velocity, newVelocity, horizontalSpeed * Time.fixedDeltaTime)
-            : Vector3.zero;
-
-        if (rb.velocity.y < -maxYSpeed)
-        {
-            Die();
-        }
+        Die();
     }
+}
 
     #endregion
 
@@ -433,11 +443,31 @@ public class SmurfCatMovement : MonoBehaviour
     public void Die()
     {
         isDead = true;
+        moveForward.enabled = false;
+
+        if (Random.Range(0, 2) == 0)
+        {
+            animator.SetTrigger("DieNMelt");
+            
+        }
+        else
+        {
+            animator.SetTrigger("Die");
+        }
+        cameraController.OnPlayerDeath();
         SaveHighScore();
         // Play Interstitial Ad
         UnityInterstitialAd.Instace.LoadAd();
         
         levelEnd.EndLevel();
+    }
+    
+    public void Revive()
+    {
+        isDead = false;
+        moveForward.enabled = true;
+        animator.SetTrigger("Jump");
+        cameraController.OnRevive();
     }
 
     #endregion

@@ -996,7 +996,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117135503}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.8487768, y: -1.8145986, z: -11.081848}
+  m_LocalPosition: {x: -3.8487768, y: -1.8145986, z: -193}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3101,6 +3101,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2793634245751233578, guid: 26cc66aa4cf625997a45e01ea8e04a9f, type: 3}
   m_PrefabInstance: {fileID: 448616291}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &453533544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 453533545}
+  m_Layer: 0
+  m_Name: DeathCameraPost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &453533545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453533544}
+  m_LocalRotation: {x: 0.57405066, y: 0.000000014088923, z: -0.000000009877332, w: 0.8188198}
+  m_LocalPosition: {x: 0, y: 18.59, z: -162.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &460363127
 GameObject:
   m_ObjectHideFlags: 0
@@ -4224,7 +4255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8654775244983140096, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.46
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 8654775244983140096, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6340,7 +6371,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.16728449, y: 1e-45, z: 0, w: 0.9859087}
+  m_LocalRotation: {x: 0.16728449, y: -1e-45, z: 0, w: 0.9859087}
   m_LocalPosition: {x: 0, y: 12.04, z: -177.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9236,7 +9267,7 @@ MonoBehaviour:
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
-  m_BiasY: 0
+  m_BiasY: -0.14899999
   m_CenterOnActivate: 1
 --- !u!4 &1513921544 stripped
 Transform:
@@ -10700,7 +10731,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730516138}
-  m_LocalRotation: {x: 0.16728449, y: 1e-45, z: 0, w: 0.9859087}
+  m_LocalRotation: {x: 0.16728449, y: -1e-45, z: -0, w: 0.9859087}
   m_LocalPosition: {x: 0, y: 12.04, z: -177.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10724,6 +10755,8 @@ MonoBehaviour:
   virtualCamera: {fileID: 1730516139}
   airborneOffset: {x: 0, y: 12, z: 4}
   transitionSpeed: 2
+  deathHeightOffset: 15
+  deathBackOffset: -10
 --- !u!1001 &1757205169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12295,6 +12328,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 234869101}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
+      propertyPath: moveForward
+      value: 
+      objectReference: {fileID: 117135505}
+    - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: jumpSpotText
       value: 
       objectReference: {fileID: 107708418}
@@ -12324,7 +12361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: horizontalSpeed
-      value: 12
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: cameraController
@@ -12344,7 +12381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: maxHorizontalSpeed
-      value: 40
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: minHitstopDuration
