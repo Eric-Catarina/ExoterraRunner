@@ -30,6 +30,7 @@ public class SmurfCatMovement : MonoBehaviour
     [FormerlySerializedAs("fadeInDuration")] [SerializeField] private float fallingVfxFadeInDuration;
     [FormerlySerializedAs("fadeOutDuration")] [SerializeField] private float fallingVfxFadeOutDuration;
     public GameObject revivePanel;
+    public GameObject halo;
     
     [Header("Hitstop Settings")]
     public float minHitstopDuration = 0.05f;
@@ -232,7 +233,6 @@ private void HandleMovement()
         }
     }
     
-    
 
     public void Jump()
     {
@@ -289,6 +289,7 @@ private void HandleMovement()
 
     private void UpdateScore()
     {
+        if (isDead) return;
         currentScore += scoreMultiplier * Time.fixedDeltaTime * 2;
         scoreMultiplier += Time.fixedDeltaTime / 150;
 
@@ -478,6 +479,15 @@ private void HandleMovement()
         moveForward.enabled = true;
         animator.SetTrigger("Jump");
         cameraController.OnRevive();
+      
+        
+        //  Check if the halo parent is self, if not, set it to self
+        if (halo.transform.parent != transform)
+        {
+            halo.transform.parent = transform;
+        }
+        ShowAndHideHalo();
+
     }
     
     // Set isImmortal false after 5 seconds
@@ -495,6 +505,24 @@ private void HandleMovement()
     public void ShowLevelEnd()
     {
         levelEnd.EndLevel();
+    }
+    
+    private void HideHalo()
+    {
+        halo.transform.DOLocalMoveY(10f, .5f).SetEase(Ease.OutBounce).OnComplete(() =>
+        {
+            halo.SetActive(false);
+        });
+    }
+    
+    private void ShowAndHideHalo()
+    {
+        // Set halo position to slightly above the player
+        halo.transform.position = transform.position + Vector3.up * 8f;
+        // Tween the halo appearing above player head
+        halo.transform.DOLocalMoveY(4f, 2f).SetEase(Ease.OutBack);
+        halo.SetActive(true);
+        Invoke("HideHalo",3f);
     }
 
     #endregion
