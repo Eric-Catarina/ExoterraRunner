@@ -29,7 +29,8 @@ public class SmurfCatMovement : MonoBehaviour
     public TextMeshProUGUI highScoreText;
     [FormerlySerializedAs("fadeInDuration")] [SerializeField] private float fallingVfxFadeInDuration;
     [FormerlySerializedAs("fadeOutDuration")] [SerializeField] private float fallingVfxFadeOutDuration;
-
+    public GameObject revivePanel;
+    
     [Header("Hitstop Settings")]
     public float minHitstopDuration = 0.05f;
     public float maxHitstopDuration = 0.3f;
@@ -197,6 +198,7 @@ private void HandleMovement()
 
     public void OnSwipe(InputAction.CallbackContext context)
     {
+        if (isDead) return;
         if (IsPointerOverUI() || !isGrounded) return;
         if (context.phase == InputActionPhase.Started)
         {
@@ -446,6 +448,7 @@ private void HandleMovement()
     {
         if (_isImmortal) return;
         isDead = true;
+        animator.SetBool("IsDead", true);
         moveForward.enabled = false;
 
         if (Random.Range(0, 2) == 0)
@@ -459,12 +462,10 @@ private void HandleMovement()
         cameraController.OnPlayerDeath();
         SaveHighScore();
         
-        // Wait 1 second and revive
-        Invoke("Revive", 3f);
+        // ShowRevivePanel();
+        
         // Play Interstitial Ad
         UnityInterstitialAd.Instace.LoadAd();
-        
-        levelEnd.EndLevel();
     }
     
     public void Revive()
@@ -472,6 +473,8 @@ private void HandleMovement()
         _isImmortal = true;
         Invoke("SetIsImmortalFalse", 5f);
         isDead = false;
+        animator.SetBool("IsDead", false);
+
         moveForward.enabled = true;
         animator.SetTrigger("Jump");
         cameraController.OnRevive();
@@ -481,6 +484,17 @@ private void HandleMovement()
     private void SetIsImmortalFalse()
     {
         _isImmortal = false;
+    }
+    
+    public void ShowRevivePanel()
+    {
+        revivePanel.SetActive(true);
+    }
+    
+    // Show the end level panel
+    public void ShowLevelEnd()
+    {
+        levelEnd.EndLevel();
     }
 
     #endregion
