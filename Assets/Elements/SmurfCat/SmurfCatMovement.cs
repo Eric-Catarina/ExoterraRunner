@@ -65,6 +65,7 @@ public class SmurfCatMovement : MonoBehaviour
     
     private AudioManager audioManager;
     private bool _isFallingFXActive;
+    private bool _isImmortal = false;
 
 
     #region Unity Lifecycle
@@ -440,15 +441,16 @@ private void HandleMovement()
 
     #region Death
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public void Die()
     {
+        if (_isImmortal) return;
         isDead = true;
         moveForward.enabled = false;
 
         if (Random.Range(0, 2) == 0)
         {
             animator.SetTrigger("DieNMelt");
-            
         }
         else
         {
@@ -456,6 +458,9 @@ private void HandleMovement()
         }
         cameraController.OnPlayerDeath();
         SaveHighScore();
+        
+        // Wait 1 second and revive
+        Invoke("Revive", 3f);
         // Play Interstitial Ad
         UnityInterstitialAd.Instace.LoadAd();
         
@@ -464,10 +469,18 @@ private void HandleMovement()
     
     public void Revive()
     {
+        _isImmortal = true;
+        Invoke("SetIsImmortalFalse", 5f);
         isDead = false;
         moveForward.enabled = true;
         animator.SetTrigger("Jump");
         cameraController.OnRevive();
+    }
+    
+    // Set isImmortal false after 5 seconds
+    private void SetIsImmortalFalse()
+    {
+        _isImmortal = false;
     }
 
     #endregion
