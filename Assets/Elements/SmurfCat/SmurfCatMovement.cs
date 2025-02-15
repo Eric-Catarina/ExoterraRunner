@@ -3,6 +3,7 @@ using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -524,6 +525,8 @@ private void HandleMovement()
         halo.SetActive(true);
         Invoke("HideHalo",3f);
     }
+    
+    public UnityEvent OnRevive;
 
     #endregion
 
