@@ -15,6 +15,7 @@ public class SmurfCatMovement : MonoBehaviour
     public float horizontalSpeed = 2.0f;
     public float jumpStrength = 10.0f;
     public float maxHorizontalSpeed = 15.0f;
+    private bool isFallingHighSpeed = false;
     private Animator animator;
 
     [Header("Game Objects")]
@@ -39,6 +40,9 @@ public class SmurfCatMovement : MonoBehaviour
     public float minHitstopIntensity = 0.2f;
     public float maxHitstopIntensity = 0.0f;
     public float maxVelocityForScaling = 120f;
+    
+    public static event Action onHighFallSpeed;
+    public static event Action onGroundImpact;
 
     [Header("Dependencies")]
     public LevelEnd levelEnd;
@@ -95,6 +99,7 @@ public class SmurfCatMovement : MonoBehaviour
         UpdateScore();
         CheckFallingState();
     }
+    
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -168,7 +173,6 @@ public class SmurfCatMovement : MonoBehaviour
     if (context.phase == InputActionPhase.Performed || context.phase == InputActionPhase.Canceled)
     {
         Vector2 moveInput = context.ReadValue<Vector2>();
-        Debug.Log($"Move Input: {moveInput}");
         // Aqui, em vez de multiplicar diretamente por horizontalSpeed, calcule a velocidade com base no movimento
         float moveDeltaX = moveInput.x * horizontalSpeed;  // Aqui, moveInput.x representa a distância percorrida
         targetVelocity = new Vector3(moveDeltaX, rb.velocity.y, rb.velocity.z);
@@ -337,6 +341,8 @@ private void HandleMovement()
         PlayImpactAudio();
         TriggerHitstopEffect();
         animator.SetBool("Falling", false);
+        isFallingHighSpeed = false;
+        onGroundImpact?.Invoke();
     }
 
     private void SpawnCoinsOnImpact(Collision collision)
@@ -364,10 +370,18 @@ private void HandleMovement()
 
     #region Falling State
 
+    private void EnteredHighFallSpeed()
+    {
+        if (isFallingHighSpeed) return;
+        Debug.Log("EnteredHighFallSpeed");
+        onHighFallSpeed?.Invoke();
+    }
     private void CheckFallingState()
     {
         if (rb.velocity.y < -35)
         {
+            EnteredHighFallSpeed();
+            isFallingHighSpeed = true;
             fallingVFX.SetActive(true);
             hadHighFallSpeed = true;
             audioManager.PlayFallingAudio();
@@ -375,6 +389,7 @@ private void HandleMovement()
         }
         else
         {
+            isFallingHighSpeed = false;
             fallingVFX.SetActive(false);
         }
     }
@@ -494,7 +509,7 @@ private void HandleMovement()
             halo.transform.parent = transform;
         }
         ShowAndHideHalo();
-
+        OnRevive.Invoke();
     }
     
     // Set isImmortal false after 5 seconds

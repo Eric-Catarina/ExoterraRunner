@@ -11,6 +11,7 @@ public class BiomeData
     public Color biomeColor;  // Cor característica do texto
     public GameObject biomeParticle;
     public Material biomeSkybox; // Skybox característico do bioma
+    public int tracksBeforeChange = 10; // Número de pistas antes de mudar para o próximo bioma
     public List<GameObject> tracks; // Lista de pistas para o bioma
 }
 
@@ -92,13 +93,17 @@ public class Generator : MonoBehaviour
 
     private void UpdateBiome()
     {
-        if (tracksGenerated > 0 && tracksGenerated % tracksToChangeBiome == 0)
+        if (tracksGenerated > 0 && tracksGenerated % biomes[currentBiomeIndex].tracksBeforeChange == 0)
         {
+            // Muda para o próximo bioma
             currentBiomeIndex = (currentBiomeIndex + 1) % biomes.Count;
             currentTracks = biomes[currentBiomeIndex].tracks;
+
+            // Chama a mudança de bioma com um atraso
             StartCoroutine(WaitAndChangeBiome());
         }
     }
+
 
     private GameObject SelectRandomTrack()
     {

@@ -10,22 +10,31 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float transitionSpeed = 1f;
     [SerializeField] private GameObject virtualCameraFollow;
     [SerializeField] private GameObject virtualCameraLookAt;
-
+    [SerializeField] private CinemachineImpulseSource impulseSource;
     [SerializeField]private CinemachineTransposer transposer;
+    private CinemachineBasicMultiChannelPerlin perlinNoise;
     private bool isAirborne = false;
-
+    
     // Deslocamento da câmera para cima e para trás durante a morte
     [SerializeField] private float deathHeightOffset = 10f; // Deslocamento da câmera para cima
     [SerializeField] private float deathBackOffset = 5f; // Deslocamento para trás no eixo Z
+    
+    [Header("Camera Shake Settings")]
+    [SerializeField] private float minShakeDuration = 0.2f;  // Duração mínima do shake
+    [SerializeField] private float maxShakeDuration = 0.5f;  // Duração máxima do shake
+    [SerializeField] private float minShakeStrength = 1f;     // Intensidade mínima do shake
+    [SerializeField] private float maxShakeStrength = 3f;     // Intensidade máxima do shake
 
     private bool isDead = false;  // Flag para saber se o personagem está morto
 
     private void Start()
     {
+        perlinNoise = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
-        virtualCameraFollow = transposer.FollowTarget.gameObject;
+        impulseSource = virtualCamera.GetComponent<CinemachineImpulseSource>(); 
         virtualCameraLookAt = transposer.LookAtTarget.gameObject;
-        
+        virtualCameraFollow = transposer.FollowTarget.gameObject;
+
         groundedOffset = transposer.m_FollowOffset;
         airborneOffset = new Vector3(groundedOffset.x + airborneOffset.x, groundedOffset.y + airborneOffset.y, groundedOffset.z + airborneOffset.z);
         if (virtualCamera == null)
@@ -35,6 +44,21 @@ public class CameraController : MonoBehaviour
         }
 
         transposer.m_FollowOffset = groundedOffset; // Set initial offset
+    }
+
+    void OnEnable()
+    {
+        SmurfCatMovement.onGroundImpact += CameraBump;
+        SmurfCatMovement.onGroundImpact += StopShake;
+        SmurfCatMovement.onHighFallSpeed += StartShake;
+
+    }
+
+    void OnDisable()
+    {
+        SmurfCatMovement.onGroundImpact -= CameraBump;
+        SmurfCatMovement.onGroundImpact -= StopShake;
+        SmurfCatMovement.onHighFallSpeed -= StartShake;
     }
 
     public void SetAirborne(bool airborne)
@@ -86,6 +110,33 @@ public class CameraController : MonoBehaviour
         // Transição da câmera de volta para a posição normal
         virtualCamera.transform.DOMove(groundedOffset, 0.5f).SetEase(Ease.InOutSine); // Pode ajustar para o valor de offset desejado
         virtualCamera.transform.DORotate(Vector3.zero, 0.5f).SetEase(Ease.InOutSine); // Restaura a rotação para normal (olhando para o jogador)
+    }
+    
+    public void CameraBump()
+    {
+        // Gera a duração e intensidade aleatórias dentro dos intervalos definidos
+        float shakeDuration = Random.Range(minShakeDuration, maxShakeDuration);
+        float shakeStrength = Random.Range(minShakeStrength, maxShakeStrength);
+
+        // Aplica o impacto na direção 'up' da câmera com intensidade e duração aleatórias
+        impulseSource.GenerateImpulse(Vector3.up * shakeStrength);
+
+        // Pode-se incluir alguma lógica para limitar o tempo ou manipular o efeito de fade out, por exemplo
+    }
+    public void StartShake()
+    {
+        Debug.Log("StartShake");
+        // Ativa o Perlin Noise para o shake
+        perlinNoise.m_FrequencyGain = 1.5f;
+        perlinNoise.m_AmplitudeGain = 1.5f;
+    }
+
+    // Para o shake, restaurando os valores
+    private void StopShake()
+    {
+        Debug.Log("StopShake");
+        perlinNoise.m_AmplitudeGain = 0f;  // Desativa o tremor
+        perlinNoise.m_FrequencyGain = 0f;
     }
 
     private void Update()
