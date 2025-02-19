@@ -168,13 +168,13 @@ public class SmurfCatMovement : MonoBehaviour
     if (context.phase == InputActionPhase.Performed || context.phase == InputActionPhase.Canceled)
     {
         Vector2 moveInput = context.ReadValue<Vector2>();
-        
+        Debug.Log($"Move Input: {moveInput}");
         // Aqui, em vez de multiplicar diretamente por horizontalSpeed, calcule a velocidade com base no movimento
         float moveDeltaX = moveInput.x * horizontalSpeed;  // Aqui, moveInput.x representa a distância percorrida
         targetVelocity = new Vector3(moveDeltaX, rb.velocity.y, rb.velocity.z);
         
         // Agora aplicamos a limitação na velocidade para garantir que ela não ultrapasse o máximo
-        targetVelocity.x = Mathf.Clamp(targetVelocity.x, -maxHorizontalSpeed, maxHorizontalSpeed);
+        // targetVelocity.x = Mathf.Clamp(targetVelocity.x, -maxHorizontalSpeed, maxHorizontalSpeed);
     }
 }
 
