@@ -190,7 +190,13 @@ private void HandleMovement()
     // Verificação para morte do personagem se a velocidade no eixo Y for muito negativa
     if (rb.velocity.y < -maxYSpeed)
     {
-        Die();
+        if (isDead) return;
+        isDead = true;
+        cameraController.OnPlayerDeath();
+        SaveHighScore();
+        ShowLevelEnd();
+        UnityInterstitialAd.Instace.LoadAd();
+
     }
 }
 

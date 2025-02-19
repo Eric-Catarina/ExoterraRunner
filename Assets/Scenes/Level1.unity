@@ -11763,7 +11763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1730516139}
   airborneOffset: {x: 0, y: 12, z: 4}
-  transitionSpeed: 2
+  transitionSpeed: 3
   virtualCameraFollow: {fileID: 0}
   virtualCameraLookAt: {fileID: 0}
   transposer: {fileID: 0}
@@ -13972,7 +13972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5191194302059315777, guid: 40c13b4164e244dfb981b86b4d630070, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
-      value: 0.23529412
+      value: 0.6156863
       objectReference: {fileID: 0}
     - target: {fileID: 5191194302059315777, guid: 40c13b4164e244dfb981b86b4d630070, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].cycleCount
