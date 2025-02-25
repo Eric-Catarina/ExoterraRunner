@@ -24,9 +24,6 @@ public partial class TutorialItem : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToDestroy);
         transform.DOScale(Vector3.zero, 1f).SetEase(Ease.InBack).OnComplete(() => Destroy(gameObject));
-
-        
-        
         
     }
 }

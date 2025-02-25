@@ -125,7 +125,6 @@ public class CameraController : MonoBehaviour
     }
     public void StartShake()
     {
-        Debug.Log("StartShake");
         // Ativa o Perlin Noise para o shake
         perlinNoise.m_FrequencyGain = 1.5f;
         perlinNoise.m_AmplitudeGain = 1.5f;
@@ -134,7 +133,6 @@ public class CameraController : MonoBehaviour
     // Para o shake, restaurando os valores
     private void StopShake()
     {
-        Debug.Log("StopShake");
         perlinNoise.m_AmplitudeGain = 0f;  // Desativa o tremor
         perlinNoise.m_FrequencyGain = 0f;
     }

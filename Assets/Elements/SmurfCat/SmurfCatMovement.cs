@@ -43,6 +43,8 @@ public class SmurfCatMovement : MonoBehaviour
     
     public static event Action onHighFallSpeed;
     public static event Action onGroundImpact;
+    public static event Action onPlayerJump;
+
 
     [Header("Dependencies")]
     public LevelEnd levelEnd;
@@ -260,8 +262,10 @@ private void HandleMovement()
 
     private void PerformJump()
     {
+        if (isDead) return;
         if (!isGrounded) return;
         isGrounded = false;
+        onPlayerJump?.Invoke();
         rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
         audioManager.PlayJumpSound();
         if (isOnJumpSpot)

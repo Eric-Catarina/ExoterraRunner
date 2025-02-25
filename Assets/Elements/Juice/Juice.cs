@@ -53,8 +53,7 @@ public class Juice : MonoBehaviour
     private void OnEnable()
     {
         PlayActivationAnimation();
-        if (animateRotation) PlayRotationAnimation();
-        if (animateVerticalBounce) PlayVerticalBounceAnimation();
+
     }
 
     private void Update()
@@ -65,8 +64,11 @@ public class Juice : MonoBehaviour
         }
     }
 
-    private void PlayActivationAnimation()
+    public void PlayActivationAnimation()
     {
+        gameObject.SetActive(true);
+        if (animateRotation) PlayRotationAnimation();
+        if (animateVerticalBounce) PlayVerticalBounceAnimation();
         if (!animateScale) return;
 
         transform.localScale = Vector3.zero; // Start from zero for the "pop-in" effect

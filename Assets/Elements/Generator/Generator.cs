@@ -239,10 +239,6 @@ public class Generator : MonoBehaviour
     private void ShowBiomeParticle()
     {
         
-        if (biomes[currentBiomeIndex].biomeParticle == null)
-        {
-            return;
-        }
         // Set other particles inactive
         for (int i = 0; i < biomes.Count; i++)
         {
@@ -251,6 +247,10 @@ public class Generator : MonoBehaviour
                 continue;
             }
             biomes[i].biomeParticle.SetActive(false);
+        }
+        if (biomes[currentBiomeIndex].biomeParticle == null)
+        {
+            return;
         }
         biomes[currentBiomeIndex].biomeParticle.SetActive(true);
 
