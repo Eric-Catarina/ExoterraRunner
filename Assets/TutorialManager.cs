@@ -71,13 +71,21 @@ public class TutorialManager : MonoBehaviour
         if (!firstJumpCompleted)
         {
             firstJumpCompleted = true;
-            HideCurrentTutorial();
-
-            currentTutorialIndex++;
-            if (currentTutorialIndex >= tutorialObjects.Length)
+            
+            Juice juice = tutorialObjects[currentTutorialIndex].GetComponent<Juice>();
+            if (juice != null)
             {
-                currentTutorialIndex = tutorialObjects.Length - 1;
+                juice.Deactivate((() =>
+                {
+                    currentTutorialIndex++;
+                    if (currentTutorialIndex >= tutorialObjects.Length)
+                    {
+                        currentTutorialIndex = tutorialObjects.Length - 1;
+                    }
+                }));
             }
+            
+
 
             // Salva o progresso no PlayerPrefs
             tutorialCompletionCount++;
@@ -86,17 +94,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    private void HideCurrentTutorial()
-    {
-        Juice juice = tutorialObjects[currentTutorialIndex].GetComponent<Juice>();
-        if (juice != null)
-        {
-            juice.Deactivate(() => {
-                // Callback após a desativação da animação
-                ActivateNextTutorial();
-            });
-        }
-    }
+
 
     private void ActivateNextTutorial()
     {
