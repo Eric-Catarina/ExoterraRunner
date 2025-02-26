@@ -66,16 +66,45 @@ public class Juice : MonoBehaviour
 
     public void PlayActivationAnimation()
     {
+        // Só aplica a animação se o jogo não estiver pausado
+        if (Time.timeScale == 0)
+        {
+            // Se o jogo estiver pausado, apenas assegura que o objeto está ativo, mas sem alterar a escala.
+            gameObject.SetActive(true);
+            return;
+        }
+
         gameObject.SetActive(true);
-        if (animateRotation) PlayRotationAnimation();
-        if (animateVerticalBounce) PlayVerticalBounceAnimation();
+
+        if (animateRotation)
+            PlayRotationAnimation();
+
+        if (animateVerticalBounce)
+            PlayVerticalBounceAnimation();
+
         if (!animateScale) return;
 
-        transform.localScale = Vector3.zero; // Start from zero for the "pop-in" effect
+        // Salve a escala original antes de começar a animação
+        Vector3 originalScale = transform.localScale;
+
+        // Se o jogo não está pausado, comece com a escala zero para o efeito de "pop-in"
+        transform.localScale = Vector3.zero;
+
+        // Animação suave para aumentar a escala até o tamanho desejado
         transform.DOScale(baseScale * scaleMultiplier, scaleDuration)
             .SetEase(scaleEase)
-            .SetUpdate(shouldAnimateWhilePaused); // Ensures animation runs even when timeScale = 0
+            .SetUpdate(shouldAnimateWhilePaused) // Garante que a animação ocorra mesmo com timeScale = 0
+            .OnKill(() => 
+            {
+                // Quando a animação de aumento terminar, restaura a escala original com uma animação suave
+                transform.DOScale(originalScale, scaleDuration)
+                    .SetEase(scaleEase)  // Usando a mesma easing para consistência
+                    .SetUpdate(shouldAnimateWhilePaused);  // Mantém a animação enquanto o tempo estiver pausado
+            });
     }
+
+
+
 
     public void PlayDeactivationOrDestroyAnimation(System.Action onComplete)
     {
@@ -144,9 +173,14 @@ public class Juice : MonoBehaviour
         objectRenderer.SetPropertyBlock(propBlock);
     }
 
-    public void Deactivate()
+    public void Deactivate(System.Action onComplete = null) 
     {
-        PlayDeactivationOrDestroyAnimation(() => gameObject.SetActive(false));
+        PlayDeactivationOrDestroyAnimation(() =>
+        {
+            onComplete?.Invoke(); 
+            gameObject.SetActive(false);
+        });
+        return;
     }
 
     public void DestroyWithAnimation()

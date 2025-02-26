@@ -5,64 +5,114 @@ public class TutorialManager : MonoBehaviour
 {
     public GameObject[] tutorialObjects;
     private int currentTutorialIndex = 0;
-    private bool firstJumpCompleted = false;  // Flag para garantir que o primeiro pulo avance para o próximo tutorial
+    private bool firstJumpCompleted = false;
+    private int tutorialCompletionCount = 0;  // Contador de quantas vezes o tutorial foi completado
+
+    private const string TutorialCompletionKey = "TutorialCompletionCount";  // Chave para PlayerPrefs
 
     private void OnEnable()
     {
-        SmurfCatMovement.onPlayerJump += NextTutorial;  // Se inscreve no evento de pulo
+        SmurfCatMovement.onPlayerJump += NextTutorial;
     }
 
     private void OnDisable()
     {
-        SmurfCatMovement.onPlayerJump -= NextTutorial;  // Desinscreve do evento para evitar vazamento de memória
+        SmurfCatMovement.onPlayerJump -= NextTutorial;
+    }
+
+    private void Start()
+    {
+        // Recupera o número de vezes que o tutorial foi completado
+        // tutorialCompletionCount = PlayerPrefs.GetInt(TutorialCompletionKey, 0); // Recupera o valor salvo anteriormente
+        tutorialCompletionCount = 0;
     }
 
     void Update()
     {
+        if (tutorialCompletionCount >= 3)  // Verifica se o tutorial já foi completado 3 vezes
+        {
+            // Se o tutorial foi completado 3 vezes, desabilita o tutorial
+            HideAllTutorials();
+            return;
+        }
+
         for (int i = 0; i < tutorialObjects.Length; i++)
         {
             if (i == currentTutorialIndex)
             {
-                // if have Juice Script play PlayActivationAnimation
-                Juice juice = tutorialObjects[i].GetComponent<Juice>();
+                TryGetComponent<Juice>(out Juice juice);
                 if (juice != null)
                 {
+                    // Ativa o tutorial atual com animação
                     juice.PlayActivationAnimation();
                 }
                 else
                 {
                     tutorialObjects[i].SetActive(true);
                 }
-                
             }
             else
             {
-                Juice juice = tutorialObjects[i].GetComponent<Juice>();
+                TryGetComponent<Juice>(out Juice juice);
                 if (juice != null)
                 {
-                    juice.Deactivate();
+                    // Desativa o tutorial anterior com animação
+                    juice.PlayDeactivationOrDestroyAnimation(() =>
+                    {
+                        NextTutorial();
+                    });
                 }
-                tutorialObjects[i].SetActive(false);
             }
         }
     }
 
     private void NextTutorial()
     {
-        // Só avança para o próximo tutorial se o primeiro pulo foi completado
         if (!firstJumpCompleted)
         {
-            // Marca que o primeiro pulo foi completado
             firstJumpCompleted = true;
+            HideCurrentTutorial();
 
-            // Avança para o próximo tutorial
             currentTutorialIndex++;
-
-            // Impede que o índice ultrapasse o número de tutoriais
             if (currentTutorialIndex >= tutorialObjects.Length)
             {
                 currentTutorialIndex = tutorialObjects.Length - 1;
             }
+
+            // Salva o progresso no PlayerPrefs
+            tutorialCompletionCount++;
+            PlayerPrefs.SetInt(TutorialCompletionKey, tutorialCompletionCount); // Salva no PlayerPrefs
+            PlayerPrefs.Save();  // Garante que as alterações no PlayerPrefs sejam salvas
+        }
+    }
+
+    private void HideCurrentTutorial()
+    {
+        Juice juice = tutorialObjects[currentTutorialIndex].GetComponent<Juice>();
+        if (juice != null)
+        {
+            juice.Deactivate(() => {
+                // Callback após a desativação da animação
+                ActivateNextTutorial();
+            });
+        }
+    }
+
+    private void ActivateNextTutorial()
+    {
+        // Ativa o próximo tutorial com animação
+        Juice juice = tutorialObjects[currentTutorialIndex].GetComponent<Juice>();
+        if (juice != null)
+        {
+            juice.PlayActivationAnimation();
+        }
+    }
+
+    private void HideAllTutorials()
+    {
+        foreach (var tutorial in tutorialObjects)
+        {
+            tutorial.SetActive(false);
         }
     }
 }
