@@ -635,7 +635,7 @@ GameObject:
   - component: {fileID: 102553488}
   - component: {fileID: 102553490}
   m_Layer: 5
-  m_Name: TapToStartText
+  m_Name: HoldToStartText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TAP TO START!
+  m_text: HOLD TO START!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 058585b96b7b1aaf18f9faefe13e5a8e, type: 2}
   m_sharedMaterial: {fileID: -1583097599504994453, guid: 058585b96b7b1aaf18f9faefe13e5a8e, type: 2}

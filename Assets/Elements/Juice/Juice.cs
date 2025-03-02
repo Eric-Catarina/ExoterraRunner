@@ -11,6 +11,7 @@ public class Juice : MonoBehaviour
     public float scaleDuration = 0.5f;
     public Ease scaleEase = Ease.OutBack;
     public bool shouldAnimateWhilePaused = true;     // Continue animation even when Time.timeScale = 0
+    private Tween activationTween; // Armazena a referência ao tween de ativação
     private Vector3 baseScale;                 // Stores the original scale of the object
 
     [Header("Deactivation/Destruction Animation Settings")]
@@ -91,16 +92,16 @@ public class Juice : MonoBehaviour
         transform.localScale = Vector3.zero;
 
         // Animação suave para aumentar a escala até o tamanho desejado
-        transform.DOScale(baseScale * scaleMultiplier, scaleDuration)
+        activationTween = transform.DOScale(baseScale * scaleMultiplier, scaleDuration)
             .SetEase(scaleEase)
-            .SetUpdate(shouldAnimateWhilePaused) // Garante que a animação ocorra mesmo com timeScale = 0
-            .OnKill(() => 
-            {
-                // Quando a animação de aumento terminar, restaura a escala original com uma animação suave
-                transform.DOScale(originalScale, scaleDuration)
-                    .SetEase(scaleEase)  // Usando a mesma easing para consistência
-                    .SetUpdate(shouldAnimateWhilePaused);  // Mantém a animação enquanto o tempo estiver pausado
-            });
+            .SetUpdate(shouldAnimateWhilePaused); // Garante que a animação ocorra mesmo com timeScale = 0
+        // .OnKill(() => 
+        // {
+        //     // // Quando a animação de aumento terminar, restaura a escala original com uma animação suave
+        //     // transform.DOScale(originalScale, scaleDuration)
+        //     //     .SetEase(scaleEase)  // Usando a mesma easing para consistência
+        //     //     .SetUpdate(shouldAnimateWhilePaused);  // Mantém a animação enquanto o tempo estiver pausado
+        // });
     }
 
 
@@ -175,6 +176,13 @@ public class Juice : MonoBehaviour
 
     public void Deactivate(System.Action onComplete = null) 
     {
+        
+        if (activationTween != null && activationTween.IsActive())
+        {
+            activationTween.Kill(); // Cancela a animação de ativação
+            activationTween = null; // Reseta a variável
+        }
+        
         PlayDeactivationOrDestroyAnimation(() =>
         {
             onComplete?.Invoke(); 
