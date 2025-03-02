@@ -44,6 +44,8 @@ public class SmurfCatMovement : MonoBehaviour
     public static event Action onHighFallSpeed;
     public static event Action onGroundImpact;
     public static event Action onPlayerJump;
+    public static event Action onPlayerHorizontalSwipe;
+
 
 
     [Header("Dependencies")]
@@ -193,6 +195,8 @@ private void HandleMovement()
         ? Vector3.Lerp(rb.velocity, newVelocity, horizontalSpeed * Time.fixedDeltaTime)
         : Vector3.zero;
 
+    if (Math.Abs(rb.velocity.x) > 15f) onPlayerHorizontalSwipe?.Invoke();
+    
     // Verificação para morte do personagem se a velocidade no eixo Y for muito negativa
     if (rb.velocity.y < -maxYSpeed)
     {

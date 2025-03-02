@@ -18,6 +18,7 @@ public class TutorialManager : MonoBehaviour
     private void OnDisable()
     {
         SmurfCatMovement.onPlayerJump -= HandlePlayerJump;  // Desinscreve do evento de pulo do jogador
+        SmurfCatMovement.onPlayerHorizontalSwipe -= HandlePlayerHorizontalMovement;
     }
 
     private void Start()
@@ -30,20 +31,21 @@ public class TutorialManager : MonoBehaviour
         {
             HideAllTutorials();
         }
-        else
-        {
-            ShowCurrentTutorial();
-        }
     }
 
     private void HandlePlayerJump()
     {
         // Quando o jogador pular, avançamos para o próximo tutorial (se o primeiro pulo foi completado)
-        if (!firstJumpCompleted)
-        {
+            SmurfCatMovement.onPlayerJump -= HandlePlayerJump;  // Desinscreve do evento de pulo do jogador
             firstJumpCompleted = true;
             MoveToNextTutorial();
-        }
+        
+    }
+    
+    private void HandlePlayerHorizontalMovement()
+    {
+        SmurfCatMovement.onPlayerHorizontalSwipe -= HandlePlayerHorizontalMovement;
+        MoveToNextTutorial();
     }
 
     private void MoveToNextTutorial()
@@ -54,6 +56,7 @@ public class TutorialManager : MonoBehaviour
         {
             juice.PlayDeactivationOrDestroyAnimation(() =>
             {
+                Debug.Log("Desativando tutorial");
                 // Avança para o próximo tutorial após a animação de desativação
                 currentTutorialIndex++;
                 ShowCurrentTutorial();
@@ -70,6 +73,8 @@ public class TutorialManager : MonoBehaviour
     {
         // Exibe o tutorial atual com animação de ativação
         if (currentTutorialIndex >= tutorialObjects.Length) return;
+        if (currentTutorialIndex == 1) SmurfCatMovement.onPlayerHorizontalSwipe += HandlePlayerHorizontalMovement;  // Se inscreve no evento de pulo do jogador
+
 
         Juice juice = tutorialObjects[currentTutorialIndex].GetComponent<Juice>();
         if (juice != null)
@@ -84,6 +89,7 @@ public class TutorialManager : MonoBehaviour
 
     private void HideAllTutorials()
     {
+        return;
         // Desativa todos os tutoriais
         foreach (var tutorial in tutorialObjects)
         {

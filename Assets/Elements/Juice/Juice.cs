@@ -67,6 +67,7 @@ public class Juice : MonoBehaviour
 
     public void PlayActivationAnimation()
     {
+
         // Só aplica a animação se o jogo não estiver pausado
         if (Time.timeScale == 0)
         {
@@ -93,15 +94,7 @@ public class Juice : MonoBehaviour
 
         // Animação suave para aumentar a escala até o tamanho desejado
         activationTween = transform.DOScale(baseScale * scaleMultiplier, scaleDuration)
-            .SetEase(scaleEase)
-            .SetUpdate(shouldAnimateWhilePaused); // Garante que a animação ocorra mesmo com timeScale = 0
-        // .OnKill(() => 
-        // {
-        //     // // Quando a animação de aumento terminar, restaura a escala original com uma animação suave
-        //     // transform.DOScale(originalScale, scaleDuration)
-        //     //     .SetEase(scaleEase)  // Usando a mesma easing para consistência
-        //     //     .SetUpdate(shouldAnimateWhilePaused);  // Mantém a animação enquanto o tempo estiver pausado
-        // });
+            .SetEase(scaleEase);
     }
 
 
@@ -109,6 +102,7 @@ public class Juice : MonoBehaviour
 
     public void PlayDeactivationOrDestroyAnimation(System.Action onComplete)
     {
+        Debug.Log("PlayDeactivationOrDestroyAnimation");
         if (!animateOnDeactivateOrDestroy)
         {
             onComplete?.Invoke();
@@ -122,6 +116,7 @@ public class Juice : MonoBehaviour
             .OnComplete(() =>
             {
                 onComplete?.Invoke();
+                gameObject.SetActive(false);
             });
 
         // Optional: Fade out if material allows
@@ -186,7 +181,6 @@ public class Juice : MonoBehaviour
         PlayDeactivationOrDestroyAnimation(() =>
         {
             onComplete?.Invoke(); 
-            gameObject.SetActive(false);
         });
         return;
     }
