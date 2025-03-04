@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using DG.Tweening;
@@ -8,6 +9,7 @@ public class CameraController : MonoBehaviour
     private Vector3 groundedOffset = new Vector3(0, 5, -10);
     [SerializeField] private Vector3 airborneOffset = new Vector3(0, 8, -12);
     [SerializeField] private float transitionSpeed = 1f;
+    [SerializeField] private List<CinemachineVirtualCameraBase> virtualCameras;
     [SerializeField] private GameObject virtualCameraFollow;
     [SerializeField] private GameObject virtualCameraLookAt;
     [SerializeField] private CinemachineImpulseSource impulseSource;
@@ -38,7 +40,7 @@ public class CameraController : MonoBehaviour
         virtualCameraFollow = transposer.FollowTarget.gameObject;
 
         groundedOffset = transposer.m_FollowOffset;
-        airborneOffset = new Vector3(groundedOffset.x + airborneOffset.x, groundedOffset.y + airborneOffset.y, groundedOffset.z + airborneOffset.z);
+        // airborneOffset = new Vector3(groundedOffset.x + airborneOffset.x, groundedOffset.y + airborneOffset.y, groundedOffset.z + airborneOffset.z);
         if (virtualCamera == null)
         {
             Debug.LogError("Cinemachine Virtual Camera is not assigned.");
@@ -66,6 +68,7 @@ public class CameraController : MonoBehaviour
     public void SetAirborne(bool airborne)
     {
         isAirborne = airborne;
+        // virtualCameras[1].Priority = isAirborne ? 11 : 0;
     }
 
     // Função chamada quando o personagem morre
