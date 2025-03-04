@@ -24,6 +24,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float maxShakeDuration = 0.5f;  // Duração máxima do shake
     [SerializeField] private float minShakeStrength = 1f;     // Intensidade mínima do shake
     [SerializeField] private float maxShakeStrength = 3f;     // Intensidade máxima do shake
+    
+    [SerializeField] private float bumpStrength = 1f;
 
     private bool isDead = false;  // Flag para saber se o personagem está morto
 
@@ -116,10 +118,10 @@ public class CameraController : MonoBehaviour
     {
         // Gera a duração e intensidade aleatórias dentro dos intervalos definidos
         float shakeDuration = Random.Range(minShakeDuration, maxShakeDuration);
-        float shakeStrength = Random.Range(minShakeStrength, maxShakeStrength);
+        bumpStrength = Random.Range(bumpStrength * 0.7f, bumpStrength * 1.3f);
 
         // Aplica o impacto na direção 'up' da câmera com intensidade e duração aleatórias
-        impulseSource.GenerateImpulse(Vector3.up * shakeStrength);
+        impulseSource.GenerateImpulse(Vector3.up * bumpStrength);
 
         // Pode-se incluir alguma lógica para limitar o tempo ou manipular o efeito de fade out, por exemplo
     }

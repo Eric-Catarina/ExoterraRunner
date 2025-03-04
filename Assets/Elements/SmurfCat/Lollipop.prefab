@@ -397,7 +397,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2263158387367087079}
   - component: {fileID: 1793246209280157399}
-  - component: {fileID: 1793246209280157398}
   - component: {fileID: 1793246209280157396}
   - component: {fileID: 1793246209280157385}
   - component: {fileID: 1335977238284424984}
@@ -444,19 +443,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!65 &1793246209280157398
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1451155497926676829}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 3, z: 1.4273773}
-  m_Center: {x: 5.160133e-16, y: 1.5, z: 0.21368873}
 --- !u!95 &1793246209280157396
 Animator:
   serializedVersion: 5
@@ -544,20 +530,33 @@ MonoBehaviour:
   maxHorizontalSpeed: 15
   loseScreen: {fileID: 0}
   fallingVFX: {fileID: 0}
+  groundScorchVFX: {fileID: 0}
   fallExplosionVFX: {fileID: 0}
-  isGrounded: 0
-  rb: {fileID: 0}
-  maxYSpeed: -20
-  levelEnd: {fileID: 0}
-  generator: {fileID: 0}
-  grounds: {fileID: 0}
-  cameraController: {fileID: 0}
   jumpSpotText: {fileID: 0}
+  grounds: {fileID: 0}
+  scoreText: {fileID: 0}
+  scoreMultiplierText: {fileID: 0}
+  highScoreText: {fileID: 0}
+  fallingVfxFadeInDuration: 0
+  fallingVfxFadeOutDuration: 0
+  revivePanel: {fileID: 0}
+  halo: {fileID: 0}
   minHitstopDuration: 0.05
   maxHitstopDuration: 0.3
   minHitstopIntensity: 0.2
   maxHitstopIntensity: 0
   maxVelocityForScaling: 120
+  levelEnd: {fileID: 0}
+  generator: {fileID: 0}
+  cameraController: {fileID: 0}
+  rb: {fileID: 0}
+  maxYSpeed: -20
+  adsManager: {fileID: 0}
+  moveForward: {fileID: 0}
+  isGrounded: 0
+  OnRevive:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4287244898372680630
 MonoBehaviour:
   m_ObjectHideFlags: 0

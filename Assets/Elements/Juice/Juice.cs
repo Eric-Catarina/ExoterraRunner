@@ -94,7 +94,8 @@ public class Juice : MonoBehaviour
 
         // Animação suave para aumentar a escala até o tamanho desejado
         activationTween = transform.DOScale(baseScale * scaleMultiplier, scaleDuration)
-            .SetEase(scaleEase);
+            .SetEase(scaleEase)
+            .SetUpdate(shouldAnimateWhilePaused);
     }
 
 

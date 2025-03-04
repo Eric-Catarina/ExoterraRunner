@@ -21,6 +21,7 @@ public class SmurfCatMovement : MonoBehaviour
     [Header("Game Objects")]
     public GameObject loseScreen;
     public GameObject fallingVFX;
+    public GameObject groundScorchVFX;
     public GameObject fallExplosionVFX;
     public GameObject jumpSpotText;
     public GameObject grounds;
@@ -350,6 +351,7 @@ private void HandleMovement()
         TriggerHitstopEffect();
         animator.SetBool("Falling", false);
         isFallingHighSpeed = false;
+        Handheld.Vibrate();
         onGroundImpact?.Invoke();
     }
 
@@ -365,6 +367,11 @@ private void HandleMovement()
         explosion.transform.SetParent(grounds.transform);
         explosion.transform.position += Vector3.up * 2.5f;
         Destroy(explosion, 3.3f);
+        
+        var groundExplosion = Instantiate(groundScorchVFX, transform.position, Quaternion.identity);
+        groundExplosion.transform.SetParent(grounds.transform);
+        groundExplosion.transform.position += Vector3.up * 1.5f;
+        Destroy(groundExplosion, 3.3f);
     }
 
     private void PlayImpactAudio()
