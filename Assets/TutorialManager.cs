@@ -4,6 +4,8 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
     public GameObject[] tutorialObjects;
+    public GameObject tutorialPanel;
+    public PauseMenu pauseMenu;
     private int currentTutorialIndex = 0;
     private bool firstJumpCompleted = false;
     private int tutorialCompletionCount = 0;
@@ -31,14 +33,19 @@ public class TutorialManager : MonoBehaviour
         {
             HideAllTutorials();
         }
+        Invoke("ShowCurrentTutorial",2f);
     }
 
     private void HandlePlayerJump()
     {
         // Quando o jogador pular, avançamos para o próximo tutorial (se o primeiro pulo foi completado)
-            SmurfCatMovement.onPlayerJump -= HandlePlayerJump;  // Desinscreve do evento de pulo do jogador
             firstJumpCompleted = true;
-            MoveToNextTutorial();
+            Unpause();
+            HideTutorialPanel();
+            HideAllTutorials();
+            Invoke("MoveToNextTutorial", 2f);
+            // MoveToNextTutorial();
+            SmurfCatMovement.onPlayerJump -= HandlePlayerJump;  // Desinscreve do evento de pulo do jogador
         
     }
     
@@ -73,6 +80,7 @@ public class TutorialManager : MonoBehaviour
     {
         // Exibe o tutorial atual com animação de ativação
         if (currentTutorialIndex >= tutorialObjects.Length) return;
+        ShowTutorialPanel();
         if (currentTutorialIndex == 1) SmurfCatMovement.onPlayerHorizontalSwipe += HandlePlayerHorizontalMovement;  // Se inscreve no evento de pulo do jogador
 
 
@@ -80,6 +88,7 @@ public class TutorialManager : MonoBehaviour
         if (juice != null)
         {
             juice.PlayActivationAnimation();
+            Pause();
         }
         else
         {
@@ -89,11 +98,33 @@ public class TutorialManager : MonoBehaviour
 
     private void HideAllTutorials()
     {
-        return;
         // Desativa todos os tutoriais
         foreach (var tutorial in tutorialObjects)
         {
             tutorial.GetComponent<Juice>().Deactivate();
         }
     }
+    
+    // disable movefoward until player jumps
+    private void Pause()
+    {
+        pauseMenu.PauseGame();
+    }
+    private void Unpause()
+    {
+        pauseMenu.UnpauseGame();
+    }
+    
+    private void ShowTutorialPanel()
+    {
+        tutorialPanel.GetComponent<Juice>().PlayActivationAnimation();
+    }
+    
+    private void HideTutorialPanel()
+    {
+        
+        tutorialPanel.GetComponent<Juice>().Deactivate();
+        
+    }
+    
 }

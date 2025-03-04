@@ -94,8 +94,8 @@ public class Juice : MonoBehaviour
 
         // Animação suave para aumentar a escala até o tamanho desejado
         activationTween = transform.DOScale(baseScale * scaleMultiplier, scaleDuration)
-            .SetEase(scaleEase)
-            .SetUpdate(shouldAnimateWhilePaused);
+            .SetUpdate(UpdateType.Normal, true)
+            .SetEase(scaleEase);
     }
 
 
@@ -103,7 +103,6 @@ public class Juice : MonoBehaviour
 
     public void PlayDeactivationOrDestroyAnimation(System.Action onComplete)
     {
-        Debug.Log("PlayDeactivationOrDestroyAnimation");
         if (!animateOnDeactivateOrDestroy)
         {
             onComplete?.Invoke();
@@ -148,7 +147,7 @@ public class Juice : MonoBehaviour
         transform.DORotate(rotationAxis, rotationDuration, RotateMode.LocalAxisAdd)
             .SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Incremental)
-            .SetUpdate(shouldAnimateWhilePaused); // Ensures animation runs even when timeScale = 0
+            .SetUpdate(UpdateType.Normal, true); // Ensures animation runs even when timeScale = 0
     }
 
     private void PlayVerticalBounceAnimation()
@@ -157,7 +156,7 @@ public class Juice : MonoBehaviour
         transform.DOMoveY(startY + bounceHeight, bounceDuration)
             .SetEase(bounceEase)
             .SetLoops(-1, LoopType.Yoyo)
-            .SetUpdate(shouldAnimateWhilePaused); // Ensures animation runs even when timeScale = 0
+            .SetUpdate(UpdateType.Normal, true); // Ensures animation runs even when timeScale = 0
     }
 
     private void ApplyRainbowEffect()
