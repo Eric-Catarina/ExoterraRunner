@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class BiomeData
@@ -42,6 +44,16 @@ public class Generator : MonoBehaviour
 
     [SerializeField] private GameObject lastElement, nextElement;
 
+    private void OnEnable()
+    {
+        TutorialManager.onTutorialsFinished += ShowBiomeName;
+    }
+    
+    private void OnDisable()
+    {
+        TutorialManager.onTutorialsFinished -= ShowBiomeName;
+    }
+
     private void Start()
     {
         initialZPosition = transform.position.z;
@@ -49,7 +61,7 @@ public class Generator : MonoBehaviour
         if (biomes.Count > 0)
         {
             currentTracks = biomes[currentBiomeIndex].tracks; // Define as pistas iniciais
-            ShowBiomeName();
+            // ShowBiomeName();
         }
         else
         {

@@ -30,6 +30,12 @@ public class Juice : MonoBehaviour
     public float bounceHeight = 0.5f;          // Height of the bounce
     public float bounceDuration = 1f;
     public Ease bounceEase = Ease.InOutSine;
+    
+    [Header("Horizontal Bounce Animation Settings")]
+    public bool animateHorizontalBounce = false;
+    public float horizontalBounceDistance = 1f;  // How far it moves on X axis
+    public float horizontalBounceDuration = 1f;
+    public Ease horizontalBounceEase = Ease.InOutSine;
 
     [Header("Rainbow Mode Settings")]
     public bool rainbowMode = false;           // Activates rainbow color cycling mode
@@ -82,7 +88,10 @@ public class Juice : MonoBehaviour
             PlayRotationAnimation();
 
         if (animateVerticalBounce)
-            PlayVerticalBounceAnimation();
+            PlayBounceAnimation();
+        
+        if (animateHorizontalBounce)
+            PlayBounceAnimation();
 
         if (!animateScale) return;
 
@@ -150,13 +159,33 @@ public class Juice : MonoBehaviour
             .SetUpdate(UpdateType.Normal, true); // Ensures animation runs even when timeScale = 0
     }
 
-    private void PlayVerticalBounceAnimation()
+    private void PlayBounceAnimation()
     {
-        float startY = transform.position.y;
-        transform.DOMoveY(startY + bounceHeight, bounceDuration)
-            .SetEase(bounceEase)
-            .SetLoops(-1, LoopType.Yoyo)
-            .SetUpdate(UpdateType.Normal, true); // Ensures animation runs even when timeScale = 0
+        // Vertical Bounce
+        if (animateVerticalBounce)
+        {
+            float startY = transform.position.y;
+            transform.DOMoveY(startY + bounceHeight, bounceDuration)
+                .SetEase(bounceEase)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetUpdate(UpdateType.Normal, true);
+        }
+
+        // Horizontal Bounce (opcional)
+        if (animateHorizontalBounce)
+        {
+            float startX = transform.position.x;
+            // Cria uma sequência para movimentar de forma simétrica: direita -> esquerda -> centro
+            Sequence horizontalSequence = DOTween.Sequence();
+            horizontalSequence.Append(transform.DOMoveX(startX + horizontalBounceDistance, horizontalBounceDuration / 2)
+                .SetEase(horizontalBounceEase));
+            horizontalSequence.Append(transform.DOMoveX(startX - horizontalBounceDistance, horizontalBounceDuration)
+                .SetEase(horizontalBounceEase));
+            horizontalSequence.Append(transform.DOMoveX(startX, horizontalBounceDuration / 2)
+                .SetEase(horizontalBounceEase));
+            horizontalSequence.SetLoops(-1)
+                .SetUpdate(UpdateType.Normal, true);
+        }
     }
 
     private void ApplyRainbowEffect()

@@ -189,7 +189,7 @@ public class SmurfCatMovement : MonoBehaviour
         // Aqui, em vez de multiplicar diretamente por horizontalSpeed, calcule a velocidade com base no movimento
         float moveDeltaX = moveInput.x * horizontalSpeed;  // Aqui, moveInput.x representa a distância percorrida
         targetVelocity = new Vector3(moveDeltaX, rb.velocity.y, rb.velocity.z);
-        if (Math.Abs(moveDeltaX) > 5f) onPlayerHorizontalSwipe?.Invoke();
+        if (Math.Abs(moveInput.x) > 15f) onPlayerHorizontalSwipe?.Invoke();
 
         // Agora aplicamos a limitação na velocidade para garantir que ela não ultrapasse o máximo
         // targetVelocity.x = Mathf.Clamp(targetVelocity.x, -maxHorizontalSpeed, maxHorizontalSpeed);

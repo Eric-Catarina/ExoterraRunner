@@ -10,6 +10,8 @@ public class TutorialManager : MonoBehaviour
     private bool firstJumpCompleted = false;
     private int tutorialCompletionCount = 0;
     public static event Action onFirstTutorialStarted;
+    public static event Action onTutorialsFinished;
+
 
 
     private const string TutorialCompletionKey = "TutorialCompletionCount";  // Chave para PlayerPrefs
@@ -56,6 +58,7 @@ public class TutorialManager : MonoBehaviour
         Unpause();
         HideTutorialPanel();
         HideTutorial(1);
+        onTutorialsFinished?.Invoke();
     }
 
     private void MoveToNextTutorial()
