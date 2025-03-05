@@ -9,12 +9,14 @@ public class TutorialManager : MonoBehaviour
     private int currentTutorialIndex = 0;
     private bool firstJumpCompleted = false;
     private int tutorialCompletionCount = 0;
+    public static event Action onFirstTutorialStarted;
+
 
     private const string TutorialCompletionKey = "TutorialCompletionCount";  // Chave para PlayerPrefs
 
     private void OnEnable()
     {
-        SmurfCatMovement.onPlayerJump += HandlePlayerJump;  // Se inscreve no evento de pulo do jogador
+        // SmurfCatMovement.onPlayerJump += HandlePlayerJump;  // Se inscreve no evento de pulo do jogador
     }
 
     private void OnDisable()
@@ -31,7 +33,7 @@ public class TutorialManager : MonoBehaviour
         // Se o tutorial já foi completado 3 vezes, desativa todos os tutoriais.
         if (tutorialCompletionCount >= 3)
         {
-            HideAllTutorials();
+            // HideAllTutorials();
         }
         Invoke("ShowCurrentTutorial",2f);
     }
@@ -39,10 +41,9 @@ public class TutorialManager : MonoBehaviour
     private void HandlePlayerJump()
     {
         // Quando o jogador pular, avançamos para o próximo tutorial (se o primeiro pulo foi completado)
-            firstJumpCompleted = true;
             Unpause();
             HideTutorialPanel();
-            HideAllTutorials();
+            HideTutorial(0);
             Invoke("MoveToNextTutorial", 2f);
             // MoveToNextTutorial();
             SmurfCatMovement.onPlayerJump -= HandlePlayerJump;  // Desinscreve do evento de pulo do jogador
@@ -52,22 +53,19 @@ public class TutorialManager : MonoBehaviour
     private void HandlePlayerHorizontalMovement()
     {
         SmurfCatMovement.onPlayerHorizontalSwipe -= HandlePlayerHorizontalMovement;
-        MoveToNextTutorial();
+        Unpause();
+        HideTutorialPanel();
+        HideTutorial(1);
     }
 
     private void MoveToNextTutorial()
     {
         // Desativa o tutorial atual e avança para o próximo
+        currentTutorialIndex++;
         Juice juice = tutorialObjects[currentTutorialIndex].GetComponent<Juice>();
         if (juice != null)
         {
-            juice.PlayDeactivationOrDestroyAnimation(() =>
-            {
-                Debug.Log("Desativando tutorial");
-                // Avança para o próximo tutorial após a animação de desativação
-                currentTutorialIndex++;
-                ShowCurrentTutorial();
-            });
+            ShowCurrentTutorial();
         }
 
         // Salva o progresso do tutorial no PlayerPrefs
@@ -81,27 +79,29 @@ public class TutorialManager : MonoBehaviour
         // Exibe o tutorial atual com animação de ativação
         if (currentTutorialIndex >= tutorialObjects.Length) return;
         ShowTutorialPanel();
+        
+        if (currentTutorialIndex == 0){
+            SmurfCatMovement.onPlayerJump += HandlePlayerJump;  // Se inscreve no evento de pulo do jogador
+            onFirstTutorialStarted?.Invoke();
+        }
+
         if (currentTutorialIndex == 1) SmurfCatMovement.onPlayerHorizontalSwipe += HandlePlayerHorizontalMovement;  // Se inscreve no evento de pulo do jogador
-
-
+        
         Juice juice = tutorialObjects[currentTutorialIndex].GetComponent<Juice>();
         if (juice != null)
         {
             juice.PlayActivationAnimation();
-            Pause();
         }
-        else
-        {
-            // tutorialObjects[currentTutorialIndex].SetActive(true);
-        }
+
+        Pause();
     }
 
-    private void HideAllTutorials()
+    private void HideTutorial(int index)
     {
-        // Desativa todos os tutoriais
-        foreach (var tutorial in tutorialObjects)
+        Juice juice = tutorialObjects[index].GetComponent<Juice>();
+        if (juice != null)
         {
-            tutorial.GetComponent<Juice>().Deactivate();
+            juice.Deactivate();
         }
     }
     

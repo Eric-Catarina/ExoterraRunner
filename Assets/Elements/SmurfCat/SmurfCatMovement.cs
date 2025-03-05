@@ -78,6 +78,7 @@ public class SmurfCatMovement : MonoBehaviour
     private AudioManager audioManager;
     private bool _isFallingFXActive;
     private bool _isImmortal = false;
+    private bool _canAlrealdyJump = false;
 
 
     #region Unity Lifecycle
@@ -91,11 +92,18 @@ public class SmurfCatMovement : MonoBehaviour
     private void OnEnable()
     {
         playerInput.actions.Enable();
+        TutorialManager.onFirstTutorialStarted += OnFirstTutorialStarted;
+        void OnFirstTutorialStarted()
+        {
+            _canAlrealdyJump = true;
+            TutorialManager.onFirstTutorialStarted -= OnFirstTutorialStarted;
+        }
     }
 
     private void OnDisable()
     {
         playerInput.actions.Disable();
+        
     }
 
     private void FixedUpdate()
@@ -181,7 +189,8 @@ public class SmurfCatMovement : MonoBehaviour
         // Aqui, em vez de multiplicar diretamente por horizontalSpeed, calcule a velocidade com base no movimento
         float moveDeltaX = moveInput.x * horizontalSpeed;  // Aqui, moveInput.x representa a distância percorrida
         targetVelocity = new Vector3(moveDeltaX, rb.velocity.y, rb.velocity.z);
-        
+        if (Math.Abs(moveDeltaX) > 5f) onPlayerHorizontalSwipe?.Invoke();
+
         // Agora aplicamos a limitação na velocidade para garantir que ela não ultrapasse o máximo
         // targetVelocity.x = Mathf.Clamp(targetVelocity.x, -maxHorizontalSpeed, maxHorizontalSpeed);
     }
@@ -196,7 +205,6 @@ private void HandleMovement()
         ? Vector3.Lerp(rb.velocity, newVelocity, horizontalSpeed * Time.fixedDeltaTime)
         : Vector3.zero;
 
-    if (Math.Abs(rb.velocity.x) > 15f) onPlayerHorizontalSwipe?.Invoke();
     
     // Verificação para morte do personagem se a velocidade no eixo Y for muito negativa
     if (rb.velocity.y < -maxYSpeed)
@@ -238,6 +246,7 @@ private void HandleMovement()
         // Verifica se o swipe é significativo
         if (swipeDelta.magnitude > 15f) // Ajuste o valor conforme necessário
         {
+
             float verticalSwipe = Mathf.Abs(swipeDelta.y);
             float horizontalSwipe = Mathf.Abs(swipeDelta.x);
 
@@ -267,10 +276,13 @@ private void HandleMovement()
 
     private void PerformJump()
     {
+        if (!_canAlrealdyJump) return;
         if (isDead) return;
         if (!isGrounded) return;
-        isGrounded = false;
+        
         onPlayerJump?.Invoke();
+
+        isGrounded = false;
         rb.AddForce(Vector3.up * jumpStrength, ForceMode.Impulse);
         audioManager.PlayJumpSound();
         if (isOnJumpSpot)

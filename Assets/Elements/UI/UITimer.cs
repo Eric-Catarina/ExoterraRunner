@@ -53,7 +53,7 @@ public class UITimer : MonoBehaviour
     public void ResetTimer()
     {
         timer = timerDuration;  // Restaura o tempo total
-        radialTimerImage.fillAmount = 1f;  // Restaura o preenchimento do radial timer
+        radialTimerImage.fillAmount = 0.3f;  // Restaura o preenchimento do radial timer
 
         if (timerText != null)
         {
