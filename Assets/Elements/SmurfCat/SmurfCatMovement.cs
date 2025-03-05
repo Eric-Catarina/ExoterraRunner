@@ -78,7 +78,7 @@ public class SmurfCatMovement : MonoBehaviour
     private AudioManager audioManager;
     private bool _isFallingFXActive;
     private bool _isImmortal = false;
-    private bool _canAlrealdyJump = false;
+    [SerializeField] private bool _canAlrealdyJump = false;
 
 
     #region Unity Lifecycle
