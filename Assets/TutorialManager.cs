@@ -46,11 +46,11 @@ public class TutorialManager : MonoBehaviour
             Unpause();
             HideTutorialPanel();
             HideTutorial(0);
-            Invoke("MoveToNextTutorial", 2f);
+            Invoke("MoveToNextTutorial", 1.5f);
             // MoveToNextTutorial();
             SmurfCatMovement.onPlayerJump -= HandlePlayerJump;  // Desinscreve do evento de pulo do jogador
-        
     }
+    
     
     private void HandlePlayerHorizontalMovement()
     {
@@ -61,7 +61,8 @@ public class TutorialManager : MonoBehaviour
         onTutorialsFinished?.Invoke();
     }
 
-    private void MoveToNextTutorial()
+
+    public void MoveToNextTutorial()
     {
         // Desativa o tutorial atual e avança para o próximo
         currentTutorialIndex++;

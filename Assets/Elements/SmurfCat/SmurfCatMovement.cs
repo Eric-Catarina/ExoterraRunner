@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -25,6 +26,7 @@ public class SmurfCatMovement : MonoBehaviour
     public GameObject fallExplosionVFX;
     public GameObject jumpSpotText;
     public GameObject grounds;
+    public List<TrailRenderer> fallingTrails;
 
     [Header("UI Elements")]
     public TextMeshProUGUI scoreText;
@@ -144,12 +146,16 @@ public class SmurfCatMovement : MonoBehaviour
         {
             generator.Generate();
             cameraController.SetAirborne(true);
+            OnGroundEnd?.Invoke();
+            
         }
         else if (other.CompareTag(Tags.JumpSpot))
         {
             isOnJumpSpot = true;
         }
     }
+
+    public UnityEvent OnGroundEnd;
 
     private void OnTriggerExit(Collider other)
     {
@@ -287,9 +293,11 @@ private void HandleMovement()
         audioManager.PlayJumpSound();
         if (isOnJumpSpot)
         {
+            animator.SetTrigger("JumpRoll");
+
             ProcessJumpSpot();
         }
-        if (animator != null)
+        else
         {
             animator.SetTrigger("Jump");
         }
@@ -400,7 +408,6 @@ private void HandleMovement()
     private void EnteredHighFallSpeed()
     {
         if (isFallingHighSpeed) return;
-        Debug.Log("EnteredHighFallSpeed");
         onHighFallSpeed?.Invoke();
     }
     private void CheckFallingState()
@@ -413,11 +420,13 @@ private void HandleMovement()
             hadHighFallSpeed = true;
             audioManager.PlayFallingAudio();
             animator.SetBool("Falling", true);
+            ActivateFallingTrails();
         }
         else
         {
             isFallingHighSpeed = false;
             fallingVFX.SetActive(false);
+            DeactivateFallingTrails();
         }
     }
     private void ActivateFallingVFX()
@@ -462,6 +471,15 @@ private void HandleMovement()
                 fallingVFX.SetActive(false);
                 _isFallingFXActive = false;
             });
+    }
+    
+    private void ActivateFallingTrails()
+    {
+        fallingTrails.ForEach(trail => trail.emitting = true);
+    }
+    private void DeactivateFallingTrails()
+    {
+        fallingTrails.ForEach(trail => trail.emitting = false);
     }
 
     #endregion
