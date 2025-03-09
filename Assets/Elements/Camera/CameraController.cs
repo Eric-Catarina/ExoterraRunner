@@ -155,7 +155,7 @@ public class CameraController : MonoBehaviour
         transposer.m_FollowOffset = Vector3.Lerp(
             transposer.m_FollowOffset,
             targetOffset,
-            Time.deltaTime * transitionSpeed
+            Time.deltaTime * transitionSpeed 
         );
     }
 }

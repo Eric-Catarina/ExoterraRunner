@@ -175,6 +175,8 @@ public class SmurfCatMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         audioManager = FindObjectOfType<AudioManager>();
         animator = GetComponent<Animator>();
+        horizontalSpeed = PlayerPrefs.GetFloat(PlayerPrefsKeys.MovementSensitivity, 2.5f);
+
     }
 
     private void LoadHighScore()
@@ -223,6 +225,12 @@ private void HandleMovement()
         UnityInterstitialAd.Instace.LoadAd();
 
     }
+}
+
+public void SetMovementSensitivity(float sensitivity)
+{
+    horizontalSpeed = sensitivity;
+    PlayerPrefs.SetFloat(PlayerPrefsKeys.MovementSensitivity, sensitivity);
 }
 
     #endregion
@@ -370,6 +378,8 @@ private void HandleMovement()
         PlayImpactAudio();
         TriggerHitstopEffect();
         animator.SetBool("Falling", false);
+        animator.SetTrigger("HeroLand");
+
         isFallingHighSpeed = false;
         Handheld.Vibrate();
         onGroundImpact?.Invoke();
@@ -615,5 +625,7 @@ private void HandleMovement()
     private static class PlayerPrefsKeys
     {
         public const string HighScore = "HighScore";
+        public const string MovementSensitivity = "MovementSensitivity";
+
     }
 }
