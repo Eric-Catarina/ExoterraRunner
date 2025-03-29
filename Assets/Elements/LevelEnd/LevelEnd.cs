@@ -9,6 +9,7 @@ public class LevelEnd : MonoBehaviour
     [SerializeField] private GameObject levelEndOverlay;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TextMeshProUGUI levelEndText;
+    public AudioManager audioManager;
 
     private readonly List<string> phrases = new List<string>
     {
@@ -46,6 +47,8 @@ public class LevelEnd : MonoBehaviour
 
     public void Start()
     {
+        audioManager.StopFallingAudio();
+        audioManager.PlayDeathSound();
         EndLevel();
     }
 

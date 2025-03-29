@@ -227,7 +227,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6076971467004703933, guid: ca741aa0e7eaf2b469a6dc4702e7fbe0, type: 2}
-  m_audioClip: {fileID: 8300000, guid: b33079267bcf2a74995c6c8b5ff3d45e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7f994d6d2bd9f6486957e38c70bd028d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -9348,7 +9348,6 @@ MonoBehaviour:
   levelEndOverlay: {fileID: 1210751975}
   canvasGroup: {fileID: 1210751980}
   levelEndText: {fileID: 1689470845}
-  audioManager: {fileID: 1493886461}
 --- !u!114 &1210751978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10391,11 +10390,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 1349226544411170020, guid: ca741aa0e7eaf2b469a6dc4702e7fbe0, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: dd43de6efb6c8e66d9c4b0cb12bb3b63, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -10913,8 +10912,6 @@ MonoBehaviour:
   sfx:
   - {fileID: 8300000, guid: 0d763a8546a30655ea403198776be9c9, type: 3}
   - {fileID: 8300000, guid: 0ec70961b96c784ebb12cc30edea3d80, type: 3}
-  - {fileID: 8300000, guid: ac9edccf356bb7a4fa1dc8a91b7a6c9b, type: 3}
-  - {fileID: 8300000, guid: 84eb87cdea9a12b4ab941c403982345f, type: 3}
   sondTrack: []
   impactSounds:
   - {fileID: 8300000, guid: dd43de6efb6c8e66d9c4b0cb12bb3b63, type: 3}

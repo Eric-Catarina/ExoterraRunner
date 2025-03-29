@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Audio;
 using Random = UnityEngine.Random;
@@ -16,16 +17,32 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private float maxPitch = 1.2f; // Max pitch range
 
     [Header("--- Clips ---")]
-    [SerializeField] public AudioClip[] audioClips;
+    [SerializeField] public AudioClip[] sfx;
+    [SerializeField] public AudioClip[] sondTrack;
     [SerializeField] private List<AudioClip> impactSounds; // List of impact sounds
 
     [SerializeField] private PauseMenu pauseMenu;
+    bool alreadyPlayed = false;
+    bool deathMarch = false;
 
+    private void Awake()
+    {
+        if (!alreadyPlayed)
+        {
+            musicSource.Play();
+            alreadyPlayed = true;
+        }
+    }
     void Start()
     {
         pauseMenu.Initialize();
-        PlaySFX(audioClips[0]);
         Coin.OnCoinCollected += PlayCoinAudio;
+    }
+
+    IEnumerator Chronos()
+    {
+        yield return new WaitForSeconds(1);
+        ResumeSong();
     }
 
     public void PlaySFX(AudioClip clip)
@@ -49,7 +66,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlayCoinAudio()
     {
-        PlaySFX(audioClips[1]);
+        PlaySFX(sfx[0]);
     }
 
     public void PlayFallingAudio ()
@@ -90,9 +107,31 @@ public class AudioManager : MonoBehaviour
     {
         SFXSource.pitch = Random.Range(minPitch, maxPitch);
 
-        PlaySFX(audioClips[3]);
+        PlaySFX(sfx[1]);
     }
 
+    public void PlayDeathSound()
+    {
+        musicSource.Pause();
+        if (!deathMarch)
+        {
+            PlaySFX(sfx[2]);
+            deathMarch = true;
+        }
+        else
+            return;
+    }
+
+    public void PlayReviveSound()
+    {
+        PlaySFX(sfx[3]);
+        StartCoroutine(Chronos());
+        deathMarch = false;
+    }
+    public void ResumeSong()
+    {
+        musicSource.Play();
+    }
     private void OnDestroy()
     {
         Coin.OnCoinCollected -= PlayCoinAudio;

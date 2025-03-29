@@ -15,6 +15,7 @@ public class Spike : MonoBehaviour
             OnSpikeHit?.Invoke();
 
             other.GetComponent<SmurfCatMovement>().Die();
+            
         }
     }
     
