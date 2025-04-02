@@ -26,12 +26,14 @@ public class SmurfCatMovement : MonoBehaviour
     public GameObject fallExplosionVFX;
     public GameObject jumpSpotText;
     public GameObject grounds;
+    public GameObject baseGround;
+    public GameObject tutorials;
     public List<TrailRenderer> fallingTrails;
 
     [Header("UI Elements")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI scoreMultiplierText;
-    public TextMeshProUGUI highScoreText;
+    // public TextMeshProUGUI highScoreText;
     [FormerlySerializedAs("fadeInDuration")] [SerializeField] private float fallingVfxFadeInDuration;
     [FormerlySerializedAs("fadeOutDuration")] [SerializeField] private float fallingVfxFadeOutDuration;
     public GameObject revivePanel;
@@ -90,6 +92,7 @@ public class SmurfCatMovement : MonoBehaviour
         InitializeComponents();
         LoadHighScore();
     }
+    
 
     private void OnEnable()
     {
@@ -177,12 +180,14 @@ public class SmurfCatMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         horizontalSpeed = PlayerPrefs.GetFloat(PlayerPrefsKeys.MovementSensitivity, 2.5f);
 
+
     }
 
     private void LoadHighScore()
     {
+        return;
         highScore = PlayerPrefs.GetFloat(PlayerPrefsKeys.HighScore, 0);
-        highScoreText.text = highScore.ToString("F0");
+        // highScoreText.text = highScore.ToString("F0");
     }
 
     #endregion
