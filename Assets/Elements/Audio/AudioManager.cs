@@ -88,6 +88,14 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PauseFallingAudio()
+    {
+        if (fallingSource != null && fallingSource.isPlaying)
+        {
+            fallingSource.Pause();
+        }
+    }
+
     // Play a random impact sound from the list
     public void PlayRandomImpactSound()
     {
@@ -129,7 +137,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic()
     {
-        musicSource.Play();
+        if (!musicSource.isPlaying)
+            musicSource.Play();
+
     }
 
     public void PlayReviveSound()
@@ -140,10 +150,16 @@ public class AudioManager : MonoBehaviour
     }
     public void ResumeSong()
     {
-        musicSource.Play();
+        if (!musicSource.isPlaying)
+            musicSource.Play();
     }
     private void OnDestroy()
     {
         Coin.OnCoinCollected -= PlayCoinAudio;
+    }
+
+    public void StopSFX()
+    {
+        SFXSource.Stop();
     }
 }

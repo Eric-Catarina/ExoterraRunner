@@ -19,13 +19,13 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
-        audioManager.PauseMusic();
+        audioManager.PauseFallingAudio();
+        audioManager.StopSFX();
         isPaused = true;
     }
     public void UnpauseGame()
     {
         Time.timeScale = 1;
-        audioManager.PlayMusic();
         isPaused = false;
     }
     public void Home()
