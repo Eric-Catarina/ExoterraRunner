@@ -127,6 +127,11 @@ public class AudioManager : MonoBehaviour
         musicSource.Pause();
     }
 
+    public void PlayMusic()
+    {
+        musicSource.Play();
+    }
+
     public void PlayReviveSound()
     {
         PlaySFX(sfx[3]);
