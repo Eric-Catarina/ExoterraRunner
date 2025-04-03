@@ -48,7 +48,7 @@ public class LevelEnd : MonoBehaviour
     public void Start()
     {
         audioManager.StopFallingAudio();
-        audioManager.PlayDeathSound();
+        audioManager.PauseMusic();
         EndLevel();
     }
 

@@ -10913,7 +10913,7 @@ MonoBehaviour:
   sfx:
   - {fileID: 8300000, guid: 0d763a8546a30655ea403198776be9c9, type: 3}
   - {fileID: 8300000, guid: 0ec70961b96c784ebb12cc30edea3d80, type: 3}
-  - {fileID: 8300000, guid: ac9edccf356bb7a4fa1dc8a91b7a6c9b, type: 3}
+  - {fileID: 8300000, guid: 688fe32fc6b60ad4a98018b043ba9e11, type: 3}
   - {fileID: 8300000, guid: 84eb87cdea9a12b4ab941c403982345f, type: 3}
   sondTrack: []
   impactSounds:
