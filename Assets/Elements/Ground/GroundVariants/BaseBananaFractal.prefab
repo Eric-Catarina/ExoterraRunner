@@ -99,7 +99,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 159219299624484793, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_Size.y
-      value: 1.4188981
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 159219299624484793, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_Size.z
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 159219299624484793, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_Center.y

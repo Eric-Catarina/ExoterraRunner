@@ -283,14 +283,14 @@ public void SetMovementSensitivity(float sensitivity)
     public void Jump()
     {
         return;
-        if (IsPointerOverUI() || !isGrounded) return;
+        /*if (IsPointerOverUI() || !isGrounded) return;
 
         PerformJump();
 
         if (isOnJumpSpot)
         {
             ProcessJumpSpot();
-        }
+        }*/
     }
 
     private void PerformJump()
@@ -544,6 +544,7 @@ public void SetMovementSensitivity(float sensitivity)
         }
         cameraController.OnPlayerDeath();
         SaveHighScore();
+        audioManager.PlayDeathSound();
         
         // ShowRevivePanel();
         
@@ -570,6 +571,7 @@ public void SetMovementSensitivity(float sensitivity)
         }
         ShowAndHideHalo();
         OnRevive.Invoke();
+        audioManager.PlayReviveSound();
     }
     
     // Set isImmortal false after 5 seconds

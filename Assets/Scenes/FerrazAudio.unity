@@ -227,7 +227,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6076971467004703933, guid: ca741aa0e7eaf2b469a6dc4702e7fbe0, type: 2}
-  m_audioClip: {fileID: 8300000, guid: b33079267bcf2a74995c6c8b5ff3d45e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7f994d6d2bd9f6486957e38c70bd028d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1289,14 +1289,14 @@ MonoBehaviour:
   m_text: x1.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 058585b96b7b1aaf18f9faefe13e5a8e, type: 2}
-  m_sharedMaterial: {fileID: -1583097599504994453, guid: 058585b96b7b1aaf18f9faefe13e5a8e, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280738533
-  m_fontColor: {r: 0.8962264, g: 0.8861095, b: 0.14796188, a: 1}
+    rgba: 4292269782
+  m_fontColor: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1352,7 +1352,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0.8899001}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &164362314
@@ -1934,7 +1934,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 058585b96b7b1aaf18f9faefe13e5a8e, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2729,7 +2729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &370151543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2972,10 +2972,10 @@ RectTransform:
   m_Father: {fileID: 907651656}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -100}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &390198566
 MonoBehaviour:
@@ -4631,7 +4631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 79.2
+      value: -77.4
       objectReference: {fileID: 0}
     - target: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4663,7 +4663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5133287355049454783, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_Name
-      value: BaseGround
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 5133287355049454783, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5062,14 +5062,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   biomes:
-  - biomeName: Sunscorched Dunes
-    biomeColor: {r: 0.8113208, g: 0.3965713, b: 0.22579211, a: 1}
-    biomeParticle: {fileID: 0}
-    biomeSkybox: {fileID: 2100000, guid: 52fcefd712182d743a781fde12426775, type: 2}
-    tracksBeforeChange: 5
-    tracks:
-    - {fileID: 6345384655228296746, guid: e67433659d8491ad890628a8ae60689c, type: 3}
-    - {fileID: 6345384655228296746, guid: aa4ed89fe092c9830a0a4aef3076aecf, type: 3}
   - biomeName: Ice Cave
     biomeColor: {r: 0.2415895, g: 0.5325245, b: 0.8396226, a: 1}
     biomeParticle: {fileID: 1166342484}
@@ -5079,6 +5071,14 @@ MonoBehaviour:
     - {fileID: 2150884777233253590, guid: 748d6f8db9f288dd495aa3b42b828278, type: 3}
     - {fileID: 6345384655228296746, guid: 57829acd8994f0d08874a19a65cddbf0, type: 3}
     - {fileID: 405758576386881191, guid: 6ab4b4acfb6268469a9daee23a748813, type: 3}
+  - biomeName: Sunscorched Dunes
+    biomeColor: {r: 0.8113208, g: 0.3965713, b: 0.22579211, a: 1}
+    biomeParticle: {fileID: 0}
+    biomeSkybox: {fileID: 2100000, guid: 52fcefd712182d743a781fde12426775, type: 2}
+    tracksBeforeChange: 3
+    tracks:
+    - {fileID: 6345384655228296746, guid: e67433659d8491ad890628a8ae60689c, type: 3}
+    - {fileID: 6345384655228296746, guid: aa4ed89fe092c9830a0a4aef3076aecf, type: 3}
   - biomeName: Burning Hell
     biomeColor: {r: 0.8113208, g: 0.13448468, b: 0.07271269, a: 1}
     biomeParticle: {fileID: 1320047794}
@@ -5086,7 +5086,6 @@ MonoBehaviour:
     tracksBeforeChange: 5
     tracks:
     - {fileID: 6411948528743387889, guid: 968027837f3157202b399a419b9e6be9, type: 3}
-    - {fileID: 6411948528743387889, guid: 64f4d40a22695bde69513fd56981a646, type: 3}
   elementContainer: {fileID: 117135503}
   timeToGenerate: 2
   timeToDestroy: 30
@@ -5752,10 +5751,10 @@ RectTransform:
   m_Father: {fileID: 1676666294}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 700, y: 0}
-  m_SizeDelta: {x: 400, y: 120}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &665956595
 MonoBehaviour:
@@ -6905,10 +6904,10 @@ RectTransform:
   m_Father: {fileID: 1676666294}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: 0}
-  m_SizeDelta: {x: 400, y: 120}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &907651657
 MonoBehaviour:
@@ -9349,7 +9348,6 @@ MonoBehaviour:
   levelEndOverlay: {fileID: 1210751975}
   canvasGroup: {fileID: 1210751980}
   levelEndText: {fileID: 1689470845}
-  audioManager: {fileID: 1493886461}
 --- !u!114 &1210751978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9494,10 +9492,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1617291221}
   m_HandleRect: {fileID: 1104116961}
   m_Direction: 0
-  m_MinValue: 3
-  m_MaxValue: 4.3
+  m_MinValue: 2
+  m_MaxValue: 3.5
   m_WholeNumbers: 0
-  m_Value: 3.459
+  m_Value: 3
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -10392,11 +10390,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 1349226544411170020, guid: ca741aa0e7eaf2b469a6dc4702e7fbe0, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: dd43de6efb6c8e66d9c4b0cb12bb3b63, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -10914,8 +10912,6 @@ MonoBehaviour:
   sfx:
   - {fileID: 8300000, guid: 0d763a8546a30655ea403198776be9c9, type: 3}
   - {fileID: 8300000, guid: 0ec70961b96c784ebb12cc30edea3d80, type: 3}
-  - {fileID: 8300000, guid: 688fe32fc6b60ad4a98018b043ba9e11, type: 3}
-  - {fileID: 8300000, guid: 84eb87cdea9a12b4ab941c403982345f, type: 3}
   sondTrack: []
   impactSounds:
   - {fileID: 8300000, guid: dd43de6efb6c8e66d9c4b0cb12bb3b63, type: 3}
@@ -11367,10 +11363,10 @@ RectTransform:
   m_Father: {fileID: 665956594}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -100}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1515049959
 MonoBehaviour:
@@ -11804,10 +11800,10 @@ RectTransform:
   m_Father: {fileID: 907651656}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300, y: -100}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1583762542
 MonoBehaviour:
@@ -12351,10 +12347,10 @@ RectTransform:
   m_Father: {fileID: 665956594}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -100}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1657113122
 MonoBehaviour:
@@ -12410,7 +12406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1676666294
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12609,7 +12605,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1698520836
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14628,19 +14624,11 @@ PrefabInstance:
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: scoreText
       value: 
-      objectReference: {fileID: 1570494123}
-    - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
-      propertyPath: tutorials
-      value: 
-      objectReference: {fileID: 370151542}
+      objectReference: {fileID: 221363116}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: adsManager
       value: 
       objectReference: {fileID: 364017215}
-    - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
-      propertyPath: baseGround
-      value: 
-      objectReference: {fileID: 1564774289}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: fallingVFX
       value: 
@@ -14699,7 +14687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: _canAlrealdyJump
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1335977238284424984, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: cameraController
@@ -14788,10 +14776,6 @@ PrefabInstance:
     - target: {fileID: 1512589409826824286, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_Time
       value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1512589409826824286, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
-      propertyPath: m_MinVertexDistance
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1793246209280157385, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_Camera
@@ -14948,10 +14932,6 @@ PrefabInstance:
     - target: {fileID: 3464351415394577029, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_Time
       value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3464351415394577029, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
-      propertyPath: m_MinVertexDistance
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4287244898372680630, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: scaleDuration
