@@ -41,7 +41,7 @@ public class AudioManager : MonoBehaviour
 
     IEnumerator Chronos()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         ResumeSong();
     }
 
