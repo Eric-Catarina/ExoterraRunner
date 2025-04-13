@@ -50,6 +50,7 @@ public class SmurfCatMovement : MonoBehaviour
     public static event Action onGroundImpact;
     public static event Action onPlayerJump;
     public static event Action onPlayerHorizontalSwipe;
+    public static event Action onTrackCompleted;
 
 
 
@@ -98,6 +99,7 @@ public class SmurfCatMovement : MonoBehaviour
     {
         playerInput.actions.Enable();
         TutorialManager.onFirstTutorialStarted += OnFirstTutorialStarted;
+        onTrackCompleted += CompleteTrack;
         void OnFirstTutorialStarted()
         {
             _canAlrealdyJump = true;
@@ -116,8 +118,12 @@ public class SmurfCatMovement : MonoBehaviour
         HandleMovement();
         UpdateScore();
         CheckFallingState();
+        
+        if (transform.position.z > generator.LatestEndPointZ)
+        {
+            onTrackCompleted?.Invoke();
+        }
     }
-    
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -634,5 +640,11 @@ public void SetMovementSensitivity(float sensitivity)
         public const string HighScore = "HighScore";
         public const string MovementSensitivity = "MovementSensitivity";
 
+    }
+
+    private void CompleteTrack()
+    {
+        generator.Generate();
+        cameraController.SetAirborne(true);
     }
 }

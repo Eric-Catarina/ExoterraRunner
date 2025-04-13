@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ground : MonoBehaviour
 {
-    public GameObject startAttachPoint, endAttachPoint;
+    public GameObject startAttachPoint, endAttachPoint, track;
 
     void Start()
     {
