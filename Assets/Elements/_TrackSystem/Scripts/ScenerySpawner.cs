@@ -9,87 +9,123 @@ public class ScenerySpawner : MonoBehaviour
     [SerializeField] private Transform sceneryParent; // Opcional: pai para organizar na hierarquia
 
     [Header("Spawning Logic")]
-    [SerializeField] private GameObject initialSceneryReference; // Um objeto na cena para começar a conectar
+    [SerializeField] private Vector2 xSpawnRange = new Vector2(-20f, 20f); // Faixa de spawn em X
+    [SerializeField] private Vector2 zSpawnOffsetRange = new Vector2(50f, 150f); // Offset em Z
+    [SerializeField] private Vector2 ySpawnRange = new Vector2(-2f, 2f); // Variação em Y
+
+    [Header("Distance from Track")]
+    [SerializeField] private float minDistanceFromTrack = 100f;
+    [SerializeField] private float maxDistanceFromTrack = 5000f;
+
+    private List<GameObject> activeScenery = new List<GameObject>();
 
     public SpawnableElement LastSpawnedScenery { get; private set; }
 
-    // TODO: Manter lista de cenários ativos para cleanup
-    // private List<GameObject> activeScenery = new List<GameObject>();
-
-    void Start()
+    public void TrySpawnScenery(Vector3 referencePosition)
     {
-        if (initialSceneryReference != null)
+        if (biomeManager.CurrentBiome == null) return;
+
+        List<GameObject> validPrefabs = biomeManager.GetValidSceneryPrefabs();
+        if (validPrefabs.Count == 0) return;
+
+        // Decide aleatoriamente se deve spawnar um cenário decorativo
+        if (Random.value > 0.5f) return;
+
+        // Seleciona um prefab aleatório
+        GameObject prefabToSpawn = validPrefabs[Random.Range(0, validPrefabs.Count)];
+
+        // Calcula a posição de spawn
+        float xOffset = Random.Range(xSpawnRange.x, xSpawnRange.y);
+        float zOffset = Random.Range(zSpawnOffsetRange.x, zSpawnOffsetRange.y);
+        float yOffset = Random.Range(ySpawnRange.x, ySpawnRange.y);
+
+        Vector3 spawnPosition = referencePosition + new Vector3(xOffset, yOffset, zOffset);
+
+        // Pede ao PoolManager
+        GameObject newSceneryObject = poolManager.Get(prefabToSpawn, spawnPosition, Quaternion.identity);
+        if (newSceneryObject == null) return;
+
+        if (sceneryParent != null)
+            newSceneryObject.transform.SetParent(sceneryParent);
+
+        activeScenery.Add(newSceneryObject);
+    }
+
+    public void CleanupActiveScenery(float cleanupPosZ)
+    {
+        for (int i = activeScenery.Count - 1; i >= 0; i--)
         {
-            LastSpawnedScenery = initialSceneryReference.GetComponent<SpawnableElement>();
-             if(LastSpawnedScenery == null)
-                  Debug.LogError("Initial Scenery Reference não tem o componente SpawnableElement!");
-        }
-        else
-        {
-            Debug.LogError("Referência inicial de cenário não definida!");
+            GameObject scenery = activeScenery[i];
+            if (scenery != null && scenery.activeSelf && scenery.transform.position.z < cleanupPosZ)
+            {
+                poolManager.Return(scenery);
+                activeScenery.RemoveAt(i);
+            }
+            else if (scenery == null)
+            {
+                activeScenery.RemoveAt(i);
+            }
         }
     }
 
     public GameObject SpawnNextScenery()
     {
-        if (biomeManager.CurrentBiome == null || LastSpawnedScenery?.endAttachPoint == null)
+        if (biomeManager == null || poolManager == null)
         {
-             Debug.LogError("Não é possível gerar cenário: Bioma atual ou ponto de anexo final do último cenário são nulos.");
+            Debug.LogError("BiomeManager ou PoolManager não estão definidos!");
+            return null;
+        }
+
+        if (biomeManager.CurrentBiome == null)
+        {
+            Debug.LogWarning("Nenhum bioma atual definido.");
             return null;
         }
 
         List<GameObject> validPrefabs = biomeManager.GetValidSceneryPrefabs();
-        if (validPrefabs.Count == 0)
+        if (validPrefabs == null || validPrefabs.Count == 0)
         {
-            Debug.LogWarning($"Nenhum prefab de cenário válido encontrado para o bioma {biomeManager.CurrentBiome.biomeName}");
+            Debug.LogWarning("Nenhum prefab de cenário válido encontrado.");
             return null;
         }
 
-        // Seleciona um prefab aleatório da lista válida
-        GameObject prefabToSpawn = validPrefabs[Random.Range(0, validPrefabs.Count)];
+        GameObject selectedPrefab = validPrefabs[Random.Range(0, validPrefabs.Count)];
+        Vector3 spawnPosition = Vector3.zero;
 
-        // Pede ao PoolManager
-        GameObject newSceneryObject = poolManager.Get(prefabToSpawn, Vector3.zero, Quaternion.identity); // Posição/Rotação são definidas abaixo
+        if (LastSpawnedScenery != null && LastSpawnedScenery.endAttachPoint != null)
+        {
+            spawnPosition = LastSpawnedScenery.endAttachPoint.position;
 
+            // Calculate random distance from track
+            float distanceFromTrack = Random.Range(minDistanceFromTrack, maxDistanceFromTrack);
+
+            // Calculate random angle
+            float angle = Random.Range(0f, 360f);
+
+            // Convert angle and distance to x and z offsets
+            float xOffset = Mathf.Cos(angle * Mathf.Deg2Rad) * distanceFromTrack;
+            float zOffset = Mathf.Sin(angle * Mathf.Deg2Rad) * distanceFromTrack;
+
+            // Apply the offset to the spawn position
+            spawnPosition += new Vector3(xOffset, 0f, zOffset);
+        }
+
+        GameObject newSceneryObject = poolManager.Get(selectedPrefab, spawnPosition, Quaternion.identity);
         if (newSceneryObject == null)
         {
-             Debug.LogError("PoolManager retornou null para o prefab de cenário.");
+            Debug.LogError("Falha ao obter objeto do PoolManager!");
             return null;
         }
 
-        SpawnableElement newSceneryElement = newSceneryObject.GetComponent<SpawnableElement>();
-        if (newSceneryElement == null)
-        {
-             Debug.LogError($"Prefab de cenário '{prefabToSpawn.name}' não tem o componente SpawnableElement!");
-             poolManager.Return(newSceneryObject); // Devolve se estiver incorreto
-            return null;
-        }
+        SpawnableElement spawnable = newSceneryObject.GetComponent<SpawnableElement>();
+        LastSpawnedScenery = spawnable;
 
-        // Calcula a posição e rotação para conectar
-        Transform currentEndAttach = LastSpawnedScenery.endAttachPoint;
-        // Assume que os attach points têm a orientação correta.
-        // O ponto inicial do *novo* cenário deve coincidir com o ponto final do *anterior*.
-        // Se os prefabs tiverem um ponto "StartAttachPoint" na origem, o cálculo é mais simples.
-        // Vamos assumir que a origem do novo prefab deve alinhar com o endAttachPoint do anterior.
-        newSceneryObject.transform.position = currentEndAttach.position;
-        newSceneryObject.transform.rotation = currentEndAttach.rotation;
-
-        // Define o pai (opcional)
         if (sceneryParent != null)
+        {
             newSceneryObject.transform.SetParent(sceneryParent);
+        }
 
-        // Atualiza a referência para o último spawnado
-        LastSpawnedScenery = newSceneryElement;
-
-        // TODO: Adicionar à lista de ativos
-        // activeScenery.Add(newSceneryObject);
-
-        // A animação de spawn é chamada dentro do PoolManager.Get -> SpawnableElement.PlaySpawnAnimation
-
-         Debug.Log($"Spawned Scenery: {newSceneryObject.name}");
+        activeScenery.Add(newSceneryObject);
         return newSceneryObject;
     }
-
-    // TODO: Implementar CleanupActiveScenery(float cleanupPosZ)
-    // Iterar sobre 'activeScenery', verificar Z position, chamar poolManager.Return() e remover da lista.
 }

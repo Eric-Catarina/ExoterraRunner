@@ -12,8 +12,12 @@ public class TrackSpawner : MonoBehaviour
     [SerializeField] private int parallelTrackCount = 3; // Deve ser ímpar para ter uma pista central
     [SerializeField] private float trackSpacing = 5.0f;  // Espaçamento horizontal entre pistas
 
-    // TODO: Manter lista de pistas ativas para cleanup
-    // private List<GameObject> activeTracks = new List<GameObject>();
+    [Header("Descent")]
+    [SerializeField] private float trackDescentRate = 0.5f;
+
+    [SerializeField] private List<GameObject> activeTracks = new List<GameObject>();
+
+    private float currentDescent = -10f;
 
     public void SpawnTracksForScenery(GameObject sceneryModule)
     {
@@ -42,8 +46,11 @@ public class TrackSpawner : MonoBehaviour
 
             // Calcula a posição final da pista no espaço do mundo
             // Aplica o offset localmente e depois transforma para world space
-            Vector3 localOffset = new Vector3(xOffset, 0, 0); // Offset apenas no X local
+            Vector3 localOffset = new Vector3(xOffset, -10, 0); // Offset apenas no X local
             Vector3 spawnPosition = sceneryModule.transform.TransformPoint(localOffset);
+
+            // Apply descent
+            spawnPosition.y -= currentDescent;
 
             // Pede ao PoolManager
             GameObject newTrackObject = poolManager.Get(prefabToSpawn, spawnPosition, sceneryRotation);
@@ -53,13 +60,23 @@ public class TrackSpawner : MonoBehaviour
             if (tracksParent != null)
                 newTrackObject.transform.SetParent(tracksParent);
 
-             // TODO: Adicionar à lista de ativos
-            // activeTracks.Add(newTrackObject);
-
-             // A animação de spawn é chamada dentro do PoolManager.Get
-              //Debug.Log($"Spawned Track: {newTrackObject.name} at index {i}");
+            activeTracks.Add(newTrackObject); // Adiciona à lista de ativos
         }
+
+        // Update current descent
+        currentDescent += trackDescentRate;
     }
 
-    // TODO: Implementar CleanupActiveTracks(float cleanupPosZ)
+    public void CleanupActiveTracks(float cleanupPosZ)
+    {
+        for (int i = activeTracks.Count - 1; i >= 0; i--)
+        {
+            GameObject track = activeTracks[i];
+            if (track.transform.position.z < cleanupPosZ)
+            {
+                poolManager.Return(track); // Retorna ao pool
+                activeTracks.RemoveAt(i); // Remove da lista
+            }
+        }
+    }
 }

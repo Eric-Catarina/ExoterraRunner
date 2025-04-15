@@ -17,15 +17,7 @@
     }
   },
   "include": [
-    "**/*.cs",
-    "**/*.shader",
-    "**/*.cginc",
-    "**/*.hlsl",
-    "**/*.compute",
-    "**/*.json",
-    "**/*.xml",
-    "**/*.txt",
-    "**/*.asmdef"
+    "Assets/Elements/**/*.cs"
   ],
   "ignore": {
     "useGitignore": true,

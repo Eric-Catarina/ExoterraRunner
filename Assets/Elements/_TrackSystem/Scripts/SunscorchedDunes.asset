@@ -17,6 +17,8 @@ MonoBehaviour:
   skyboxMaterial: {fileID: 2100000, guid: 52fcefd712182d743a781fde12426775, type: 2}
   environmentParticlePrefab: {fileID: 0}
   modulesBeforeTransition: 4
-  sceneryPrefabs: []
-  trackPrefabs: []
+  sceneryPrefabs:
+  - {fileID: 4742711396302157090, guid: ffebeb976304ea4c0a592722694eca55, type: 3}
+  trackPrefabs:
+  - {fileID: 5133287355049454783, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
   speedMultiplier: 1

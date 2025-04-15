@@ -13,7 +13,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float generationDistanceThreshold = 150f; // Distância à frente do jogador para gerar
     [SerializeField] private float cleanupDistanceBehind = 200f; // Distância atrás para limpar
 
-    private float furthestPointGeneratedZ = 0f;
+    public float furthestPointGeneratedZ = 0f;
 
     void Start()
     {
@@ -25,6 +25,8 @@ public class LevelGenerator : MonoBehaviour
     void Update()
     {
         if (playerTransform == null) return;
+        
+        furthestPointGeneratedZ = scenerySpawner.LastSpawnedScenery.endAttachPoint.position.z;
 
         // Verifica se precisa gerar mais conteúdo
         if (furthestPointGeneratedZ - playerTransform.position.z < generationDistanceThreshold)
@@ -48,10 +50,10 @@ public class LevelGenerator : MonoBehaviour
         return valid;
     }
 
-     private void GenerateInitialContent()
+    private void GenerateInitialContent()
     {
         // Gera algumas seções iniciais para preencher o espaço
-        for (int i = 0; i < 5; i++) // Gera 5 seções iniciais, por exemplo
+        for (int i = 0; i < 2; i++) // Gera 5 seções iniciais, por exemplo
         {
             GenerateNextSection();
             // Ajusta artificialmente a posição para forçar a geração sequencial no início
@@ -109,22 +111,10 @@ public class LevelGenerator : MonoBehaviour
 
     private void CleanupOldContent()
     {
-        // Simplificado: Itera sobre os filhos do PoolManager (onde os objetos retornados ficam)
-        // Uma implementação real deveria rastrear objetos ativos e verificar sua posição.
-        // Ou usar triggers atrás do jogador.
-        foreach (Transform child in poolManager.transform) // Assume que objetos inativos estão no pool
-        {
-            if (!child.gameObject.activeSelf && child.position.z < playerTransform.position.z - cleanupDistanceBehind)
-            {
-                 // O objeto já está inativo e no pool, não precisa fazer nada extra aqui
-                 // A lógica de retornar ao pool já o desativa e move para cá.
-                 // Se você tiver objetos que *não* são gerenciados pelo pool, precisaria destruí-los aqui.
-            }
-        }
+        float cleanupPosZ = playerTransform.position.z - cleanupDistanceBehind;
 
-         // Limpeza de objetos *ativos* que ficaram para trás
-         // Isso requer que ScenerySpawner e TrackSpawner mantenham listas de objetos ativos
-         // Ex: scenerySpawner.CleanupActiveScenery(playerTransform.position.z - cleanupDistanceBehind);
-         // Ex: trackSpawner.CleanupActiveTracks(playerTransform.position.z - cleanupDistanceBehind);
+        // Limpa pistas e cenários antigos
+        scenerySpawner.CleanupActiveScenery(cleanupPosZ);
+        trackSpawner.CleanupActiveTracks(cleanupPosZ);
     }
 }
