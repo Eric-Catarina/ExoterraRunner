@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -12,11 +13,14 @@ public class LevelGenerator : MonoBehaviour
     [Header("Generation Triggering")]
     [SerializeField] private float cleanupDistance = 200f; // Distância atrás para limpar ambos
     [SerializeField] private float cleanupCheckInterval = 50f; // Intervalo para verificar limpeza
+    public static event Action onTrackCompleted;
 
     // Rastreia o ponto Z mais distante para cada tipo de spawner
     public float furthestTrackGeneratedZ = 0f;
     private float furthestSceneryGeneratedZ = 0f;
     private float lastCleanupZ = 0f;
+    [SerializeField]
+    private SmurfCatMovement smurfCatMovement;
 
     void Start()
     {
@@ -49,6 +53,8 @@ public class LevelGenerator : MonoBehaviour
         if (playerTransform.position.z > furthestTrackGeneratedZ - 30f)
         {
             trackSpawner.SpawnNextTrackSet();
+            onTrackCompleted?.Invoke();
+
         }
 
         

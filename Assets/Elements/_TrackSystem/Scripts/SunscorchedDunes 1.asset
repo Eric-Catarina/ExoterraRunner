@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f782413318f3a071a65b7f6527e548f, type: 3}
-  m_Name: SunscorchedDunes
+  m_Name: SunscorchedDunes 1
   m_EditorClassIdentifier: 
   biomeName: Sunscorched Dunes
   biomeDebugColor: {r: 0.8301887, g: 0.5805755, b: 0.090067655, a: 1}

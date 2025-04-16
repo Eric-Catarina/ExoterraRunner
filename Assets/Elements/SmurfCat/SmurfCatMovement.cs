@@ -50,7 +50,6 @@ public class SmurfCatMovement : MonoBehaviour
     public static event Action onGroundImpact;
     public static event Action onPlayerJump;
     public static event Action onPlayerHorizontalSwipe;
-    public static event Action onTrackCompleted;
 
 
 
@@ -99,7 +98,7 @@ public class SmurfCatMovement : MonoBehaviour
     {
         playerInput.actions.Enable();
         TutorialManager.onFirstTutorialStarted += OnFirstTutorialStarted;
-        onTrackCompleted += CompleteTrack;
+        LevelGenerator.onTrackCompleted += SetAirborneDelay;
         void OnFirstTutorialStarted()
         {
             _canAlrealdyJump = true;
@@ -123,9 +122,9 @@ public class SmurfCatMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+            HandleGroundCollision(collision);
         if (collision.gameObject.CompareTag(Tags.Ground))
         {
-            HandleGroundCollision(collision);
         }
     }
 
@@ -642,4 +641,18 @@ public void SetMovementSensitivity(float sensitivity)
         generator.Generate();
         cameraController.SetAirborne(true);
     }
+
+    // Wait 0.5f and set airboner
+    private void SetAirborne()
+    {
+        cameraController.SetAirborne(true);
+    }
+
+    private void SetAirborneDelay()
+    {
+        Invoke("SetAirborne", 1f);
+    }
+    
+    
+ 
 }
