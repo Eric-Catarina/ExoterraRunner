@@ -10,7 +10,6 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private PoolManager poolManager;     // Para cleanup (usado pelos spawners)
 
     [Header("Generation Triggering")]
-    [SerializeField] private float generationThreshold = 150f;  // Distância à frente para gerar PISTAS
     [SerializeField] private float cleanupDistance = 200f; // Distância atrás para limpar ambos
     [SerializeField] private float cleanupCheckInterval = 50f; // Intervalo para verificar limpeza
 
@@ -45,75 +44,14 @@ public class LevelGenerator : MonoBehaviour
 
     void Update()
     {
-        if (playerTransform == null) return;
-        furthestTrackGeneratedZ = trackSpawner.initialTrackReference.endAttachPoint.position.z;
+        furthestTrackGeneratedZ = trackSpawner.lastSpawnedTrackEndAttachPoint.position.z;
 
-        float playerZ = playerTransform.position.z;
-
-        // --- Debugging Generation Trigger ---
-        Debug.Log($"[GenCheck] PlayerZ: {playerZ:F2} | Threshold: {generationThreshold:F2} | Trigger Point (PlayerZ + Threshold): {playerZ + generationThreshold:F2} | FurthestTrackZ: {furthestTrackGeneratedZ:F2}");
-        // --- End Debugging ---
-
-        // --- Combined Generation Logic ---
-        // Check if we need to generate the *next* track set
-        if (playerZ > furthestTrackGeneratedZ)
-        {   
-            // --- Debugging Generation Action ---
-            Debug.Log(">>> [GenCheck] Condition MET! Attempting to generate next track section...");
-            // --- End Debugging ---
-
-            // Generate one track set
-            float previousTrackZ = furthestTrackGeneratedZ;
-            Transform newTrackAttachPoint = trackSpawner.SpawnNextTrackSet();
-
-            if (newTrackAttachPoint != null)
-            {
-                furthestTrackGeneratedZ = newTrackAttachPoint.position.z;
-                // Check if generation failed to advance
-                if (furthestTrackGeneratedZ <= previousTrackZ + 0.1f)
-                {
-                    Debug.LogError("LevelGenerator: Falha ao avançar Z das pistas durante Update. Verifique TrackSpawner e prefabs.");
-                    // Consider disabling further generation to prevent infinite loops
-                    // this.enabled = false;
-                }
-                else
-                {
-                    // If track generation succeeded, immediately spawn corresponding scenery
-                    float previousSceneryZ = furthestSceneryGeneratedZ;
-                    GameObject spawnedScenery = scenerySpawner.SpawnNextScenery();
-                    if (spawnedScenery != null)
-                    {
-                        float newSceneryZ = spawnedScenery.transform.position.z;
-                        furthestSceneryGeneratedZ = newSceneryZ;
-
-                        if (furthestSceneryGeneratedZ <= previousSceneryZ + 0.1f)
-                        {
-                            Debug.LogWarning("LevelGenerator: Scenery Z did not advance significantly after spawning. Check ScenerySpawner setup.");
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogWarning("LevelGenerator: Falha ao gerar cenário correspondente à pista no Update.");
-                        // Don't necessarily stop, maybe the next track trigger will succeed
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogError("LevelGenerator: Falha ao gerar conjunto de pistas durante Update.");
-                // Consider disabling
-            }
-        }
-        // --- End Combined Generation Logic ---
-
-        // Cleanup (can remain separate)
-        if (playerZ > lastCleanupZ + cleanupCheckInterval)
+        if (playerTransform.position.z > furthestTrackGeneratedZ)
         {
-            float cleanupPosZ = playerZ - cleanupDistance;
-            trackSpawner.CleanupActiveTracks(cleanupPosZ);
-            scenerySpawner.CleanupActiveScenery(cleanupPosZ);
-            lastCleanupZ = playerZ;
+            trackSpawner.SpawnNextTrackSet();
         }
+
+        
     }
 
     /// <summary>
