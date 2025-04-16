@@ -46,7 +46,7 @@ public class LevelGenerator : MonoBehaviour
     {
         furthestTrackGeneratedZ = trackSpawner.lastSpawnedTrackEndAttachPoint.position.z;
 
-        if (playerTransform.position.z > furthestTrackGeneratedZ)
+        if (playerTransform.position.z > furthestTrackGeneratedZ - 30f)
         {
             trackSpawner.SpawnNextTrackSet();
         }
