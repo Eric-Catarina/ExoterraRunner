@@ -8041,7 +8041,7 @@ MonoBehaviour:
   tracksParent: {fileID: 117135504}
   initialTrackReference: {fileID: 1564774290}
   initialTrackSetPosition: {x: 0, y: 0, z: 0}
-  parallelTrackCount: 3
+  parallelTrackCount: 5
   trackSpacing: 30
   zDistanceBetweenSets: 70
   trackDescentRate: 50
@@ -8626,7 +8626,6 @@ MonoBehaviour:
   scenerySpawner: {fileID: 1407553372}
   trackSpawner: {fileID: 1024011778}
   poolManager: {fileID: 276935598}
-  generationThreshold: 150
   cleanupDistance: 200
   cleanupCheckInterval: 50
   furthestTrackGeneratedZ: 0
