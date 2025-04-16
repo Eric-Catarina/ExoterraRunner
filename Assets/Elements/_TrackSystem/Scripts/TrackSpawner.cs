@@ -13,6 +13,8 @@ public class TrackSpawner : MonoBehaviour
     [Header("Initial Position")]
     [Tooltip("Define a posição exata onde o centro do primeiro conjunto de pistas deve iniciar.")]
     [SerializeField] private Vector3 initialTrackSetPosition = Vector3.zero; // New variable to set start position
+    [Tooltip("Distância em Y do primeiro TrackSet")]
+    [SerializeField] private float initialYOffset = 0f;
 
     [Header("Spawning Logic")]
     [SerializeField] private int parallelTrackCount = 3; // Deve ser ímpar para ter uma pista central
@@ -20,6 +22,12 @@ public class TrackSpawner : MonoBehaviour
     [SerializeField] private float trackSpacing = 20.0f;  // Changed from 5.0f to 20.0f (User range: 10-30)
     [Tooltip("Distância Z adicional entre o ponto final de um conjunto de pistas e o início do próximo.")]
     [SerializeField] private float zDistanceBetweenSets = 150.0f; // New variable (User range: 100-200)
+
+    [Header("Random Horizontal Offset")]
+    [Tooltip("Minimum random horizontal offset applied to each NEW track set.")]
+    [SerializeField] private float minXOffset = -50.0f; // Updated range
+    [Tooltip("Maximum random horizontal offset applied to each NEW track set.")]
+    [SerializeField] private float maxXOffset = 50.0f; // Updated range
 
     [Header("Descent")]
     [Tooltip("Quanto cada NOVO CONJUNTO de pistas desce em Y em relação ao conjunto anterior.")]
@@ -29,6 +37,7 @@ public class TrackSpawner : MonoBehaviour
     [SerializeField] private List<GameObject> activeTracks = new List<GameObject>();
     public Transform lastSpawnedTrackEndAttachPoint { get; private set; }
     private float currentDescent = -10f;
+    private float previousCenterX = 0f; // Track center X of previous set
 
     void Start()
     {
@@ -40,7 +49,7 @@ public class TrackSpawner : MonoBehaviour
             // --- Move initial track to the specified starting position --- END
 
             lastSpawnedTrackEndAttachPoint = initialTrackReference.endAttachPoint;
-            currentDescent = initialTrackReference.transform.position.y; // Start descent from the *new* initial track height
+            currentDescent = initialTrackReference.transform.position.y + initialYOffset; // Start descent from the *new* initial track height
             if (!activeTracks.Contains(initialTrackReference.gameObject))
             {
                  activeTracks.Add(initialTrackReference.gameObject); // Ensure initial track is managed
@@ -79,37 +88,41 @@ public class TrackSpawner : MonoBehaviour
             return null;
         }
 
-        // Use the last attach point as the reference for the new set
-        // Apply the Z offset along the forward direction of the attach point
+        // Calculate base spawn position using previous center X
         Vector3 baseSpawnPosition = lastSpawnedTrackEndAttachPoint.position + lastSpawnedTrackEndAttachPoint.forward * zDistanceBetweenSets;
-        Quaternion baseSpawnRotation = lastSpawnedTrackEndAttachPoint.rotation; // Use the rotation of the last attach point
+        baseSpawnPosition.x = previousCenterX; // Use previous center X
 
-        Transform newFurthestAttachPoint = lastSpawnedTrackEndAttachPoint; // Initialize with the previous point
+        // Apply random horizontal offset within specified range
+        float randomX = Random.Range(minXOffset, maxXOffset);
+        baseSpawnPosition.x += randomX;
+
+        Quaternion baseSpawnRotation = lastSpawnedTrackEndAttachPoint.rotation;
+        Transform newFurthestAttachPoint = lastSpawnedTrackEndAttachPoint;
         float maxZ = (newFurthestAttachPoint != null) ? newFurthestAttachPoint.position.z : float.MinValue;
 
-        // Apply descent relative to the *previous set's* Y level
         currentDescent += trackDescentRate;
-
-        int centerIndex = parallelTrackCount / 2; // Index of the middle track
+        int centerIndex = parallelTrackCount / 2;
+        float centerXPosition = 0f;
 
         // Spawn parallel tracks
         for (int i = 0; i < parallelTrackCount; i++)
         {
             // Calculate horizontal offset from the center track
-            // Example: For 3 tracks (indices 0, 1, 2), center is 1.
-            // i=0 -> offset = (0 - 1) * spacing = -spacing
-            // i=1 -> offset = (1 - 1) * spacing = 0
-            // i=2 -> offset = (2 - 1) * spacing = +spacing
             float xOffset = (i - centerIndex) * trackSpacing;
             Vector3 localOffset = new Vector3(xOffset, 0, 0); // Offset relative to attach point's orientation
 
             // Rotate the local offset by the base rotation and add to the base position
-            // This aligns tracks correctly even if the attach point is rotated.
             Vector3 spawnPosition = baseSpawnPosition + baseSpawnRotation * localOffset;
 
             // Apply consistent descent based on accumulated rate
-            // The descent is applied to the *entire set* relative to the previous set's Y
             spawnPosition.y = baseSpawnPosition.y - currentDescent; // Apply consistent descent based on accumulated rate
+
+            // Store center track position
+            if (i == centerIndex)
+            {
+                centerXPosition = spawnPosition.x;
+                previousCenterX = centerXPosition; // Store for next spawn
+            }
 
             // Get from pool
             GameObject newTrackObject = poolManager.Get(validPrefabs[Random.Range(0, validPrefabs.Count)], spawnPosition, baseSpawnRotation);

@@ -21,4 +21,6 @@ MonoBehaviour:
   - {fileID: 4742711396302157090, guid: ffebeb976304ea4c0a592722694eca55, type: 3}
   trackPrefabs:
   - {fileID: 5133287355049454783, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+  - {fileID: 6345384655228296746, guid: b1e478c0c45122932be168a28fd75562, type: 3}
+  - {fileID: 6345384655228296746, guid: 71aa7388533ddafaaa7036bf84bf6717, type: 3}
   speedMultiplier: 1
