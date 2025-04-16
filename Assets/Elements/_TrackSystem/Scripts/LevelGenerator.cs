@@ -5,116 +5,200 @@ public class LevelGenerator : MonoBehaviour
     [Header("References")]
     [SerializeField] private Transform playerTransform;
     [SerializeField] private BiomeManager biomeManager;
-    [SerializeField] private ScenerySpawner scenerySpawner;
-    [SerializeField] private TrackSpawner trackSpawner;
-    [SerializeField] private PoolManager poolManager; // Para cleanup
+    [SerializeField] private ScenerySpawner scenerySpawner; // Spawner para ilhas distantes
+    [SerializeField] private TrackSpawner trackSpawner;     // Spawner para pistas jogáveis
+    [SerializeField] private PoolManager poolManager;     // Para cleanup (usado pelos spawners)
 
     [Header("Generation Triggering")]
-    [SerializeField] private float generationDistanceThreshold = 150f; // Distância à frente do jogador para gerar
-    [SerializeField] private float cleanupDistanceBehind = 200f; // Distância atrás para limpar
+    [SerializeField] private float generationThreshold = 150f;  // Distância à frente para gerar PISTAS
+    [SerializeField] private float cleanupDistance = 200f; // Distância atrás para limpar ambos
+    [SerializeField] private float cleanupCheckInterval = 50f; // Intervalo para verificar limpeza
 
-    public float furthestPointGeneratedZ = 0f;
+    // Rastreia o ponto Z mais distante para cada tipo de spawner
+    public float furthestTrackGeneratedZ = 0f;
+    private float furthestSceneryGeneratedZ = 0f;
+    private float lastCleanupZ = 0f;
 
     void Start()
     {
-        if (!ValidateReferences()) return;
-        // Gera o conteúdo inicial
+        if (!ValidateReferences())
+        {
+            this.enabled = false;
+            return;
+        }
+
+        // Initialize furthest Z positions based on initial references IF THEY EXIST
+        // Otherwise, GenerateInitialContent will set them based on the first *generated* elements
+        if (trackSpawner.initialTrackReference?.endAttachPoint != null)
+            furthestTrackGeneratedZ = trackSpawner.initialTrackReference.endAttachPoint.position.z;
+        else
+            furthestTrackGeneratedZ = transform.position.z; // Fallback
+
+        if (scenerySpawner.initialSceneryReference != null)
+            furthestSceneryGeneratedZ = scenerySpawner.initialSceneryReference.transform.position.z;
+        else
+            furthestSceneryGeneratedZ = transform.position.z; // Fallback
+
+        // Spawn the very first elements
         GenerateInitialContent();
     }
 
     void Update()
     {
         if (playerTransform == null) return;
-        
-        furthestPointGeneratedZ = scenerySpawner.LastSpawnedScenery.endAttachPoint.position.z;
+        furthestTrackGeneratedZ = trackSpawner.initialTrackReference.endAttachPoint.position.z;
 
-        // Verifica se precisa gerar mais conteúdo
-        if (furthestPointGeneratedZ - playerTransform.position.z < generationDistanceThreshold)
+        float playerZ = playerTransform.position.z;
+
+        // --- Debugging Generation Trigger ---
+        Debug.Log($"[GenCheck] PlayerZ: {playerZ:F2} | Threshold: {generationThreshold:F2} | Trigger Point (PlayerZ + Threshold): {playerZ + generationThreshold:F2} | FurthestTrackZ: {furthestTrackGeneratedZ:F2}");
+        // --- End Debugging ---
+
+        // --- Combined Generation Logic ---
+        // Check if we need to generate the *next* track set
+        if (playerZ > furthestTrackGeneratedZ)
+        {   
+            // --- Debugging Generation Action ---
+            Debug.Log(">>> [GenCheck] Condition MET! Attempting to generate next track section...");
+            // --- End Debugging ---
+
+            // Generate one track set
+            float previousTrackZ = furthestTrackGeneratedZ;
+            Transform newTrackAttachPoint = trackSpawner.SpawnNextTrackSet();
+
+            if (newTrackAttachPoint != null)
+            {
+                furthestTrackGeneratedZ = newTrackAttachPoint.position.z;
+                // Check if generation failed to advance
+                if (furthestTrackGeneratedZ <= previousTrackZ + 0.1f)
+                {
+                    Debug.LogError("LevelGenerator: Falha ao avançar Z das pistas durante Update. Verifique TrackSpawner e prefabs.");
+                    // Consider disabling further generation to prevent infinite loops
+                    // this.enabled = false;
+                }
+                else
+                {
+                    // If track generation succeeded, immediately spawn corresponding scenery
+                    float previousSceneryZ = furthestSceneryGeneratedZ;
+                    GameObject spawnedScenery = scenerySpawner.SpawnNextScenery();
+                    if (spawnedScenery != null)
+                    {
+                        float newSceneryZ = spawnedScenery.transform.position.z;
+                        furthestSceneryGeneratedZ = newSceneryZ;
+
+                        if (furthestSceneryGeneratedZ <= previousSceneryZ + 0.1f)
+                        {
+                            Debug.LogWarning("LevelGenerator: Scenery Z did not advance significantly after spawning. Check ScenerySpawner setup.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning("LevelGenerator: Falha ao gerar cenário correspondente à pista no Update.");
+                        // Don't necessarily stop, maybe the next track trigger will succeed
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError("LevelGenerator: Falha ao gerar conjunto de pistas durante Update.");
+                // Consider disabling
+            }
+        }
+        // --- End Combined Generation Logic ---
+
+        // Cleanup (can remain separate)
+        if (playerZ > lastCleanupZ + cleanupCheckInterval)
         {
-            GenerateNextSection();
+            float cleanupPosZ = playerZ - cleanupDistance;
+            trackSpawner.CleanupActiveTracks(cleanupPosZ);
+            scenerySpawner.CleanupActiveScenery(cleanupPosZ);
+            lastCleanupZ = playerZ;
+        }
+    }
+
+    /// <summary>
+    /// Generates only the first set of tracks and corresponding scenery.
+    /// </summary>
+    private void GenerateInitialContent()
+    {
+        Debug.Log("Generating initial content...");
+        bool initialTrackGenFailed = false;
+        bool initialSceneryGenFailed = false;
+
+        // --- Spawn ONE initial track set ---
+        float previousTrackZ = furthestTrackGeneratedZ;
+        Transform newTrackAttachPoint = trackSpawner.SpawnNextTrackSet();
+
+        if (newTrackAttachPoint != null)
+        {
+            furthestTrackGeneratedZ = newTrackAttachPoint.position.z;
+            if (furthestTrackGeneratedZ <= previousTrackZ + 0.1f)
+            {
+                Debug.LogError("LevelGenerator: Initial track generation failed to advance Z.");
+                initialTrackGenFailed = true;
+            }
+            else
+            {
+                Debug.Log($"Initial track set generated, furthest Z: {furthestTrackGeneratedZ}");
+            }
+        }
+        else
+        {
+            Debug.LogError("LevelGenerator: Failed to spawn initial track set.");
+            initialTrackGenFailed = true;
         }
 
-        // Verifica se precisa limpar conteúdo antigo (simplificado)
-        // Uma abordagem mais robusta seria rastrear os objetos ativos
-        CleanupOldContent();
+        // --- Spawn ONE initial scenery IF track succeeded ---
+        if (!initialTrackGenFailed)
+        {
+            float previousSceneryZ = furthestSceneryGeneratedZ;
+            GameObject spawnedScenery = scenerySpawner.SpawnNextScenery();
+            if (spawnedScenery != null)
+            {
+                float newSceneryZ = spawnedScenery.transform.position.z;
+                furthestSceneryGeneratedZ = newSceneryZ;
+
+                if (furthestSceneryGeneratedZ <= previousSceneryZ + 0.1f)
+                {
+                    Debug.LogWarning("LevelGenerator: Initial scenery generation did not advance Z significantly.");
+                    // This might be okay if scenery offset is large and negative Y/X
+                }
+                Debug.Log($"Initial scenery generated, furthest Z: {furthestSceneryGeneratedZ}");
+            }
+            else
+            {
+                Debug.LogWarning("LevelGenerator: Failed to spawn initial scenery.");
+                initialSceneryGenFailed = true;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("LevelGenerator: Skipping initial scenery generation due to track generation failure.");
+            initialSceneryGenFailed = true; // Mark scenery as failed if track failed
+        }
+
+        if (initialTrackGenFailed || initialSceneryGenFailed)
+        {
+            Debug.LogError("LevelGenerator: Failed to generate essential initial content. Check Spawners and Prefabs.");
+            // Optionally disable the generator or enter a safe mode
+            // this.enabled = false;
+        }
+        else
+        {
+            Debug.Log("Initial content generation complete.");
+        }
     }
 
     private bool ValidateReferences()
     {
         bool valid = true;
-        if (playerTransform == null) { Debug.LogError("Player Transform not set!"); valid = false; }
-        if (biomeManager == null) { Debug.LogError("Biome Manager not set!"); valid = false; }
-        if (scenerySpawner == null) { Debug.LogError("Scenery Spawner not set!"); valid = false; }
-        if (trackSpawner == null) { Debug.LogError("Track Spawner not set!"); valid = false; }
-        if (poolManager == null) { Debug.LogError("Pool Manager not set!"); valid = false; }
+        // Adiciona verificações robustas para todas as referências
+        if (playerTransform == null) { Debug.LogError("LevelGenerator: Player Transform não definido!"); valid = false; }
+        if (biomeManager == null) { Debug.LogError("LevelGenerator: Biome Manager não definido!"); valid = false; }
+        if (scenerySpawner == null) { Debug.LogError("LevelGenerator: Scenery Spawner não definido!"); valid = false; }
+        if (trackSpawner == null) { Debug.LogError("LevelGenerator: Track Spawner não definido!"); valid = false; }
+        if (poolManager == null) { Debug.LogError("LevelGenerator: Pool Manager não definido!"); valid = false; }
+        // Validação adicional das referências iniciais dentro dos spawners é feita nos Starts deles
         return valid;
-    }
-
-    private void GenerateInitialContent()
-    {
-        // Gera algumas seções iniciais para preencher o espaço
-        for (int i = 0; i < 2; i++) // Gera 5 seções iniciais, por exemplo
-        {
-            GenerateNextSection();
-            // Ajusta artificialmente a posição para forçar a geração sequencial no início
-            // (Ou melhore a lógica de `GenerateNextSection` para lidar com o caso inicial)
-            if(scenerySpawner.LastSpawnedScenery != null)
-                furthestPointGeneratedZ = scenerySpawner.LastSpawnedScenery.endAttachPoint.position.z - generationDistanceThreshold * 0.5f;
-        }
-         // Após gerar o conteúdo inicial, reseta furthestPointGeneratedZ para o valor correto
-        if (scenerySpawner.LastSpawnedScenery != null && scenerySpawner.LastSpawnedScenery.endAttachPoint != null)
-        {
-            furthestPointGeneratedZ = scenerySpawner.LastSpawnedScenery.endAttachPoint.position.z;
-        }
-        else
-        {
-             furthestPointGeneratedZ = 0f; // Valor inicial se nada foi gerado
-             Debug.LogWarning("Nenhum cenário inicial gerado ou sem attach point.");
-        }
-    }
-
-    private void GenerateNextSection()
-    {
-        // 1. Gera o próximo módulo de cenário
-        GameObject newScenery = scenerySpawner.SpawnNextScenery();
-        if (newScenery == null)
-        {
-            Debug.LogError("Falha ao gerar novo cenário!");
-            return;
-        }
-
-        // 2. Gera as pistas paralelas para *este* cenário
-        trackSpawner.SpawnTracksForScenery(newScenery);
-
-        // 3. Atualiza o ponto mais distante gerado
-        SpawnableElement sceneryElement = newScenery.GetComponent<SpawnableElement>();
-        if (sceneryElement != null && sceneryElement.endAttachPoint != null)
-        {
-            furthestPointGeneratedZ = sceneryElement.endAttachPoint.position.z;
-            // Debug.Log($"Nova seção gerada. Furthest Z: {furthestPointGeneratedZ}");
-        }
-        else
-        {
-            // Fallback: estima baseado no tamanho do objeto se não houver attach point
-            Renderer rend = newScenery.GetComponentInChildren<Renderer>();
-            if(rend != null)
-                furthestPointGeneratedZ += rend.bounds.size.z; // Estimativa grosseira
-            else
-                 furthestPointGeneratedZ += 50f; // Valor padrão
-
-            Debug.LogWarning($"Scenery '{newScenery.name}' não tem SpawnableElement ou endAttachPoint configurado. Estimando Z.");
-        }
-
-         // 4. Notifica o BiomeManager sobre o spawn do cenário (para transição)
-        biomeManager.NotifySceneryModuleSpawned();
-    }
-
-    private void CleanupOldContent()
-    {
-        float cleanupPosZ = playerTransform.position.z - cleanupDistanceBehind;
-
-        // Limpa pistas e cenários antigos
-        scenerySpawner.CleanupActiveScenery(cleanupPosZ);
-        trackSpawner.CleanupActiveTracks(cleanupPosZ);
     }
 }

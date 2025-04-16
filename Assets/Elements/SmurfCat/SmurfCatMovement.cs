@@ -119,10 +119,6 @@ public class SmurfCatMovement : MonoBehaviour
         UpdateScore();
         CheckFallingState();
         
-        if (transform.position.z > generator.LatestEndPointZ)
-        {
-            onTrackCompleted?.Invoke();
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -153,7 +149,6 @@ public class SmurfCatMovement : MonoBehaviour
     {
         if (other.CompareTag(Tags.GroundEnd))
         {
-            generator.Generate();
             cameraController.SetAirborne(true);
             OnGroundEnd?.Invoke();
             
