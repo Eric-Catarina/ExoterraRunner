@@ -109,6 +109,7 @@ public class SmurfCatMovement : MonoBehaviour
     private void OnDisable()
     {
         playerInput.actions.Disable();
+        LevelGenerator.onTrackCompleted -= SetAirborneDelay;
         
     }
 

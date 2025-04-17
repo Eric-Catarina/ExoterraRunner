@@ -11,10 +11,8 @@ public class TrackSpawner : MonoBehaviour
     public SpawnableElement initialTrackReference; // Added field for LevelGenerator
 
     [Header("Initial Position")]
-    [Tooltip("Define a posição exata onde o centro do primeiro conjunto de pistas deve iniciar.")]
-    [SerializeField] private Vector3 initialTrackSetPosition = Vector3.zero; // New variable to set start position
     [Tooltip("Distância em Y do primeiro TrackSet")]
-    [SerializeField] private float initialYOffset = 0f;
+    [SerializeField] private float firstTracksetYOffset = 0f;
 
     [Header("Spawning Logic")]
     [SerializeField] private int parallelTrackCount = 3; // Deve ser ímpar para ter uma pista central
@@ -45,11 +43,10 @@ public class TrackSpawner : MonoBehaviour
         if (initialTrackReference?.endAttachPoint != null)
         {
             // --- Move initial track to the specified starting position --- START
-            initialTrackReference.transform.position = initialTrackSetPosition;
             // --- Move initial track to the specified starting position --- END
 
             lastSpawnedTrackEndAttachPoint = initialTrackReference.endAttachPoint;
-            currentDescent = initialTrackReference.transform.position.y + initialYOffset; // Start descent from the *new* initial track height
+            currentDescent = initialTrackReference.transform.position.y + firstTracksetYOffset; // Start descent from the *new* initial track height
             if (!activeTracks.Contains(initialTrackReference.gameObject))
             {
                  activeTracks.Add(initialTrackReference.gameObject); // Ensure initial track is managed
