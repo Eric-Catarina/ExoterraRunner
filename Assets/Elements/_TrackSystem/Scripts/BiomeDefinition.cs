@@ -9,6 +9,10 @@ public class BiomeDefinition : ScriptableObject
     public string biomeName = "Unnamed Biome";
     public Color biomeDebugColor = Color.white; // Para Gizmos ou UI
 
+    [Header("Track Settings")]
+    [Tooltip("Espaçamento horizontal entre pistas paralelas neste bioma.")]
+    public float trackSpacing = 20.0f;
+
     [Header("Visuals")]
     public Material skyboxMaterial;
     [CanBeNull] public GameObject environmentParticlePrefab; // Partículas de ambiente do bioma

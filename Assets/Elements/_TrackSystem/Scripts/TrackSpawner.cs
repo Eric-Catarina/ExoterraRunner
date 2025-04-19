@@ -16,8 +16,6 @@ public class TrackSpawner : MonoBehaviour
 
     [Header("Spawning Logic")]
     [SerializeField] private int parallelTrackCount = 3; // Deve ser ímpar para ter uma pista central
-    [Tooltip("Espaçamento horizontal entre pistas paralelas.")]
-    [SerializeField] private float trackSpacing = 20.0f;  // Changed from 5.0f to 20.0f (User range: 10-30)
     [Tooltip("Distância Z adicional entre o ponto final de um conjunto de pistas e o início do próximo.")]
     [SerializeField] private float zDistanceBetweenSets = 150.0f; // New variable (User range: 100-200)
 
@@ -100,6 +98,8 @@ public class TrackSpawner : MonoBehaviour
         currentDescent += trackDescentRate;
         int centerIndex = parallelTrackCount / 2;
         float centerXPosition = 0f;
+
+        float trackSpacing = biomeManager.CurrentBiome.trackSpacing;
 
         // Spawn parallel tracks
         for (int i = 0; i < parallelTrackCount; i++)

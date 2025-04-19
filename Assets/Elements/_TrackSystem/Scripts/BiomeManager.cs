@@ -4,10 +4,10 @@ using System; // Para Action
 
 public class BiomeManager : MonoBehaviour
 {
-    [SerializeField] private List<BiomeDefinition> availableBiomes;
+    public List<BiomeDefinition> availableBiomes;
     [SerializeField] private float transitionDelay = 2.0f; // Tempo para animação de UI, etc.
 
-    public BiomeDefinition CurrentBiome { get; private set; }
+    public BiomeDefinition CurrentBiome;
     private int currentBiomeIndex = -1;
     private int modulesSpawnedInCurrentBiome = 0;
 

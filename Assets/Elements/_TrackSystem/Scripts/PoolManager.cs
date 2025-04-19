@@ -9,12 +9,14 @@ public class PoolManager : MonoBehaviour
     public class Pool
     {
         public GameObject prefab;
-        public int initialSize;
         [HideInInspector] public Queue<GameObject> objects = new Queue<GameObject>();
     }
 
-    [SerializeField] private List<Pool> pools; // Configure os prefabs de Cenário e Pista aqui no Inspector
-    private Dictionary<int, Pool> poolDictionary = new Dictionary<int, Pool>();
+    public Dictionary<int, Pool> poolDictionary = new Dictionary<int, Pool>();
+    [SerializeField]
+    private BiomeManager biomeManager;
+
+    [SerializeField] private List<GameObject> validPrefabs;
 
     void Awake()
     {
@@ -29,20 +31,38 @@ public class PoolManager : MonoBehaviour
 
     private void InitializePools()
     {
-        foreach (Pool pool in pools)
+        if (biomeManager == null) return;
+
+        // Add track prefabs from all biomes
+        foreach (var biome in biomeManager.availableBiomes)
         {
-            int prefabId = pool.prefab.GetInstanceID();
-            if (!poolDictionary.ContainsKey(prefabId))
+            foreach (var prefab in biome.trackPrefabs)
             {
-                poolDictionary.Add(prefabId, pool);
-                for (int i = 0; i < pool.initialSize; i++)
+                if (!validPrefabs.Contains(prefab))
                 {
-                    AddNewObjectToPool(pool);
+                    validPrefabs.Add(prefab);
+                    AddPrefabToPool(prefab, 10);
                 }
             }
-            else
+        }
+        
+        // Add scenery prefabs
+        foreach (var prefab in biomeManager.GetValidSceneryPrefabs())
+        {
+            AddPrefabToPool(prefab, 5);
+        }
+    }
+
+    private void AddPrefabToPool(GameObject prefab, int initialSize)
+    {
+        int prefabId = prefab.GetInstanceID();
+        if (!poolDictionary.ContainsKey(prefabId))
+        {
+            var pool = new Pool { prefab = prefab };
+            poolDictionary.Add(prefabId, pool);
+            for (int i = 0; i < initialSize; i++)
             {
-                Debug.LogWarning($"Pool for prefab '{pool.prefab.name}' already exists.");
+                AddNewObjectToPool(pool);
             }
         }
     }

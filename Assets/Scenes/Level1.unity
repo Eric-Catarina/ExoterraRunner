@@ -1124,6 +1124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableBiomes:
+  - {fileID: 11400000, guid: 29554b91c3fc4ecf0b1e7d4c0352c9eb, type: 2}
   - {fileID: 11400000, guid: c189eb36bf761c05cb553ccb9c3a6298, type: 2}
   transitionDelay: 2
 --- !u!4 &160253456
@@ -2529,15 +2530,17 @@ MonoBehaviour:
     initialSize: 0
   - prefab: {fileID: 4742711396302157090, guid: ffebeb976304ea4c0a592722694eca55, type: 3}
     initialSize: 0
+  - prefab: {fileID: 6345384655228296746, guid: aa4ed89fe092c9830a0a4aef3076aecf, type: 3}
+    initialSize: 0
   - prefab: {fileID: 6345384655228296746, guid: b1e478c0c45122932be168a28fd75562, type: 3}
+    initialSize: 0
+  - prefab: {fileID: 6345384655228296746, guid: d4b2aafa485206ea8833067510f039af, type: 3}
     initialSize: 0
   - prefab: {fileID: 405758576386881191, guid: 0ef92f8657f38fd01843c6079d882dda, type: 3}
     initialSize: 0
   - prefab: {fileID: 9196618639578155915, guid: 397cf474e2013efe8af8223033ed26b2, type: 3}
     initialSize: 0
   - prefab: {fileID: 405758576386881191, guid: e19ddcd473a34348cb5ffe235c5e0921, type: 3}
-    initialSize: 0
-  - prefab: {fileID: 6345384655228296746, guid: d4b2aafa485206ea8833067510f039af, type: 3}
     initialSize: 0
 --- !u!4 &276935599
 Transform:
@@ -8050,13 +8053,12 @@ MonoBehaviour:
   poolManager: {fileID: 276935598}
   tracksParent: {fileID: 117135504}
   initialTrackReference: {fileID: 1564774290}
-  firstTracksetYOffset: 0
-  parallelTrackCount: 1
-  trackSpacing: 130
+  firstTracksetYOffset: 40
+  parallelTrackCount: 3
   zDistanceBetweenSets: 100
   minXOffset: 0
   maxXOffset: 0
-  trackDescentRate: 100
+  trackDescentRate: 15
   activeTracks: []
 --- !u!4 &1024011779
 Transform:
