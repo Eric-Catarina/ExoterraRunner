@@ -14,6 +14,8 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float cleanupDistance = 200f; // Distância atrás para limpar ambos
     [SerializeField] private float cleanupCheckInterval = 50f; // Intervalo para verificar limpeza
     public static event Action onTrackCompleted;
+    public static event Action onTrackSetGenerated;
+
 
     // Rastreia o ponto Z mais distante para cada tipo de spawner
     public float furthestTrackGeneratedZ = 0f;
@@ -21,6 +23,9 @@ public class LevelGenerator : MonoBehaviour
     private float lastCleanupZ = 0f;
     [SerializeField]
     private SmurfCatMovement smurfCatMovement;
+
+    // Biome switching
+    private int tracksGeneratedInCurrentBiome = 0;
 
     void Start()
     {
@@ -72,7 +77,12 @@ public class LevelGenerator : MonoBehaviour
         // --- Spawn ONE initial track set ---
         float previousTrackZ = furthestTrackGeneratedZ;
         Transform newTrackAttachPoint = trackSpawner.SpawnNextTrackSet();
-
+        
+        onTrackSetGenerated?.Invoke();
+        tracksGeneratedInCurrentBiome++;
+        biomeManager.modulesSpawnedInCurrentBiome++;
+        biomeManager.CheckForBiomeTransition();
+        
         if (newTrackAttachPoint != null)
         {
             furthestTrackGeneratedZ = newTrackAttachPoint.position.z;

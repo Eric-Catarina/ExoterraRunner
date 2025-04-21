@@ -9,7 +9,7 @@ public class BiomeManager : MonoBehaviour
 
     public BiomeDefinition CurrentBiome;
     private int currentBiomeIndex = -1;
-    private int modulesSpawnedInCurrentBiome = 0;
+    public int modulesSpawnedInCurrentBiome = 0;
 
     public static event Action<BiomeDefinition> OnBiomeWillChange; // Avisa *antes* da transição (para UI/FX)
     public static event Action<BiomeDefinition> OnBiomeChanged; // Avisa *depois* da transição
@@ -32,9 +32,8 @@ public class BiomeManager : MonoBehaviour
     {
         modulesSpawnedInCurrentBiome++;
         CheckForBiomeTransition();
-    }
-
-    private void CheckForBiomeTransition()
+    } 
+    public void CheckForBiomeTransition()
     {
         if (CurrentBiome == null) return;
 
