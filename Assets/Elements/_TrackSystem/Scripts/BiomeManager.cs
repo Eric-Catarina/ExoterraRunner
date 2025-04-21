@@ -1,6 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System; // Para Action
+using System;
+using System.Collections;
+using DG.Tweening;
+using TMPro; // Para Action
 
 public class BiomeManager : MonoBehaviour
 {
@@ -8,6 +11,7 @@ public class BiomeManager : MonoBehaviour
     [SerializeField] private float transitionDelay = 2.0f; // Tempo para animação de UI, etc.
 
     public BiomeDefinition CurrentBiome;
+    public TextMeshProUGUI biomeText; // Texto UI para mostrar o nome do bioma
     private int currentBiomeIndex = -1;
     public int modulesSpawnedInCurrentBiome = 0;
 
@@ -40,30 +44,20 @@ public class BiomeManager : MonoBehaviour
         if (modulesSpawnedInCurrentBiome >= CurrentBiome.modulesBeforeTransition)
         {
             // Lógica para decidir se muda (pode ser aleatório, sequencial, etc.)
-            // Exemplo simples: sempre muda sequencialmente
             int nextBiomeIndex = (currentBiomeIndex + 1) % availableBiomes.Count;
-            StartCoroutine(TransitionToBiomeCoroutine(nextBiomeIndex));
+            
+            // Notify before changing
+            OnBiomeWillChange?.Invoke(availableBiomes[nextBiomeIndex]);
+            
+            // Change biome immediately
+            ForceSetBiome(nextBiomeIndex);
+            
+            // Notify after changing
+            OnBiomeChanged?.Invoke(CurrentBiome);
+            StartCoroutine(WaitAndChangeBiome()); // Chama a mudança de bioma com um atraso()
+            
+            modulesSpawnedInCurrentBiome = 0;
         }
-    }
-
-    private System.Collections.IEnumerator TransitionToBiomeCoroutine(int nextBiomeIndex)
-    {
-        if (nextBiomeIndex == currentBiomeIndex) yield break; // Já está no bioma
-
-        BiomeDefinition nextBiome = availableBiomes[nextBiomeIndex];
-
-        OnBiomeWillChange?.Invoke(nextBiome); // Dispara evento *antes* da mudança
-
-        // --- Aqui você pode adicionar a animação de UI do nome do bioma ---
-        // Ex: biomeTextAnimator.Show(nextBiome.biomeName, nextBiome.biomeColor);
-        Debug.Log($"Transitioning to Biome: {nextBiome.biomeName}");
-        yield return new WaitForSeconds(transitionDelay); // Espera a animação/delay
-
-        ForceSetBiome(nextBiomeIndex);
-        ApplyBiomeSettings(CurrentBiome);
-
-        OnBiomeChanged?.Invoke(CurrentBiome); // Dispara evento *depois* da mudança
-        modulesSpawnedInCurrentBiome = 0; // Reseta contador para o novo bioma
     }
 
     private void ForceSetBiome(int index)
@@ -107,5 +101,89 @@ public class BiomeManager : MonoBehaviour
     public List<GameObject> GetValidTrackPrefabs()
     {
         return CurrentBiome?.trackPrefabs ?? new List<GameObject>();
+    }
+    
+     private void ShowBiomeName()
+    {
+        
+        biomeText.gameObject.SetActive(true);
+
+        // Define o texto para o nome do bioma
+        biomeText.text = CurrentBiome.biomeName;
+
+        // Define a cor do texto para a cor do bioma atual
+        biomeText.color = CurrentBiome.biomeDebugColor;
+
+        // Pegar RectTransform do TMP
+        RectTransform textRect = biomeText.GetComponent<RectTransform>();
+
+        // Armazena a posição atual em Y (para manter o texto na altura desejada)
+        float originalY = textRect.anchoredPosition.y;
+
+        // Posicionar inicialmente fora da tela, à esquerda (apenas no eixo X)
+        textRect.anchoredPosition = new Vector2(-Screen.width, originalY);
+
+        // Criar a sequência de animações
+        Sequence seq = DOTween.Sequence();
+
+        // 1. Entrar da esquerda até o centro
+        seq.Append(
+            textRect.DOAnchorPos(new Vector2(0f, originalY), 1f)
+                .SetEase(Ease.OutBack)
+        );
+
+        // 2. Ficar parado 2 segundos
+        seq.AppendInterval(2f);
+
+        // 3. Sair pra direita (fora da tela)
+        seq.Append(
+            textRect.DOAnchorPos(new Vector2(Screen.width, originalY), 1f)
+                .SetEase(Ease.InQuad)
+        );
+
+        // 4. Desativar após o fim
+        seq.OnComplete(() =>
+        {
+            biomeText.gameObject.SetActive(false);
+        });
+    }
+    
+    private void ShowBiomeParticle()
+    {
+        
+        // Set other particles inactive
+        for (int i = 0; i < availableBiomes.Count; i++)
+        {
+            if (availableBiomes[i].environmentParticlePrefab == null)
+            {
+                continue;
+            }
+            availableBiomes[i].environmentParticlePrefab.SetActive(false);
+        }
+        if (CurrentBiome.environmentParticlePrefab == null)
+        {
+            return;
+        }
+        CurrentBiome.environmentParticlePrefab.SetActive(true);
+
+    }
+    
+    
+    private void ChangeBiomeSkybox()
+    {
+        RenderSettings.skybox = CurrentBiome.skyboxMaterial;
+    }
+    
+    private IEnumerator WaitAndChangeBiome()
+    {
+        // Aguarda X segundos antes de trocar
+        yield return new WaitForSeconds(transitionDelay);
+
+        // Anima o texto
+        ShowBiomeName();
+        ShowBiomeParticle();
+
+        // Troca a Skybox
+        ChangeBiomeSkybox();
     }
 }

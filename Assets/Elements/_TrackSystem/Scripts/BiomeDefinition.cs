@@ -20,8 +20,7 @@ public class BiomeDefinition : ScriptableObject
     [CanBeNull] public GameObject environmentParticlePrefab; // Partículas de ambiente do bioma
 
     [Header("Spawning Rules")]
-    public int modulesBeforeTransition = 10; // Quantos módulos de *cenário* gerar antes de talvez mudar
-    public int tracksBeforeChange = 10; // Quantos módulos de *pista* gerar antes de talvez mudar
+    public int modulesBeforeTransition = 4; // Quantos módulos de *cenário* gerar antes de talvez mudar
 
     [Header("Spawnable Prefabs")]
     // Lista de prefabs de *Cenário* que podem aparecer neste bioma

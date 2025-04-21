@@ -79,9 +79,11 @@ public class LevelGenerator : MonoBehaviour
         Transform newTrackAttachPoint = trackSpawner.SpawnNextTrackSet();
         
         onTrackSetGenerated?.Invoke();
+        
         tracksGeneratedInCurrentBiome++;
-        biomeManager.modulesSpawnedInCurrentBiome++;
-        biomeManager.CheckForBiomeTransition();
+        biomeManager.NotifySceneryModuleSpawned();
+        
+        
         
         if (newTrackAttachPoint != null)
         {

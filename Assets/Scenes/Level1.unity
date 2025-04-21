@@ -1128,6 +1128,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c189eb36bf761c05cb553ccb9c3a6298, type: 2}
   transitionDelay: 2
   CurrentBiome: {fileID: 11400000, guid: 29554b91c3fc4ecf0b1e7d4c0352c9eb, type: 2}
+  biomeText: {fileID: 460363128}
+  modulesSpawnedInCurrentBiome: 0
 --- !u!4 &160253456
 Transform:
   m_ObjectHideFlags: 0
@@ -7498,8 +7500,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.16802993, y: 1e-45, z: 0, w: 0.9857819}
-  m_LocalPosition: {x: 0, y: 12.04, z: -98.2}
+  m_LocalRotation: {x: 0.16802981, y: 0.000000023987521, z: -0.0000000040887533, w: 0.9857819}
+  m_LocalPosition: {x: 0, y: 12.04, z: -95.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8039,11 +8041,10 @@ MonoBehaviour:
   poolManager: {fileID: 276935598}
   tracksParent: {fileID: 117135504}
   initialTrackReference: {fileID: 1564774290}
-  firstTracksetYOffset: 40
+  firstTracksetYOffset: 150
   parallelTrackCount: 3
-  zDistanceBetweenSets: 100
-  minXOffset: 0
-  maxXOffset: 0
+  minXOffset: 50
+  maxXOffset: 50
   trackDescentRate: 15
   activeTracks: []
 --- !u!4 &1024011779
@@ -13078,8 +13079,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730516138}
-  m_LocalRotation: {x: 0.16802993, y: 1e-45, z: 0, w: 0.9857819}
-  m_LocalPosition: {x: 0, y: 12.04, z: -98.2}
+  m_LocalRotation: {x: 0.16802981, y: 0.000000023987521, z: -0.0000000040887533, w: 0.9857819}
+  m_LocalPosition: {x: 0, y: 12.04, z: -95.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15207,7 +15208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2263158387367087079, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -80.9
+      value: -78.2
       objectReference: {fileID: 0}
     - target: {fileID: 2263158387367087079, guid: 4cb34de7c3e4b5e289b1c4cfcd254feb, type: 3}
       propertyPath: m_LocalRotation.w
