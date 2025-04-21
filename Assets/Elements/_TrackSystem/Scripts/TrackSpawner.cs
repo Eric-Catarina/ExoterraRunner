@@ -16,8 +16,6 @@ public class TrackSpawner : MonoBehaviour
 
     [Header("Spawning Logic")]
     [SerializeField] private int parallelTrackCount = 3; // Deve ser ímpar para ter uma pista central
-    [Tooltip("Distância Z adicional entre o ponto final de um conjunto de pistas e o início do próximo.")]
-    [SerializeField] private float zDistanceBetweenSets = 150.0f; // New variable (User range: 100-200)
 
     [Header("Random Horizontal Offset")]
     [Tooltip("Minimum random horizontal offset applied to each NEW track set.")]
@@ -84,7 +82,7 @@ public class TrackSpawner : MonoBehaviour
         }
 
         // Calculate base spawn position using previous center X
-        Vector3 baseSpawnPosition = lastSpawnedTrackEndAttachPoint.position + lastSpawnedTrackEndAttachPoint.forward * zDistanceBetweenSets;
+        Vector3 baseSpawnPosition = lastSpawnedTrackEndAttachPoint.position + lastSpawnedTrackEndAttachPoint.forward * biomeManager.CurrentBiome.trackSetZSpacing;
         baseSpawnPosition.x = previousCenterX; // Use previous center X
 
         // Apply random horizontal offset within specified range

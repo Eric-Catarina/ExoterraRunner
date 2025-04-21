@@ -12,6 +12,8 @@ public class BiomeDefinition : ScriptableObject
     [Header("Track Settings")]
     [Tooltip("Espaçamento horizontal entre pistas paralelas neste bioma.")]
     public float trackSpacing = 20.0f;
+    [Tooltip("Espaçamento em Z entre conjuntos de pistas neste bioma.")]
+    public float trackSetZSpacing = 50.0f;
 
     [Header("Visuals")]
     public Material skyboxMaterial;
