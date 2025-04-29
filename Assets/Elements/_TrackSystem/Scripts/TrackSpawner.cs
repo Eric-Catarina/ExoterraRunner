@@ -27,6 +27,7 @@ public class TrackSpawner : MonoBehaviour
     [Tooltip("Quanto cada NOVO CONJUNTO de pistas desce em Y em relação ao conjunto anterior.")]
     [SerializeField] private float trackDescentRate = 75.0f; // Changed from 0.5f to 75.0f (User range: 50-100)
 
+    [SerializeField] private float trackZSpacing = 10f;
     // Keep track of active tracks and the last attach point
     [SerializeField] private List<GameObject> activeTracks = new List<GameObject>();
     public Transform lastSpawnedTrackEndAttachPoint { get; private set; }

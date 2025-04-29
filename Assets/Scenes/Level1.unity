@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.24532752, g: 0.2746848, b: 0.3490566, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: ed1387202b1349540a5d6464f0f27488, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 52fcefd712182d743a781fde12426775, type: 2}
   m_HaloStrength: 0
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1126,7 +1126,7 @@ MonoBehaviour:
   availableBiomes:
   - {fileID: 11400000, guid: 29554b91c3fc4ecf0b1e7d4c0352c9eb, type: 2}
   - {fileID: 11400000, guid: c189eb36bf761c05cb553ccb9c3a6298, type: 2}
-  transitionDelay: 2
+  transitionDelay: 10
   CurrentBiome: {fileID: 11400000, guid: 29554b91c3fc4ecf0b1e7d4c0352c9eb, type: 2}
   biomeText: {fileID: 460363128}
   modulesSpawnedInCurrentBiome: 0
@@ -7500,7 +7500,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.16802981, y: 0.000000023987521, z: -0.0000000040887533, w: 0.9857819}
+  m_LocalRotation: {x: 0.16802981, y: -0.000000023987521, z: 0.0000000040887533, w: 0.9857819}
   m_LocalPosition: {x: 0, y: 12.04, z: -95.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8039,13 +8039,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   biomeManager: {fileID: 160253455}
   poolManager: {fileID: 276935598}
+  speedManager: {fileID: 443421856}
   tracksParent: {fileID: 117135504}
   initialTrackReference: {fileID: 1564774290}
-  firstTracksetYOffset: 150
+  firstGeneratedSetYOffset: 0
   parallelTrackCount: 3
+  baseZSpacing: 15
+  zSpacingSpeedScaleFactor: 0.5
   minXOffset: 50
   maxXOffset: 50
-  trackDescentRate: 15
+  trackDescentPerSet: 1
   activeTracks: []
 --- !u!4 &1024011779
 Transform:
@@ -13079,7 +13082,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730516138}
-  m_LocalRotation: {x: 0.16802981, y: 0.000000023987521, z: -0.0000000040887533, w: 0.9857819}
+  m_LocalRotation: {x: 0.16802981, y: -0.000000023987521, z: 0.0000000040887533, w: 0.9857819}
   m_LocalPosition: {x: 0, y: 12.04, z: -95.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

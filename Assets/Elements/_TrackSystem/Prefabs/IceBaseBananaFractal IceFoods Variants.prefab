@@ -21521,6 +21521,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SnowManIsland
       objectReference: {fileID: 0}
+    - target: {fileID: 2961831540346582288, guid: 329bc4bf5a3055e428312221ab4a4275, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2961831540346582289, guid: 329bc4bf5a3055e428312221ab4a4275, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -21660,6 +21664,10 @@ PrefabInstance:
     - target: {fileID: 1003506057684509506, guid: 5d9d46a3a4c25194d9c9686ee709503a, type: 3}
       propertyPath: m_Name
       value: IglooIsland
+      objectReference: {fileID: 0}
+    - target: {fileID: 1003506057684509506, guid: 5d9d46a3a4c25194d9c9686ee709503a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4345739508068929547, guid: 5d9d46a3a4c25194d9c9686ee709503a, type: 3}
       propertyPath: m_RootOrder

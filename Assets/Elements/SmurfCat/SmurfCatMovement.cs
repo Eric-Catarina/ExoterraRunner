@@ -319,6 +319,7 @@ public void SetMovementSensitivity(float sensitivity)
 
     private void ProcessJumpSpot()
     {
+        SetAirborne();
         currentScore += 10 * scoreMultiplier;
         scoreMultiplier *= 1.1f;
         ShowJumpSpotText(10 * scoreMultiplier);

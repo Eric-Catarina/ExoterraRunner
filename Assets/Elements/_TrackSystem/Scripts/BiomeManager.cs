@@ -29,6 +29,7 @@ public class BiomeManager : MonoBehaviour
         // Começa com o primeiro bioma sem transição visual imediata
         ForceSetBiome(0);
         ApplyBiomeSettings(CurrentBiome); // Aplica configurações iniciais
+        ShowBiomeTransitions();
     }
 
     // Chamado pelo LevelGenerator quando um módulo de cenário é spawnado
@@ -180,10 +181,14 @@ public class BiomeManager : MonoBehaviour
         yield return new WaitForSeconds(transitionDelay);
 
         // Anima o texto
+        ShowBiomeTransitions();
+    }
+    
+    private void ShowBiomeTransitions()
+    {
         ShowBiomeName();
         ShowBiomeParticle();
 
-        // Troca a Skybox
-        ChangeBiomeSkybox();
+        ChangeBiomeSkybox();   
     }
 }
