@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f782413318f3a071a65b7f6527e548f, type: 3}
+  m_Name: SunscorchedDunes
+  m_EditorClassIdentifier: 
+  biomeName: Sunscorched Dunes
+  biomeDebugColor: {r: 0.8301887, g: 0.5805755, b: 0.090067655, a: 1}
+  trackSpacing: 60
+  trackSetZSpacing: 120
+  skyboxMaterial: {fileID: 2100000, guid: 52fcefd712182d743a781fde12426775, type: 2}
+  environmentParticlePrefab: {fileID: 0}
+  modulesBeforeTransition: 1
+  sceneryPrefabs:
+  - {fileID: 4742711396302157090, guid: ffebeb976304ea4c0a592722694eca55, type: 3}
+  trackPrefabs:
+  - {fileID: 6345384655228296746, guid: b1e478c0c45122932be168a28fd75562, type: 3}
+  - {fileID: 6345384655228296746, guid: 3173b073675c9f239b1ce79a6aa3483c, type: 3}
+  speedMultiplier: 1

@@ -26,12 +26,14 @@ public class SmurfCatMovement : MonoBehaviour
     public GameObject fallExplosionVFX;
     public GameObject jumpSpotText;
     public GameObject grounds;
+    public GameObject baseGround;
+    public GameObject tutorials;
     public List<TrailRenderer> fallingTrails;
 
     [Header("UI Elements")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI scoreMultiplierText;
-    public TextMeshProUGUI highScoreText;
+    // public TextMeshProUGUI highScoreText;
     [FormerlySerializedAs("fadeInDuration")] [SerializeField] private float fallingVfxFadeInDuration;
     [FormerlySerializedAs("fadeOutDuration")] [SerializeField] private float fallingVfxFadeOutDuration;
     public GameObject revivePanel;
@@ -90,11 +92,13 @@ public class SmurfCatMovement : MonoBehaviour
         InitializeComponents();
         LoadHighScore();
     }
+    
 
     private void OnEnable()
     {
         playerInput.actions.Enable();
         TutorialManager.onFirstTutorialStarted += OnFirstTutorialStarted;
+        LevelGenerator.onTrackCompleted += SetAirborneDelay;
         void OnFirstTutorialStarted()
         {
             _canAlrealdyJump = true;
@@ -105,6 +109,7 @@ public class SmurfCatMovement : MonoBehaviour
     private void OnDisable()
     {
         playerInput.actions.Disable();
+        LevelGenerator.onTrackCompleted -= SetAirborneDelay;
         
     }
 
@@ -113,14 +118,14 @@ public class SmurfCatMovement : MonoBehaviour
         HandleMovement();
         UpdateScore();
         CheckFallingState();
+        
     }
-    
 
     private void OnCollisionEnter(Collision collision)
     {
+            HandleGroundCollision(collision);
         if (collision.gameObject.CompareTag(Tags.Ground))
         {
-            HandleGroundCollision(collision);
         }
     }
 
@@ -144,7 +149,6 @@ public class SmurfCatMovement : MonoBehaviour
     {
         if (other.CompareTag(Tags.GroundEnd))
         {
-            generator.Generate();
             cameraController.SetAirborne(true);
             OnGroundEnd?.Invoke();
             
@@ -177,12 +181,14 @@ public class SmurfCatMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         horizontalSpeed = PlayerPrefs.GetFloat(PlayerPrefsKeys.MovementSensitivity, 2.5f);
 
+
     }
 
     private void LoadHighScore()
     {
+        return;
         highScore = PlayerPrefs.GetFloat(PlayerPrefsKeys.HighScore, 0);
-        highScoreText.text = highScore.ToString("F0");
+        // highScoreText.text = highScore.ToString("F0");
     }
 
     #endregion
@@ -278,14 +284,14 @@ public void SetMovementSensitivity(float sensitivity)
     public void Jump()
     {
         return;
-        if (IsPointerOverUI() || !isGrounded) return;
+        /*if (IsPointerOverUI() || !isGrounded) return;
 
         PerformJump();
 
         if (isOnJumpSpot)
         {
             ProcessJumpSpot();
-        }
+        }*/
     }
 
     private void PerformJump()
@@ -313,6 +319,7 @@ public void SetMovementSensitivity(float sensitivity)
 
     private void ProcessJumpSpot()
     {
+        SetAirborne();
         currentScore += 10 * scoreMultiplier;
         scoreMultiplier *= 1.1f;
         ShowJumpSpotText(10 * scoreMultiplier);
@@ -539,6 +546,7 @@ public void SetMovementSensitivity(float sensitivity)
         }
         cameraController.OnPlayerDeath();
         SaveHighScore();
+        audioManager.PlayDeathSound();
         
         // ShowRevivePanel();
         
@@ -565,6 +573,7 @@ public void SetMovementSensitivity(float sensitivity)
         }
         ShowAndHideHalo();
         OnRevive.Invoke();
+        audioManager.PlayReviveSound();
     }
     
     // Set isImmortal false after 5 seconds
@@ -628,4 +637,24 @@ public void SetMovementSensitivity(float sensitivity)
         public const string MovementSensitivity = "MovementSensitivity";
 
     }
+
+    private void CompleteTrack()
+    {
+        generator.Generate();
+        cameraController.SetAirborne(true);
+    }
+
+    // Wait 0.5f and set airboner
+    private void SetAirborne()
+    {
+        cameraController.SetAirborne(true);
+    }
+
+    private void SetAirborneDelay()
+    {
+        Invoke("SetAirborne", 1f);
+    }
+    
+    
+ 
 }

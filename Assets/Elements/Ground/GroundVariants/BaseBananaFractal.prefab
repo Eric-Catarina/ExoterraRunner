@@ -99,7 +99,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 159219299624484793, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_Size.y
-      value: 1.4188981
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 159219299624484793, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: m_Size.z
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 159219299624484793, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: m_Center.y
@@ -145,6 +149,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 652548551364808073, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+      propertyPath: track
+      value: 
+      objectReference: {fileID: 6437124112264379692}
     - target: {fileID: 2271751897328895781, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
       value: 1
@@ -391,6 +399,11 @@ PrefabInstance:
 --- !u!4 &5332653041181351065 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5133287354641087369, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
+  m_PrefabInstance: {fileID: 953771400729437968}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6437124112264379692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6082454685706951228, guid: 3c749d3e1162f75aab3a71498c1ca854, type: 3}
   m_PrefabInstance: {fileID: 953771400729437968}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6729377246977144658 stripped

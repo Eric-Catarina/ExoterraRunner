@@ -15,10 +15,12 @@ public class PauseMenu : MonoBehaviour
 
     void Awake()
     {
-        }
+    }
     public void PauseGame()
     {
         Time.timeScale = 0;
+        audioManager.PauseFallingAudio();
+        audioManager.StopSFX();
         isPaused = true;
     }
     public void UnpauseGame()

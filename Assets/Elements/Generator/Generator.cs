@@ -17,6 +17,13 @@ public class BiomeData
     public List<GameObject> tracks; // Lista de pistas para o bioma
 }
 
+[System.Serializable]
+public class TrackSpawnData
+{
+    public Vector3 position;
+    public bool isCentralTrack;
+}
+
 public class Generator : MonoBehaviour
 {
     [Header("Biomes Settings")] [SerializeField]
@@ -36,11 +43,49 @@ public class Generator : MonoBehaviour
     [SerializeField] private float minYVariation = 30f;
     [SerializeField] private float maxYVariation = 150f;
 
+    [SerializeField] private List<GameObject> modulesList;
+    public GameObject currentModule;
+    public Transform currentModuleEnd;
+
     private int currentBiomeIndex = 0; // Índice do bioma atual
     private List<GameObject> currentTracks; // Referência para as pistas do bioma atual
     private int tracksGenerated = 0; // Contador de pistas geradas
     private float cumulativeYOffset = 0f; // Acumula o deslocamento em Y
     private float initialZPosition = 0f;
+    
+    
+    [Header("Parallel Tracks Settings")]
+    [SerializeField] private int numberOfParallelTracks = 3;
+    
+    // Mantenha os campos existentes e adicione:
+    [SerializeField] private List<GameObject> activeTracks = new List<GameObject>();
+    private float latestEndPointZ;
+    
+    [Header("Track Generation Settings")]
+    [SerializeField] private int parallelTracksCount = 3; // Número ímpar recomendado
+    [SerializeField] private float trackSpacing = 50f;
+    [SerializeField] private float safetyBuffer = 10f; // Margem antes do fim da pista
+
+    private List<GameObject> activeBiomeModules = new List<GameObject>();
+    private float furthestEndPointZ;
+
+    public float FurthestEndPointZ => furthestEndPointZ;
+
+
+    private void UpdateLatestEndPoint()
+    {
+        latestEndPointZ = float.MinValue;
+        foreach (var track in activeTracks)
+        {
+            var endPoint = track.GetComponent<Ground>().endAttachPoint.transform.position.z;
+            if (endPoint > latestEndPointZ)
+            {
+                latestEndPointZ = endPoint;
+            }
+        }
+    }
+
+    public float LatestEndPointZ => latestEndPointZ;
 
     [SerializeField] private GameObject lastElement, nextElement;
 
@@ -57,7 +102,7 @@ public class Generator : MonoBehaviour
     private void Start()
     {
         initialZPosition = transform.position.z;
-
+        
         if (biomes.Count > 0)
         {
             currentTracks = biomes[currentBiomeIndex].tracks; // Define as pistas iniciais
@@ -71,20 +116,18 @@ public class Generator : MonoBehaviour
 
     public void Generate()
     {
-        // Atualiza o bioma a cada 20 pistas
         UpdateBiome();
-
-        // Seleciona aleatoriamente um prefab da lista do bioma atual
-        GameObject selectedTrack = SelectRandomTrack();
-        if (selectedTrack == null)
-        {
-            Debug.LogWarning("Nenhum prefab de pista disponível na lista atual.");
-            return;
-        }
+        GenerateParallelTracks();
+        tracksGenerated++;
+    }
+    
+    
+    private void GenerateSingleTrack()
+    {
+        GameObject selectedTrack = SelectRandomGround();
+        if (selectedTrack == null) return;
 
         nextElement = selectedTrack;
-
-        // Calcula a posição final e instancia o elemento
         Vector3 finalPosition = CalculateFinalPosition();
         GameObject newElement = InstantiateElement(selectedTrack, finalPosition);
 
@@ -94,13 +137,59 @@ public class Generator : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x, transform.position.y, initialZPosition);
         lastElement = newElement;
+    }
+    
+    private void GenerateParallelTracks()
+    {
+        GameObject selectedTrack = SelectRandomSingleTrack();
+        if (selectedTrack == null) return;
 
-        tracksGenerated++;
-
-        if (tracksGenerated % 20 == 1) // Após mudar o bioma, gere uma pista adicional para suavizar a transição
+        Vector3 centralPosition = CalculateTrackSpawnPosition();
+        
+        for (int i = 0; i < numberOfParallelTracks; i++)
         {
-            WaitAndGenerate();
+            float xOffset = (i - (numberOfParallelTracks - 1) / 2f) * trackSpacing;
+            Vector3 spawnPosition = centralPosition + new Vector3(xOffset, 0, 0);
+            
+            GameObject newTrack = InstantiateTrack(selectedTrack, spawnPosition);
+            activeTracks.Add(newTrack);
+            
+            UpdateLatestEndPoint();
+            CleanupOldTracks();
         }
+    }
+
+    private Vector3 CalculateTrackSpawnPosition()
+    {
+        return new Vector3(
+            Random.Range(minimumXPosition, maximumXPosition),
+            transform.position.y - Random.Range(minYVariation, maxYVariation),
+            latestEndPointZ
+        );
+    }
+    
+    private GameObject InstantiateTrack(GameObject prefab, Vector3 position)
+    {
+        GameObject newTrack = Instantiate(prefab, position, Quaternion.identity);
+        newTrack.transform.parent = elementContainer.transform;
+        InitializeTrack(newTrack);
+        return newTrack;
+    }
+
+    private void InitializeTrack(GameObject track)
+    {
+        // Mantenha a lógica de animação e colliders existente
+        SetInitialScaleAndPosition(track, track.transform.position);
+        ApplyAnimations(track, track.transform.position);
+        ScheduleDestruction(track);
+    }
+
+    private void CleanupOldTracks()
+    {
+        // Remove tracks que já estão muito para trás
+        activeTracks.RemoveAll(track => 
+            track == null || 
+            track.transform.position.z < (latestEndPointZ - 100f));
     }
 
     private void UpdateBiome()
@@ -117,11 +206,18 @@ public class Generator : MonoBehaviour
     }
 
 
-    private GameObject SelectRandomTrack()
+    private GameObject SelectRandomGround()
     {
         if (currentTracks.Count == 0) return null; // Evita erros se a lista estiver vazia
         int randomIndex = Random.Range(0, currentTracks.Count);
         return currentTracks[randomIndex];
+    }
+
+    private GameObject SelectRandomSingleTrack()
+    {
+        if (currentTracks.Count == 0) return null; // Evita erros se a lista estiver vazia
+        int randomIndex = Random.Range(0, currentTracks.Count);
+        return currentTracks[randomIndex].GetComponent<Ground>().track;
     }
 
     private Vector3 CalculateFinalPosition()
@@ -286,4 +382,6 @@ public class Generator : MonoBehaviour
         // Troca a Skybox
         ChangeBiomeSkybox();
     }
+    
+
 }
