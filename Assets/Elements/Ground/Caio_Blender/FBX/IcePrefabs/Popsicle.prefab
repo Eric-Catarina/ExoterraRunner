@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3354429737989988029}
   - component: {fileID: 8168686475093377727}
   - component: {fileID: 3455720993769527404}
-  - component: {fileID: 9020318217248825957}
+  - component: {fileID: 3745105447659813711}
+  - component: {fileID: 3683971144063030853}
   m_Layer: 0
   m_Name: Popsicle
   m_TagString: Untagged
@@ -84,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &9020318217248825957
-MeshCollider:
+--- !u!65 &3745105447659813711
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,7 +95,19 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4751492104759440778, guid: b86f1ba03a3e9094d95753ebc9bd4d0a, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 2.8927982, y: 0.96408033, z: 6.952092}
+  m_Center: {x: 0, y: -0.00000061988834, z: 2.3740106}
+--- !u!65 &3683971144063030853
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583841929531835767}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.50527745, y: 0.21018143, z: 2.589319}
+  m_Center: {x: 0.024171734, y: 0.0020713806, z: -2.3712432}

@@ -8039,16 +8039,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   biomeManager: {fileID: 160253455}
   poolManager: {fileID: 276935598}
-  speedManager: {fileID: 443421856}
   tracksParent: {fileID: 117135504}
   initialTrackReference: {fileID: 1564774290}
-  firstGeneratedSetYOffset: 0
+  firstTracksetYOffset: 0
   parallelTrackCount: 3
-  baseZSpacing: 15
-  zSpacingSpeedScaleFactor: 0.5
   minXOffset: 50
   maxXOffset: 50
-  trackDescentPerSet: 1
+  trackDescentRate: 75
+  trackZSpacing: 10
   activeTracks: []
 --- !u!4 &1024011779
 Transform:
@@ -14829,12 +14827,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: -0.051279068, z: 18.529661, w: 4.7585254}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_renderer: {fileID: 2107295309}
-  m_maskType: 0
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
+  m_hasFontAssetChanged: 0
+  m_renderer: {fileID: 2107295309}
+  m_maskType: 0
 --- !u!23 &2107295309
 MeshRenderer:
   m_ObjectHideFlags: 0
