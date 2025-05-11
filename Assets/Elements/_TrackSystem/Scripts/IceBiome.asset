@@ -27,4 +27,5 @@ MonoBehaviour:
   - {fileID: 405758576386881191, guid: 9b0595f9de8ea674dafb9d8faa858454, type: 3}
   - {fileID: 6345384655228296746, guid: 6cc7881e344660545943211d66f2ef5f, type: 3}
   - {fileID: 6345384655228296746, guid: a0c7fd47dbbe78f4d9b6d9370750e651, type: 3}
+  - {fileID: 6345384655228296746, guid: 44dc3180ed88de847b4885485793b5e4, type: 3}
   speedMultiplier: 1
