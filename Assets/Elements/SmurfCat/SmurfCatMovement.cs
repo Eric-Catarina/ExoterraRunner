@@ -429,7 +429,7 @@ public void SetMovementSensitivity(float sensitivity)
     }
     private void CheckFallingState()
     {
-        if (rb.velocity.y < -35)
+        if (rb.velocity.y < -50)
         {
             EnteredHighFallSpeed();
             isFallingHighSpeed = true;

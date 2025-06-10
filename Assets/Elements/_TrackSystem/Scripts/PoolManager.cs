@@ -44,6 +44,17 @@ public class PoolManager : MonoBehaviour
                     AddPrefabToPool(prefab, 10);
                 }
             }
+            // Add scenery prefabs from each biome
+            foreach (var prefab in biome.sceneryPrefabs)
+            {
+                if (!validPrefabs.Contains(prefab))
+                {
+                    validPrefabs.Add(prefab);
+                    AddPrefabToPool(prefab, 5);
+                    Debug.Log($"Added scenery prefab '{prefab.name}' to pool with initial size 5.");
+                }
+            }
+            
         }
         
         // Add scenery prefabs
