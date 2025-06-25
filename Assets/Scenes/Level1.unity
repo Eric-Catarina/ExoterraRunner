@@ -1124,9 +1124,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   availableBiomes:
+  - {fileID: 11400000, guid: c2221f690d09f1f2e95d129eb1a2c7b2, type: 2}
   - {fileID: 11400000, guid: 29554b91c3fc4ecf0b1e7d4c0352c9eb, type: 2}
   - {fileID: 11400000, guid: c189eb36bf761c05cb553ccb9c3a6298, type: 2}
-  - {fileID: 11400000, guid: c2221f690d09f1f2e95d129eb1a2c7b2, type: 2}
+  - {fileID: 11400000, guid: c189eb36bf761c05cb553ccb9c3a6298, type: 2}
   transitionDelay: 10
   CurrentBiome: {fileID: 11400000, guid: 29554b91c3fc4ecf0b1e7d4c0352c9eb, type: 2}
   biomeText: {fileID: 460363128}
@@ -8633,6 +8634,7 @@ MonoBehaviour:
   cleanupCheckInterval: 50
   furthestTrackGeneratedZ: 0
   smurfCatMovement: {fileID: 919132147592852550}
+  tracksGeneratedInCurrentBiome: 0
 --- !u!4 &1077337923
 Transform:
   m_ObjectHideFlags: 0

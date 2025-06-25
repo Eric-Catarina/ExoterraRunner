@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   biomeName: Burning Hells
   biomeDebugColor: {r: 0.8301887, g: 0.5805755, b: 0.090067655, a: 1}
-  trackSpacing: 20
+  trackSpacing: 40
   trackSetZSpacing: 50
   skyboxMaterial: {fileID: 2100000, guid: 7ed994c1997814049b44c36a823bba6c, type: 2}
   environmentParticlePrefab: {fileID: 4064004897132018163, guid: ea27f0810af643412ae3d26ef990aba6, type: 3}
-  modulesBeforeTransition: 4
-  sceneryPrefabs: []
+  modulesBeforeTransition: 2
+  sceneryPrefabs:
+  - {fileID: 1003506057684509506, guid: 98c52ced759f56d489b8c8f334455698, type: 3}
   trackPrefabs:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 6411948528743387889, guid: be10ff86ae5ef5749bd4f2f726a2555d, type: 3}
+  - {fileID: 6411948528743387889, guid: 2f176de63a62f921eab48beca1f1990f, type: 3}
   speedMultiplier: 1
