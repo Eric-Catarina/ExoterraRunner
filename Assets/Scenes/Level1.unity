@@ -1126,6 +1126,7 @@ MonoBehaviour:
   availableBiomes:
   - {fileID: 11400000, guid: 29554b91c3fc4ecf0b1e7d4c0352c9eb, type: 2}
   - {fileID: 11400000, guid: c189eb36bf761c05cb553ccb9c3a6298, type: 2}
+  - {fileID: 11400000, guid: c2221f690d09f1f2e95d129eb1a2c7b2, type: 2}
   transitionDelay: 10
   CurrentBiome: {fileID: 11400000, guid: 29554b91c3fc4ecf0b1e7d4c0352c9eb, type: 2}
   biomeText: {fileID: 460363128}
@@ -14827,12 +14828,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: -0.051279068, z: 18.529661, w: 4.7585254}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  _SortingLayer: 0
-  _SortingLayerID: 0
-  _SortingOrder: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2107295309}
   m_maskType: 0
+  _SortingLayer: 0
+  _SortingLayerID: 0
+  _SortingOrder: 0
 --- !u!23 &2107295309
 MeshRenderer:
   m_ObjectHideFlags: 0
