@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Catarina Games
-  productName: SmurfCatAmazingRunner
+  productName: ExoterraRunner
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.10857955, g: 0.120684944, b: 0.3773585, a: 1}
