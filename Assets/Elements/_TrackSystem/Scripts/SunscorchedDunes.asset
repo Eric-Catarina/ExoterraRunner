@@ -17,7 +17,7 @@ MonoBehaviour:
   trackSpacing: 60
   trackSetZSpacing: 120
   skyboxMaterial: {fileID: 2100000, guid: 52fcefd712182d743a781fde12426775, type: 2}
-  environmentParticlePrefab: {fileID: 0}
+  environmentParticlePrefab: {fileID: 4064004897132018163, guid: ea27f0810af643412ae3d26ef990aba6, type: 3}
   modulesBeforeTransition: 4
   sceneryPrefabs:
   - {fileID: 4742711396302157090, guid: ffebeb976304ea4c0a592722694eca55, type: 3}
