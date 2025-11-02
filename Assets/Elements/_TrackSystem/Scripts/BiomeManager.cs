@@ -35,11 +35,13 @@ public class BiomeManager : MonoBehaviour
     // Chamado pelo LevelGenerator quando um módulo de cenário é spawnado
     public void NotifySceneryModuleSpawned()
     {
+        Debug.Log($"Módulo de cenário spawnado no bioma atual: {CurrentBiome.biomeName}");
         modulesSpawnedInCurrentBiome++;
         CheckForBiomeTransition();
     } 
     public void CheckForBiomeTransition()
     {
+        Debug.Log($"Módulos spawnados no bioma atual: {modulesSpawnedInCurrentBiome}");
         if (CurrentBiome == null) return;
 
         if (modulesSpawnedInCurrentBiome >= CurrentBiome.modulesBeforeTransition)

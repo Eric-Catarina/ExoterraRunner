@@ -15,14 +15,17 @@ MonoBehaviour:
   biomeName: Ice Biome
   biomeDebugColor: {r: 0.2, g: 0.46666667, b: 0.7764706, a: 1}
   trackSpacing: 100
+  trackSetZSpacing: 50
   skyboxMaterial: {fileID: 2100000, guid: 52fcefd712182d743a781fde12426775, type: 2}
   environmentParticlePrefab: {fileID: 4064004897132018163, guid: ea27f0810af643412ae3d26ef990aba6, type: 3}
-  modulesBeforeTransition: 4
+  modulesBeforeTransition: 6
   sceneryPrefabs:
-  - {fileID: 4742711396302157090, guid: ffebeb976304ea4c0a592722694eca55, type: 3}
+  - {fileID: 2961831540346582288, guid: 1df130ee09eeafb45b387cfc820c4360, type: 3}
+  - {fileID: 1003506057684509506, guid: 98c52ced759f56d489b8c8f334455698, type: 3}
   trackPrefabs:
-  - {fileID: 405758576386881191, guid: 0ef92f8657f38fd01843c6079d882dda, type: 3}
-  - {fileID: 9196618639578155915, guid: 397cf474e2013efe8af8223033ed26b2, type: 3}
-  - {fileID: 405758576386881191, guid: e19ddcd473a34348cb5ffe235c5e0921, type: 3}
-  - {fileID: 6345384655228296746, guid: d4b2aafa485206ea8833067510f039af, type: 3}
+  - {fileID: 9196618639578155915, guid: 2d2323d48ef0cc9408ade4fe3be0119d, type: 3}
+  - {fileID: 405758576386881191, guid: 9b0595f9de8ea674dafb9d8faa858454, type: 3}
+  - {fileID: 6345384655228296746, guid: 6cc7881e344660545943211d66f2ef5f, type: 3}
+  - {fileID: 6345384655228296746, guid: a0c7fd47dbbe78f4d9b6d9370750e651, type: 3}
+  - {fileID: 6345384655228296746, guid: 44dc3180ed88de847b4885485793b5e4, type: 3}
   speedMultiplier: 1

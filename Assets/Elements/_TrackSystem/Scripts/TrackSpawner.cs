@@ -26,6 +26,7 @@ public class TrackSpawner : MonoBehaviour
     [Header("Descent")]
     [Tooltip("Quanto cada NOVO CONJUNTO de pistas desce em Y em relação ao conjunto anterior.")]
     [SerializeField] private float trackDescentRate = 75.0f; // Changed from 0.5f to 75.0f (User range: 50-100)
+    [SerializeField] private float initialTrackDescentRate = 75.0f; // Changed from 0.5f to 75.0f (User range: 50-100)
 
     [SerializeField] private float trackZSpacing = 10f;
     // Keep track of active tracks and the last attach point
@@ -43,7 +44,7 @@ public class TrackSpawner : MonoBehaviour
             // --- Move initial track to the specified starting position --- END
 
             lastSpawnedTrackEndAttachPoint = initialTrackReference.endAttachPoint;
-            currentDescent = initialTrackReference.transform.position.y + firstTracksetYOffset; // Start descent from the *new* initial track height
+            currentDescent = initialTrackReference.transform.position.y + initialTrackDescentRate; // Start descent from the *new* initial track height
             if (!activeTracks.Contains(initialTrackReference.gameObject))
             {
                  activeTracks.Add(initialTrackReference.gameObject); // Ensure initial track is managed
@@ -93,7 +94,6 @@ public class TrackSpawner : MonoBehaviour
         Quaternion baseSpawnRotation = lastSpawnedTrackEndAttachPoint.rotation;
         Transform newFurthestAttachPoint = lastSpawnedTrackEndAttachPoint;
         float maxZ = (newFurthestAttachPoint != null) ? newFurthestAttachPoint.position.z : float.MinValue;
-
         currentDescent += trackDescentRate;
         int centerIndex = parallelTrackCount / 2;
         float centerXPosition = 0f;
@@ -109,6 +109,7 @@ public class TrackSpawner : MonoBehaviour
 
             // Rotate the local offset by the base rotation and add to the base position
             Vector3 spawnPosition = baseSpawnPosition + baseSpawnRotation * localOffset;
+            spawnPosition.z += 0.1f * currentDescent; // Add a small Z offset to avoid overlap
 
             // Apply consistent descent based on accumulated rate
             spawnPosition.y = baseSpawnPosition.y - currentDescent; // Apply consistent descent based on accumulated rate
@@ -133,6 +134,8 @@ public class TrackSpawner : MonoBehaviour
             {
                 maxZ = newSpawnableElement.endAttachPoint.position.z;
                 newFurthestAttachPoint = newSpawnableElement.endAttachPoint;
+                // Add 0.5f of the currentDescent to the Z 
+                // newFurthestAttachPoint.position += new Vector3(0, 0, 0.3f * currentDescent);
             }
             else
             {

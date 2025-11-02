@@ -25,6 +25,7 @@ public class LevelGenerator : MonoBehaviour
     private SmurfCatMovement smurfCatMovement;
 
     // Biome switching
+    [SerializeField]
     private int tracksGeneratedInCurrentBiome = 0;
 
     void Start()
@@ -59,6 +60,7 @@ public class LevelGenerator : MonoBehaviour
         {
             trackSpawner.SpawnNextTrackSet();
             onTrackCompleted?.Invoke();
+            biomeManager.NotifySceneryModuleSpawned();
 
         }
 

@@ -60,7 +60,7 @@ public class SmurfCatMovement : MonoBehaviour
 
     [Header("Physics Settings")]
     public Rigidbody rb;
-    public float maxYSpeed = -20.0f;
+    public float maxYSpeed = -30.0f;
     public GameObject adsManager;
     public MoveForward moveForward;
 
@@ -429,7 +429,7 @@ public void SetMovementSensitivity(float sensitivity)
     }
     private void CheckFallingState()
     {
-        if (rb.velocity.y < -35)
+        if (rb.velocity.y < -80)
         {
             EnteredHighFallSpeed();
             isFallingHighSpeed = true;

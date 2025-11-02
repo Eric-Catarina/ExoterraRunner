@@ -130,6 +130,7 @@ public class ScenerySpawner : MonoBehaviour
         // Adiciona à lista de rastreamento
         activeScenery.Add(newSceneryObject);
         // Debug.Log($"Scenery Spawned Relative: {newSceneryObject.name} at {spawnPosition}");
+        Debug.Log($"Scenery Spawned Relative: {newSceneryObject.name} at {spawnPosition}");
         return newSceneryObject;
     }
 
