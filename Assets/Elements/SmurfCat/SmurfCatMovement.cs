@@ -202,7 +202,7 @@ public class SmurfCatMovement : MonoBehaviour
         Vector2 moveInput = context.ReadValue<Vector2>();
         // Aqui, em vez de multiplicar diretamente por horizontalSpeed, calcule a velocidade com base no movimento
         float moveDeltaX = moveInput.x * horizontalSpeed;  // Aqui, moveInput.x representa a distância percorrida
-        targetVelocity = new Vector3(moveDeltaX, rb.velocity.y, rb.velocity.z);
+        targetVelocity = new Vector3(moveDeltaX, rb.linearVelocity.y, rb.linearVelocity.z);
         if (Math.Abs(moveInput.x) > 15f) onPlayerHorizontalSwipe?.Invoke();
 
         // Agora aplicamos a limitação na velocidade para garantir que ela não ultrapasse o máximo
@@ -212,16 +212,16 @@ public class SmurfCatMovement : MonoBehaviour
 
 private void HandleMovement()
 {
-    Vector3 newVelocity = new Vector3(targetVelocity.x, rb.velocity.y, rb.velocity.z);
+    Vector3 newVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, rb.linearVelocity.z);
     
     // Movimentação suave entre a velocidade atual e a nova velocidade com base na entrada
-    rb.velocity = !isDead
-        ? Vector3.Lerp(rb.velocity, newVelocity, horizontalSpeed * Time.fixedDeltaTime)
+    rb.linearVelocity = !isDead
+        ? Vector3.Lerp(rb.linearVelocity, newVelocity, horizontalSpeed * Time.fixedDeltaTime)
         : Vector3.zero;
 
     
     // Verificação para morte do personagem se a velocidade no eixo Y for muito negativa
-    if (rb.velocity.y < -maxYSpeed)
+    if (rb.linearVelocity.y < -maxYSpeed)
     {
         if (isDead) return;
         isDead = true;
@@ -429,7 +429,7 @@ public void SetMovementSensitivity(float sensitivity)
     }
     private void CheckFallingState()
     {
-        if (rb.velocity.y < -80)
+        if (rb.linearVelocity.y < -80)
         {
             EnteredHighFallSpeed();
             isFallingHighSpeed = true;
@@ -505,7 +505,7 @@ public void SetMovementSensitivity(float sensitivity)
 
     private void TriggerHitstopEffect()
     {
-        float impactVelocity = Mathf.Abs(rb.velocity.y);
+        float impactVelocity = Mathf.Abs(rb.linearVelocity.y);
         float scaledDuration = Mathf.Lerp(minHitstopDuration, maxHitstopDuration, impactVelocity / maxVelocityForScaling);
         float scaledIntensity = Mathf.Lerp(minHitstopIntensity, maxHitstopIntensity, impactVelocity / maxVelocityForScaling);
         StartCoroutine(HitstopCoroutine(scaledDuration, scaledIntensity));

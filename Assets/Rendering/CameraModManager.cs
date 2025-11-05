@@ -34,10 +34,10 @@ namespace Rendering
 
         private void FixedUpdate()
         {
-            if (playerScript.rb.velocity.y < -5)
+            if (playerScript.rb.linearVelocity.y < -5)
             {
                 // Scale lens distortion intensity based on player's fall speed at a maximun of 0.5
-                lensDistortion.intensity.value = Mathf.Clamp(-playerScript.rb.velocity.y / 50, 0, 0.6f);
+                lensDistortion.intensity.value = Mathf.Clamp(-playerScript.rb.linearVelocity.y / 50, 0, 0.6f);
                 
             }
             else

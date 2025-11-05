@@ -52,5 +52,5 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": true,
-    "dotnet.defaultSolution": "ExoterraRunner.sln"
+    "dotnet.defaultSolution": "ExoterraRunner.slnx"
 }
