@@ -1,0 +1,5 @@
+/home/eric/coisas/projects/ExoterraRunner/.utmp/RelWithDebInfo/1h276g5b/arm64-v8a/CMakeFiles/edit_cache.dir
+/home/eric/coisas/projects/ExoterraRunner/.utmp/RelWithDebInfo/1h276g5b/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/home/eric/coisas/projects/ExoterraRunner/.utmp/RelWithDebInfo/1h276g5b/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+/home/eric/coisas/projects/ExoterraRunner/.utmp/RelWithDebInfo/1h276g5b/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+/home/eric/coisas/projects/ExoterraRunner/.utmp/RelWithDebInfo/1h276g5b/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir
